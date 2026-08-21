@@ -73,11 +73,11 @@ export default function ContactSection() {
 
               <label className="contact-field-label">Select Item</label>
               <select value={product} onChange={(e) => setProduct(e.target.value)} className="contact-select">
-                <option value="Karuppati (Palm Jaggery)">Karuppati - கருப்பட்டி</option>
-                <option value="Panam Karkandu (Palm Candy)">Panam Karkandu - பனங்கற்கண்டு</option>
-                <option value="Vellai Karuppati (White Palm Jaggery)">Vellai Karuppati</option>
-                <option value="Chukku Karuppati (Dry Ginger Palm Jaggery)">Chukku Karuppati - சுக்கு கருப்பட்டி</option>
-                <option value="Assorted Palm Sampler Pack">Sampler Pack (All 3)</option>
+                <option value="Karuppati (Palm Jaggery) - கருப்பட்டி">Karuppati - கருப்பட்டி</option>
+                <option value="Panam Karkandu (Palm Candy) - பனங்கற்கண்டு">Panam Karkandu - பனங்கற்கண்டு</option>
+                <option value="Chukku Karuppati (Dry Ginger Palm Jaggery) - சுக்கு கருப்பட்டி">Chukku Karuppati - சுக்கு கருப்பட்டி</option>
+                <option value="Vattu Karuppati (Disc Palm Jaggery) - வட்டு கருப்பட்டி">Vattu Karuppati - வட்டு கருப்பட்டி</option>
+                <option value="Assorted Palm Sampler Pack">Sampler Pack (All 4 Items)</option>
               </select>
 
               <label className="contact-field-label">Quantity</label>

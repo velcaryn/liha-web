@@ -36,14 +36,14 @@ const products = [
     grid: 'product-card--narrow'
   },
   {
-    name: 'Vellai Karuppati',
-    tamil: 'வெள்ளை கருப்பட்டி',
-    subtitle: 'Artisanal White Palm Jaggery',
+    name: 'Vattu Karuppati',
+    tamil: 'வட்டு கருப்பட்டி',
+    subtitle: 'Traditional Palm Jaggery Cakes',
     img: '/images/vellai-karuppati.png',
-    badge: { label: 'Rare & Delicate', className: 'badge-cream' },
-    desc: 'Creamish-white palm jaggery blocks with a lighter, sophisticated flavor perfect for traditional sweets, tea, and filter coffee.',
+    badge: { label: 'Artisanal & Pure', className: 'badge-cream' },
+    desc: 'Classic disc-shaped palm jaggery with a delicate, rich flavor profile. Handcrafted in small batches, perfect for traditional sweets, tea, and filter coffee.',
     tags: ['Delicate Caramel Notes', 'Unbleached Purity', 'Perfect for Beverages'],
-    waLink: 'https://wa.me/919597959549?text=Hi%2C%20I%20would%20like%20to%20order%20Vellai%20Karuppati%20(White%20Palm%20Jaggery)',
+    waLink: 'https://wa.me/919597959549?text=Hi%2C%20I%20would%20like%20to%20order%20Vattu%20Karuppati%20(%E0%AE%B5%E0%AE%9F%E0%AF%8D%E0%AE%9F%E0%AF%81%20%E0%AE%95%E0%AE%B0%E0%AF%81%E0%AE%AA%E0%AF%8D%E0%AE%AA%E0%AE%9F%E0%AF%8D%E0%AE%9F%E0%AE%BF)',
     grid: 'product-card--wide'
   }
 ];
@@ -210,7 +210,7 @@ export default function Products() {
 
         /* Tablet & desktop: 2x2 bento grid
            Row 1: Karuppati (7) + Panam Karkandu (5)
-           Row 2: Chukku Karuppati (5) + Vellai Karuppati (7) */
+           Row 2: Chukku Karuppati (5) + Vattu Karuppati (7) */
         @media (min-width: 768px) {
           .products-section { padding: 5rem 0; }
           .products-grid {
