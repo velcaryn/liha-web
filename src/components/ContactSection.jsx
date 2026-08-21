@@ -1,7 +1,15 @@
-import React, { useState } from 'react';
-import { MessageCircle, Phone } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Phone, ChevronDown, Check } from 'lucide-react';
 
-function InstagramIcon({ size = 20, color = 'currentColor' }) {
+function WhatsAppIcon({ size = 20, color = 'currentColor' }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={color} aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  );
+}
+
+function InstagramIcon({ size = 18, color = 'currentColor' }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
@@ -11,13 +19,55 @@ function InstagramIcon({ size = 20, color = 'currentColor' }) {
   );
 }
 
+const PRODUCT_OPTIONS = [
+  { id: 'karuppati', label: 'Karuppati', tamil: 'கருப்பட்டி', full: 'Karuppati (Palm Jaggery) - கருப்பட்டி', badge: 'Best Seller' },
+  { id: 'panam-karkandu', label: 'Panam Karkandu', tamil: 'பனங்கற்கண்டு', full: 'Panam Karkandu (Palm Candy) - பனங்கற்கண்டு', badge: 'Natural Crystal' },
+  { id: 'chukku', label: 'Chukku Karuppati', tamil: 'சுக்கு கருப்பட்டி', full: 'Chukku Karuppati (Dry Ginger Palm Jaggery) - சுக்கு கருப்பட்டி', badge: 'Herbal Wellness' },
+  { id: 'vattu', label: 'Vattu Karuppati', tamil: 'வட்டு கருப்பட்டி', full: 'Vattu Karuppati (Disc Palm Jaggery) - வட்டு கருப்பட்டி', badge: 'Rare Edition' },
+  { id: 'sampler', label: 'Assorted Sampler Pack', tamil: 'அனைத்தும் அடங்கிய தொகுப்பு', full: 'Assorted Palm Sampler Pack (All 4 Varieties)', badge: 'All 4 Varieties' },
+];
+
+const QTY_OPTIONS = [
+  { id: '1kg', label: '1 Kg', desc: 'Minimum Qty', tag: 'Fresh Batch' },
+  { id: '2kg', label: '2 Kg', desc: 'Family Pack', tag: 'Popular' },
+  { id: '5kg', label: '5 Kg', desc: 'Pantry Saver', tag: 'Best Value' },
+  { id: '10kg+', label: '10+ Kg', desc: 'Bulk Order', tag: 'Wholesale' },
+];
+
 export default function ContactSection() {
-  const [product, setProduct] = useState('Karuppati (Palm Jaggery)');
-  const [qty, setQty] = useState('1 Kg');
+  const [selectedProduct, setSelectedProduct] = useState(PRODUCT_OPTIONS[0]);
+  const [selectedQty, setSelectedQty] = useState(QTY_OPTIONS[0]);
   const [notes, setNotes] = useState('');
 
+  const [productOpen, setProductOpen] = useState(false);
+  const [qtyOpen, setQtyOpen] = useState(false);
+
+  const productRef = useRef(null);
+  const qtyRef = useRef(null);
+
+  // Close dropdowns on outside click
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (productRef.current && !productRef.current.contains(event.target)) {
+        setProductOpen(false);
+      }
+      if (qtyRef.current && !qtyRef.current.contains(event.target)) {
+        setQtyOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, []);
+
   const waLink = () => {
-    const msg = `Hi Liha's Karuppati team! I would like to order:\n- Product: ${product}\n- Quantity: ${qty}${notes ? `\n- Notes: ${notes}` : ''}`;
+    let msg = `Hi Liha's Karuppati team, I would like to order:\n- Item: ${selectedProduct.full}\n- Quantity: ${selectedQty.label} (${selectedQty.desc})`;
+    if (notes.trim()) {
+      msg += `\n- Delivery Location: ${notes.trim()}`;
+    }
     return `https://wa.me/919597959549?text=${encodeURIComponent(msg)}`;
   };
 
@@ -34,14 +84,14 @@ export default function ContactSection() {
           </div>
 
           <div className="contact-grid">
-            {/* Contact Info */}
+            {/* Contact Info Channels */}
             <div className="contact-info">
               <a href="https://wa.me/919597959549" target="_blank" rel="noopener noreferrer" className="contact-info-item">
                 <div className="contact-info-icon" style={{ background: '#25D366' }}>
-                  <MessageCircle size={20} aria-hidden="true" />
+                  <WhatsAppIcon size={20} color="#ffffff" />
                 </div>
                 <div>
-                  <div className="contact-info-label">WhatsApp</div>
+                  <div className="contact-info-label">WhatsApp Quick Order</div>
                   <div className="contact-info-value">+91 95979 59549</div>
                 </div>
               </a>
@@ -51,54 +101,136 @@ export default function ContactSection() {
                   <Phone size={18} aria-hidden="true" />
                 </div>
                 <div>
-                  <div className="contact-info-label">Direct Call</div>
+                  <div className="contact-info-label">Direct Phone Call</div>
                   <div className="contact-info-value">+91 95979 59549</div>
                 </div>
               </a>
 
               <a href="https://www.instagram.com/lihas_karupatti/" target="_blank" rel="noopener noreferrer" className="contact-info-item">
-                <div className="contact-info-icon" style={{ background: '#E1306C' }}>
+                <div className="contact-info-icon" style={{ background: 'linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)' }}>
                   <InstagramIcon size={18} color="#ffffff" />
                 </div>
                 <div>
-                  <div className="contact-info-label">Instagram</div>
+                  <div className="contact-info-label">Instagram Community</div>
                   <div className="contact-info-value">@lihas_karupatti</div>
                 </div>
               </a>
             </div>
 
-            {/* Order Builder */}
+            {/* Interactive Order Configurator */}
             <div className="contact-order-builder">
-              <h3 className="contact-builder-title">Quick Order</h3>
+              <div className="builder-header">
+                <h3 className="contact-builder-title">Quick Order</h3>
+                <span className="builder-subtag">Direct WhatsApp Checkout</span>
+              </div>
 
-              <label className="contact-field-label">Select Item</label>
-              <select value={product} onChange={(e) => setProduct(e.target.value)} className="contact-select">
-                <option value="Karuppati (Palm Jaggery) - கருப்பட்டி">Karuppati - கருப்பட்டி</option>
-                <option value="Panam Karkandu (Palm Candy) - பனங்கற்கண்டு">Panam Karkandu - பனங்கற்கண்டு</option>
-                <option value="Chukku Karuppati (Dry Ginger Palm Jaggery) - சுக்கு கருப்பட்டி">Chukku Karuppati - சுக்கு கருப்பட்டி</option>
-                <option value="Vattu Karuppati (Disc Palm Jaggery) - வட்டு கருப்பட்டி">Vattu Karuppati - வட்டு கருப்பட்டி</option>
-                <option value="Assorted Palm Sampler Pack">Sampler Pack (All 4 Items)</option>
-              </select>
+              {/* Product Custom Dropdown */}
+              <div className="form-group" ref={productRef}>
+                <label className="contact-field-label">Select Item</label>
+                <div className="custom-select-container">
+                  <button
+                    type="button"
+                    className={`custom-select-trigger ${productOpen ? 'open' : ''}`}
+                    onClick={() => {
+                      setProductOpen(!productOpen);
+                      setQtyOpen(false);
+                    }}
+                    aria-expanded={productOpen}
+                  >
+                    <div className="trigger-content">
+                      <span className="trigger-main">{selectedProduct.label}</span>
+                      <span className="trigger-tamil">({selectedProduct.tamil})</span>
+                    </div>
+                    <ChevronDown size={18} className={`chevron-icon ${productOpen ? 'rotate' : ''}`} />
+                  </button>
 
-              <label className="contact-field-label">Quantity</label>
-              <select value={qty} onChange={(e) => setQty(e.target.value)} className="contact-select">
-                <option value="500g">500g Trial Pack</option>
-                <option value="1 Kg">1 Kg Standard</option>
-                <option value="2 Kg">2 Kg Family Pack</option>
-                <option value="5 Kg+ (Bulk)">5 Kg+ Bulk</option>
-              </select>
+                  {productOpen && (
+                    <div className="custom-select-dropdown">
+                      {PRODUCT_OPTIONS.map((item) => (
+                        <div
+                          key={item.id}
+                          className={`custom-select-option ${selectedProduct.id === item.id ? 'selected' : ''}`}
+                          onClick={() => {
+                            setSelectedProduct(item);
+                            setProductOpen(false);
+                          }}
+                        >
+                          <div className="option-text">
+                            <div className="option-title-row">
+                              <span className="option-label">{item.label}</span>
+                              <span className="option-tamil">({item.tamil})</span>
+                            </div>
+                            <span className="option-badge">{item.badge}</span>
+                          </div>
+                          {selectedProduct.id === item.id && <Check size={18} className="check-icon" />}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
 
-              <label className="contact-field-label">Delivery City (Optional)</label>
-              <input
-                type="text"
-                placeholder="e.g. Chennai, Bangalore"
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                className="contact-input"
-              />
+              {/* Quantity Custom Dropdown */}
+              <div className="form-group" ref={qtyRef}>
+                <label className="contact-field-label">Quantity</label>
+                <div className="custom-select-container">
+                  <button
+                    type="button"
+                    className={`custom-select-trigger ${qtyOpen ? 'open' : ''}`}
+                    onClick={() => {
+                      setQtyOpen(!qtyOpen);
+                      setProductOpen(false);
+                    }}
+                    aria-expanded={qtyOpen}
+                  >
+                    <div className="trigger-content">
+                      <span className="trigger-main">{selectedQty.label}</span>
+                      <span className="trigger-desc">({selectedQty.desc})</span>
+                    </div>
+                    <ChevronDown size={18} className={`chevron-icon ${qtyOpen ? 'rotate' : ''}`} />
+                  </button>
 
+                  {qtyOpen && (
+                    <div className="custom-select-dropdown">
+                      {QTY_OPTIONS.map((opt) => (
+                        <div
+                          key={opt.id}
+                          className={`custom-select-option ${selectedQty.id === opt.id ? 'selected' : ''}`}
+                          onClick={() => {
+                            setSelectedQty(opt);
+                            setQtyOpen(false);
+                          }}
+                        >
+                          <div className="option-text">
+                            <div className="option-title-row">
+                              <span className="option-label">{opt.label}</span>
+                              <span className="option-desc-text">({opt.desc})</span>
+                            </div>
+                            <span className="option-badge">{opt.tag}</span>
+                          </div>
+                          {selectedQty.id === opt.id && <Check size={18} className="check-icon" />}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Location Input */}
+              <div className="form-group">
+                <label className="contact-field-label">Delivery City (Optional)</label>
+                <input
+                  type="text"
+                  placeholder="e.g. Chennai, Coimbatore, Bangalore"
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  className="contact-input"
+                />
+              </div>
+
+              {/* Submit Action */}
               <a href={waLink()} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp contact-submit-btn">
-                <MessageCircle size={20} aria-hidden="true" />
+                <WhatsAppIcon size={20} color="#ffffff" />
                 <span>Send WhatsApp Order</span>
               </a>
             </div>
@@ -137,7 +269,7 @@ export default function ContactSection() {
         .contact-info {
           display: flex;
           flex-direction: column;
-          gap: 0.75rem;
+          gap: 0.85rem;
         }
         .contact-info-item {
           display: flex;
@@ -151,19 +283,21 @@ export default function ContactSection() {
           transition: var(--transition-smooth);
           touch-action: manipulation;
           min-height: 56px;
+          border: 1px solid var(--outline-variant);
         }
         .contact-info-item:active {
           transform: scale(0.98);
           background: var(--bg-container);
         }
         .contact-info-icon {
-          width: 40px; height: 40px;
+          width: 42px; height: 42px;
           border-radius: 50%;
           color: #ffffff;
           display: flex;
           align-items: center;
           justify-content: center;
           flex-shrink: 0;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         .contact-info-label {
           font-size: 0.75rem;
@@ -178,44 +312,190 @@ export default function ContactSection() {
           background: var(--bg-surface);
           padding: 1.5rem;
           border-radius: var(--radius-lg);
-          border: 1px solid var(--outline-variant);
+          border: 1.5px solid var(--outline-variant);
+          box-shadow: var(--soil-shadow-sm);
+        }
+        .builder-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 1.25rem;
+          flex-wrap: wrap;
+          gap: 0.5rem;
         }
         .contact-builder-title {
-          font-size: 1.15rem;
-          margin-bottom: 1.25rem;
+          font-size: 1.2rem;
           color: var(--primary);
+          font-family: var(--font-serif);
+        }
+        .builder-subtag {
+          font-size: 0.72rem;
+          font-weight: 700;
+          color: #15803d;
+          background: #dcfce7;
+          padding: 0.2rem 0.6rem;
+          border-radius: 999px;
+        }
+        .form-group {
+          margin-bottom: 1rem;
+          position: relative;
         }
         .contact-field-label {
           display: block;
           font-size: 0.82rem;
-          font-weight: 600;
+          font-weight: 700;
           color: var(--text-variant);
           margin-bottom: 0.4rem;
-          margin-top: 1rem;
         }
-        .contact-field-label:first-of-type { margin-top: 0; }
-        .contact-select, .contact-input {
+
+        /* Custom Dropdown Styling */
+        .custom-select-container {
+          position: relative;
           width: 100%;
+        }
+        .custom-select-trigger {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0.85rem 1rem;
+          background: var(--bg-container-lowest);
+          border: 1.5px solid var(--outline-variant);
+          border-radius: var(--radius-sm);
+          font-family: var(--font-sans);
+          font-size: 0.92rem;
+          color: var(--primary);
+          cursor: pointer;
+          min-height: 50px;
+          text-align: left;
+          transition: all 0.2s ease;
+          touch-action: manipulation;
+        }
+        .custom-select-trigger:hover {
+          border-color: var(--primary-container);
+        }
+        .custom-select-trigger.open {
+          border-color: var(--secondary);
+          box-shadow: 0 0 0 3px rgba(45, 90, 39, 0.12);
+        }
+        .trigger-content {
+          display: flex;
+          align-items: baseline;
+          gap: 0.4rem;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        .trigger-main {
+          font-weight: 700;
+          color: var(--primary);
+        }
+        .trigger-tamil, .trigger-desc {
+          font-size: 0.82rem;
+          color: var(--text-muted);
+        }
+        .chevron-icon {
+          color: var(--text-muted);
+          transition: transform 0.2s ease;
+          flex-shrink: 0;
+        }
+        .chevron-icon.rotate {
+          transform: rotate(180deg);
+          color: var(--secondary);
+        }
+
+        /* Expanded Dropdown Menu */
+        .custom-select-dropdown {
+          position: absolute;
+          top: calc(100% + 4px);
+          left: 0;
+          right: 0;
+          background: var(--bg-container-lowest);
+          border: 1.5px solid var(--outline-variant);
+          border-radius: var(--radius-md);
+          box-shadow: 0 10px 28px rgba(50, 23, 13, 0.14);
+          z-index: 40;
+          overflow: hidden;
+          animation: dropFade 0.2s ease;
+        }
+        @keyframes dropFade {
+          from { opacity: 0; transform: translateY(-6px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        .custom-select-option {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
           padding: 0.8rem 1rem;
+          cursor: pointer;
+          transition: background 0.15s ease;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+          min-height: 48px;
+          touch-action: manipulation;
+        }
+        .custom-select-option:last-child {
+          border-bottom: none;
+        }
+        .custom-select-option:hover {
+          background: var(--bg-container-low);
+        }
+        .custom-select-option.selected {
+          background: #f0fdf4;
+        }
+        .option-text {
+          display: flex;
+          flex-direction: column;
+          gap: 0.15rem;
+        }
+        .option-title-row {
+          display: flex;
+          align-items: baseline;
+          gap: 0.4rem;
+        }
+        .option-label {
+          font-weight: 700;
+          font-size: 0.92rem;
+          color: var(--primary);
+        }
+        .option-tamil, .option-desc-text {
+          font-size: 0.8rem;
+          color: var(--text-muted);
+        }
+        .option-badge {
+          font-size: 0.7rem;
+          font-weight: 700;
+          color: var(--secondary);
+          letter-spacing: 0.02em;
+        }
+        .check-icon {
+          color: #16a34a;
+          flex-shrink: 0;
+        }
+
+        .contact-input {
+          width: 100%;
+          padding: 0.85rem 1rem;
           border-radius: var(--radius-sm);
           border: 1.5px solid var(--outline-variant);
           background: var(--bg-container-lowest);
           font-family: var(--font-sans);
-          font-size: 0.95rem;
+          font-size: 0.92rem;
           color: var(--primary);
           outline: none;
-          appearance: none;
-          -webkit-appearance: none;
-          min-height: 48px;
+          min-height: 50px;
           transition: border-color 0.2s;
         }
-        .contact-select:focus, .contact-input:focus {
+        .contact-input:focus {
           border-color: var(--secondary);
+          box-shadow: 0 0 0 3px rgba(45, 90, 39, 0.12);
         }
         .contact-submit-btn {
           width: 100%;
           justify-content: center;
-          margin-top: 1.5rem;
+          margin-top: 1.25rem;
+          font-size: 1rem;
+          gap: 0.6rem;
         }
 
         @media (min-width: 768px) {

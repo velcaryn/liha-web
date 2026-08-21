@@ -181,23 +181,25 @@ img {
   transform: scale(0.97);
 }
 
+/* ---------- Subtle & Harmonious WhatsApp Button ---------- */
 .btn-whatsapp {
-  background-color: #25D366;
+  background-color: var(--secondary);
   color: #ffffff;
   font-weight: 600;
-  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+  border: 1px solid rgba(45, 90, 39, 0.2);
+  box-shadow: 0 2px 8px rgba(45, 90, 39, 0.18);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .btn-whatsapp:hover {
-    background-color: #20ba5a;
+    background-color: var(--secondary-hover);
     transform: translateY(-2px);
-    box-shadow: 0 8px 22px rgba(37, 211, 102, 0.4);
+    box-shadow: 0 4px 14px rgba(45, 90, 39, 0.28);
   }
 }
 
 .btn-whatsapp:active {
-  background-color: #1ca34f;
+  background-color: #1b3817;
   transform: scale(0.97);
 }
 
@@ -237,51 +239,45 @@ img {
   background-size: 24px 24px;
 }
 
-/* ---------- Floating WhatsApp ---------- */
+/* ---------- Desktop Floating WhatsApp ---------- */
 .floating-whatsapp {
   position: fixed;
   z-index: 80;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  background-color: #25D366;
+  gap: 0.6rem;
+  background-color: var(--secondary);
   color: #ffffff;
+  border: 1px solid rgba(45, 90, 39, 0.3);
   border-radius: var(--radius-full);
-  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+  box-shadow: 0 6px 20px rgba(45, 90, 39, 0.25);
   text-decoration: none;
   font-weight: 600;
   transition: var(--transition-smooth);
   touch-action: manipulation;
-}
-
-/* Desktop: full label, bottom-right */
-.floating-whatsapp {
   bottom: 2rem;
   right: 2rem;
   padding: 0.85rem 1.4rem;
   font-size: 0.95rem;
 }
 
-/* Mobile: icon-only pill above mobile nav */
-@media (max-width: 899px) {
-  .floating-whatsapp {
-    bottom: calc(4.5rem + var(--safe-bottom));
-    right: 1rem;
-    padding: 0.85rem;
-    font-size: 0;
-  }
-  .floating-whatsapp span { display: none; }
-}
-
 @media (hover: hover) and (pointer: fine) {
   .floating-whatsapp:hover {
+    background-color: var(--secondary-hover);
     transform: translateY(-3px) scale(1.03);
-    box-shadow: 0 12px 30px rgba(37, 211, 102, 0.55);
+    box-shadow: 0 10px 26px rgba(45, 90, 39, 0.35);
   }
 }
 
 .floating-whatsapp:active {
   transform: scale(0.95);
+}
+
+/* On mobile (< 900px), bottom nav has the projected center WhatsApp order button, so floating FAB is hidden to prevent clutter */
+@media (max-width: 899px) {
+  .floating-whatsapp {
+    display: none;
+  }
 }
 
 /* ---------- Focus-visible ring for a11y ---------- */
