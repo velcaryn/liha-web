@@ -29,7 +29,7 @@ const products = [
     tamil: 'சுக்கு கருப்பட்டி',
     subtitle: 'Dry Ginger Palm Jaggery',
     img: '/images/chukku-karuppati.png',
-    badge: { label: 'Healthy', className: 'badge-green' },
+    badge: { label: 'Healthy Remedy', className: 'badge-green' },
     desc: 'Traditional palm jaggery infused with the warming goodness of dry ginger and black pepper. A time-tested remedy for cold and cough.',
     tags: ['Warming & Soothing', 'Cold & Cough Relief', 'Immunity Booster'],
     waLink: 'https://wa.me/919597959549?text=Hi%2C%20I%20would%20like%20to%20order%20Chukku%20Karuppati%20(Dry%20Ginger%20Palm%20Jaggery)',
@@ -38,11 +38,11 @@ const products = [
   {
     name: 'Vattu Karuppati',
     tamil: 'வட்டு கருப்பட்டி',
-    subtitle: 'Traditional Palm Jaggery Cakes',
+    subtitle: 'Rare Male Palm Nectar Delicacy',
     img: '/images/vellai-karuppati.png',
-    badge: { label: 'Artisanal & Pure', className: 'badge-cream' },
-    desc: 'Classic disc-shaped palm jaggery with a delicate, rich flavor profile. Handcrafted in small batches, perfect for traditional sweets, tea, and filter coffee.',
-    tags: ['Delicate Caramel Notes', 'Unbleached Purity', 'Perfect for Beverages'],
+    badge: { label: 'Rare & Limited Edition', className: 'badge-cream' },
+    desc: 'An exquisite artisanal delicacy crafted exclusively from the limited Padaneer tapped from Male Palm trees (ஆண் பனை). This unique nectar gives Vattu Karuppati its distinctive lighter golden shade and refined, melt-in-the-mouth sweetness. Available in strictly limited seasonal batches.',
+    tags: ['Tapped from Male Palms', 'Distinctive Light Shade', 'Seasonal & Limited Stock'],
     waLink: 'https://wa.me/919597959549?text=Hi%2C%20I%20would%20like%20to%20order%20Vattu%20Karuppati%20(%E0%AE%B5%E0%AE%9F%E0%AF%8D%E0%AE%9F%E0%AF%81%20%E0%AE%95%E0%AE%B0%E0%AF%81%E0%AE%AA%E0%AF%8D%E0%AE%AA%E0%AE%9F%E0%AF%8D%E0%AE%9F%E0%AE%BF)',
     grid: 'product-card--wide'
   }
