@@ -1,38 +1,45 @@
 :root {
-  --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-heading: 'Space Grotesk', var(--font-main);
+  --font-serif: 'Literata', Georgia, serif;
+  --font-sans: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   
-  --bg-primary: #0a0c14;
-  --bg-secondary: #111422;
-  --bg-card: rgba(22, 27, 46, 0.75);
-  --bg-card-hover: rgba(30, 37, 63, 0.85);
-  --border-color: rgba(255, 255, 255, 0.08);
-  --border-highlight: rgba(139, 92, 246, 0.4);
+  --bg-surface: #fff8f6;
+  --bg-container-lowest: #ffffff;
+  --bg-container-low: #fff1ec;
+  --bg-container: #fceae5;
+  --bg-container-high: #f6e4df;
+  --bg-container-highest: #f1dfda;
   
-  --text-main: #f3f4f6;
-  --text-muted: #9ca3af;
-  --text-faint: #6b7280;
+  --primary: #32170d;
+  --primary-container: #4b2c20;
+  --on-primary: #ffffff;
+  --on-primary-container: #bf9282;
   
-  --primary: #7c3aed;
-  --primary-hover: #6d28d9;
-  --primary-light: #a78bfa;
-  --accent-cyan: #06b6d4;
-  --accent-rose: #f43f5e;
+  --secondary: #2d5a27;
+  --secondary-hover: #23471e;
+  --secondary-container: #b9eeab;
+  --on-secondary: #ffffff;
+  --on-secondary-container: #1b4017;
   
-  --gradient-primary: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%);
-  --gradient-glow: radial-gradient(circle at 50% 0%, rgba(124, 58, 237, 0.25) 0%, transparent 70%);
+  --accent-orange: #d97706;
+  --accent-gold: #b45309;
+  
+  --text-main: #231a17;
+  --text-variant: #504440;
+  --text-muted: #83746f;
+  --outline: #83746f;
+  --outline-variant: #d5c3bd;
+  
+  --soil-shadow-sm: 0 4px 12px rgba(50, 23, 13, 0.05);
+  --soil-shadow: 0 10px 30px rgba(50, 23, 13, 0.07);
+  --soil-shadow-hover: 0 16px 40px rgba(50, 23, 13, 0.12);
   
   --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 22px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
   --radius-full: 9999px;
   
-  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.25);
-  --shadow-lg: 0 16px 40px -8px rgba(0, 0, 0, 0.5);
-  --shadow-glow: 0 0 35px -5px rgba(124, 58, 237, 0.35);
-  
-  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 * {
@@ -43,63 +50,45 @@
 
 html {
   scroll-behavior: smooth;
+  background-color: var(--bg-surface);
 }
 
 body {
-  font-family: var(--font-main);
-  background-color: var(--bg-primary);
+  font-family: var(--font-sans);
+  background-color: var(--bg-surface);
   color: var(--text-main);
   line-height: 1.6;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Background Atmosphere */
-.ambient-glow {
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100vw;
-  height: 600px;
-  background: var(--gradient-glow);
-  pointer-events: none;
-  z-index: 0;
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  color: var(--primary);
+  line-height: 1.25;
 }
 
-.ambient-grid {
-  position: fixed;
-  inset: 0;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 40px 40px;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* Container */
 .container {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem;
-  position: relative;
-  z-index: 1;
 }
 
-/* Typography Helpers */
-h1, h2, h3, h4 {
-  font-family: var(--font-heading);
-  color: #ffffff;
-  line-height: 1.2;
+/* Organic Soil Shadows */
+.soil-card {
+  background: var(--bg-container-lowest);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--soil-shadow);
+  transition: var(--transition-smooth);
 }
 
-.gradient-text {
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  display: inline-block;
+.soil-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--soil-shadow-hover);
+  border-color: var(--primary-container);
 }
 
 /* Button System */
@@ -107,76 +96,120 @@ h1, h2, h3, h4 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  font-family: var(--font-main);
+  gap: 0.6rem;
+  font-family: var(--font-sans);
   font-size: 0.95rem;
   font-weight: 600;
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--radius-full);
-  border: 1px solid transparent;
+  padding: 0.75rem 1.6rem;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid transparent;
   cursor: pointer;
   text-decoration: none;
   transition: var(--transition-smooth);
 }
 
 .btn-primary {
-  background: var(--gradient-primary);
-  color: #ffffff;
-  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+  background-color: var(--secondary);
+  color: var(--on-secondary);
+  box-shadow: 0 4px 14px rgba(45, 90, 39, 0.25);
 }
 
 .btn-primary:hover {
+  background-color: var(--secondary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(124, 58, 237, 0.6);
+  box-shadow: 0 6px 20px rgba(45, 90, 39, 0.35);
 }
 
-.btn-secondary {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text-main);
-  border: 1px solid var(--border-color);
-  backdrop-filter: blur(10px);
+.btn-outline {
+  background-color: transparent;
+  border-color: var(--primary-container);
+  color: var(--primary-container);
 }
 
-.btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
+.btn-outline:hover {
+  background-color: var(--primary-container);
+  color: var(--on-primary);
   transform: translateY(-2px);
 }
 
-/* Glassmorphism Card */
-.glass-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  backdrop-filter: blur(16px);
+.btn-whatsapp {
+  background-color: #25D366;
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+}
+
+.btn-whatsapp:hover {
+  background-color: #20ba5a;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(37, 211, 102, 0.4);
+}
+
+/* Badges */
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.badge-green {
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
+}
+
+.badge-cream {
+  background: var(--bg-container-high);
+  color: var(--primary);
+  border: 1px solid var(--outline-variant);
+}
+
+.badge-orange {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+/* Subtle pattern overlay */
+.palm-pattern-bg {
+  background-image: radial-gradient(circle at 1px 1px, rgba(75, 44, 32, 0.04) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Floating WhatsApp Quick Action Button */
+.floating-whatsapp {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background-color: #25D366;
+  color: #ffffff;
+  padding: 0.85rem 1.4rem;
+  border-radius: var(--radius-full);
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
   transition: var(--transition-smooth);
 }
 
-.glass-card:hover {
-  background: var(--bg-card-hover);
-  border-color: var(--border-highlight);
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-glow);
+.floating-whatsapp:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.55);
 }
 
-/* Badge */
-.pill-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.35rem 1rem;
-  background: rgba(124, 58, 237, 0.12);
-  border: 1px solid rgba(124, 58, 237, 0.3);
-  border-radius: var(--radius-full);
-  color: var(--primary-light);
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
-
-/* Responsive adjustments */
 @media (max-width: 768px) {
-  .container {
-    padding: 0 1.25rem;
+  .floating-whatsapp {
+    bottom: 5.5rem;
+    right: 1.25rem;
+    padding: 0.75rem 1.1rem;
+    font-size: 0.88rem;
   }
 }
