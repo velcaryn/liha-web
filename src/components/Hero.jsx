@@ -1,107 +1,54 @@
 import React from 'react';
-import { MessageCircle, ArrowRight, Sparkles, ShieldCheck, Leaf } from 'lucide-react';
+import { MessageCircle, ArrowRight, ShieldCheck, Leaf, Sparkles } from 'lucide-react';
 
 export default function Hero() {
   return (
-    <section style={{
-      position: 'relative',
-      paddingTop: '8.5rem',
-      paddingBottom: '4rem',
-      overflow: 'hidden',
-      background: 'linear-gradient(180deg, #fff8f6 0%, #fff1ec 100%)'
-    }} className="palm-pattern-bg">
+    <section className="palm-pattern-bg hero-section">
       <div className="container">
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '3.5rem',
-          alignItems: 'center'
-        }}>
+        <div className="hero-grid">
           {/* Left Text Column */}
-          <div>
-            {/* Pill Badge */}
-            <div style={{ display: 'inline-flex', marginBottom: '1.25rem' }}>
+          <div className="hero-text">
+            <div style={{ display: 'inline-flex', marginBottom: '1rem' }}>
               <span className="badge-pill badge-green">
                 <Leaf size={14} aria-hidden="true" />
-                100% Pure, Unrefined & Artisanal
+                100% Pure & Artisanal
               </span>
             </div>
 
-            {/* Headline */}
-            <h1 style={{
-              fontSize: 'clamp(2.4rem, 5vw, 3.8rem)',
-              fontWeight: 700,
-              lineHeight: 1.15,
-              marginBottom: '1rem',
-              color: 'var(--primary)'
-            }}>
+            <h1 className="hero-headline">
               Traditional Palm Jaggery, Reimagined for Wellness
             </h1>
 
-            {/* Tamil Subtitle */}
-            <div style={{
-              fontSize: '1.2rem',
-              fontWeight: 600,
-              color: 'var(--secondary)',
-              marginBottom: '1.25rem',
-              letterSpacing: '0.01em'
-            }}>
+            <div className="hero-tamil">
               உண்மையான பாரம்பரிய பனை கருப்பட்டி & பனங்கற்கண்டு
             </div>
 
-            {/* Paragraph Description */}
-            <p style={{
-              fontSize: 'clamp(1.05rem, 2vw, 1.2rem)',
-              color: 'var(--text-variant)',
-              lineHeight: 1.7,
-              marginBottom: '2.25rem',
-              maxWidth: '560px'
-            }}>
-              Handcrafted in small batches from fresh Palmyra palm nectar. Zero artificial colors, zero preservatives, and naturally rich in essential minerals like iron, calcium, and potassium.
+            <p className="hero-desc">
+              Handcrafted in small batches from fresh Palmyra palm nectar. Zero artificial colors, zero preservatives, and naturally rich in iron, calcium, and potassium.
             </p>
 
-            {/* Action Buttons */}
-            <div style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: '1rem',
-              alignItems: 'center'
-            }}>
+            <div className="hero-actions">
               <a
                 href="https://wa.me/919597959549?text=Hi%2C%20I%20would%20like%20to%20order%20Karuppati%20from%20Liha"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-whatsapp"
-                style={{ padding: '0.9rem 1.8rem', fontSize: '1.05rem' }}
+                className="btn btn-whatsapp hero-btn"
               >
                 <MessageCircle size={20} aria-hidden="true" />
                 <span>Order via WhatsApp</span>
               </a>
-
-              <a
-                href="#products"
-                className="btn btn-outline"
-                style={{ padding: '0.9rem 1.8rem', fontSize: '1.05rem' }}
-              >
+              <a href="#products" className="btn btn-outline hero-btn">
                 <span>View Products</span>
                 <ArrowRight size={18} aria-hidden="true" />
               </a>
             </div>
 
-            {/* Trust Mini Strip */}
-            <div style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: '1.5rem',
-              marginTop: '2.5rem',
-              paddingTop: '1.5rem',
-              borderTop: '1px solid var(--outline-variant)'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem', color: 'var(--text-variant)', fontWeight: 600 }}>
+            <div className="hero-trust-strip">
+              <div className="hero-trust-item">
                 <ShieldCheck size={18} color="var(--secondary)" aria-hidden="true" />
                 <span>Direct Farm Sourced</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem', color: 'var(--text-variant)', fontWeight: 600 }}>
+              <div className="hero-trust-item">
                 <Sparkles size={18} color="var(--secondary)" aria-hidden="true" />
                 <span>Wood-Fired Processing</span>
               </div>
@@ -109,78 +56,175 @@ export default function Hero() {
           </div>
 
           {/* Right Visual Column */}
-          <div style={{ position: 'relative' }}>
-            <div style={{
-              position: 'relative',
-              borderRadius: 'var(--radius-xl)',
-              overflow: 'hidden',
-              boxShadow: 'var(--soil-shadow-hover)',
-              border: '4px solid var(--bg-container-lowest)',
-              background: 'var(--bg-container-high)'
-            }}>
+          <div className="hero-visual">
+            <div className="hero-image-card">
               <img
                 src="/images/palm-illustration.png"
                 alt="Palmyra Palm Trees Heritage"
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                  maxHeight: '480px',
-                  objectFit: 'cover',
-                  display: 'block'
-                }}
+                className="hero-image"
+                loading="eager"
               />
-              <div style={{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                right: 0,
-                padding: '1.5rem',
-                background: 'linear-gradient(to top, rgba(50, 23, 13, 0.85) 0%, transparent 100%)',
-                color: '#ffffff'
-              }}>
-                <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 600 }}>
-                  Native Palmyra Palm Groves
-                </div>
-                <div style={{ fontSize: '0.85rem', color: '#ffd6cc', marginTop: '0.25rem' }}>
-                  Authentic heritage of Tamil Nadu palm artisans
-                </div>
+              <div className="hero-image-overlay">
+                <div className="hero-image-title">Native Palmyra Palm Groves</div>
+                <div className="hero-image-subtitle">Authentic heritage of Tamil Nadu palm artisans</div>
               </div>
             </div>
 
-            {/* Floating Highlight Card */}
-            <div style={{
-              position: 'absolute',
-              top: '-15px',
-              right: '-15px',
-              background: 'var(--bg-container-lowest)',
-              padding: '0.85rem 1.25rem',
-              borderRadius: 'var(--radius-md)',
-              boxShadow: 'var(--soil-shadow)',
-              border: '1px solid var(--outline-variant)',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.75rem'
-            }}>
-              <div style={{
-                width: '36px',
-                height: '36px',
-                borderRadius: '50%',
-                background: 'var(--secondary-container)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'var(--on-secondary-container)'
-              }}>
-                <Leaf size={20} aria-hidden="true" />
+            <div className="hero-float-card">
+              <div className="hero-float-icon">
+                <Leaf size={18} aria-hidden="true" />
               </div>
               <div>
                 <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--primary)' }}>Zero Additives</div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Pure Neera Reduction</div>
+                <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Pure Neera Reduction</div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <style>{`
+        .hero-section {
+          position: relative;
+          padding-top: 6.5rem;
+          padding-bottom: 2.5rem;
+          overflow: hidden;
+          background: linear-gradient(180deg, #fff8f6 0%, #fff1ec 100%);
+        }
+        .hero-grid {
+          display: flex;
+          flex-direction: column;
+          gap: 2.5rem;
+        }
+        .hero-headline {
+          font-size: clamp(1.9rem, 5.5vw, 3.8rem);
+          font-weight: 700;
+          line-height: 1.12;
+          margin-bottom: 0.75rem;
+          color: var(--primary);
+        }
+        .hero-tamil {
+          font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+          font-weight: 600;
+          color: var(--secondary);
+          margin-bottom: 1rem;
+          line-height: 1.5;
+        }
+        .hero-desc {
+          font-size: clamp(0.95rem, 2vw, 1.15rem);
+          color: var(--text-variant);
+          line-height: 1.7;
+          margin-bottom: 1.75rem;
+          max-width: 560px;
+        }
+        .hero-actions {
+          display: flex;
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+        .hero-btn {
+          width: 100%;
+          justify-content: center;
+        }
+        .hero-trust-strip {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 1.25rem;
+          margin-top: 2rem;
+          padding-top: 1.25rem;
+          border-top: 1px solid var(--outline-variant);
+        }
+        .hero-trust-item {
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+          font-size: 0.85rem;
+          color: var(--text-variant);
+          font-weight: 600;
+        }
+        .hero-visual { position: relative; }
+        .hero-image-card {
+          position: relative;
+          border-radius: var(--radius-lg);
+          overflow: hidden;
+          box-shadow: var(--soil-shadow);
+          border: 3px solid var(--bg-container-lowest);
+          background: var(--bg-container-high);
+        }
+        .hero-image {
+          width: 100%;
+          height: auto;
+          max-height: 320px;
+          object-fit: cover;
+        }
+        .hero-image-overlay {
+          position: absolute;
+          bottom: 0; left: 0; right: 0;
+          padding: 1.25rem;
+          background: linear-gradient(to top, rgba(50, 23, 13, 0.85) 0%, transparent 100%);
+          color: #ffffff;
+        }
+        .hero-image-title {
+          font-family: var(--font-serif);
+          font-size: 1.05rem;
+          font-weight: 600;
+        }
+        .hero-image-subtitle {
+          font-size: 0.78rem;
+          color: #ffd6cc;
+          margin-top: 0.15rem;
+        }
+        .hero-float-card {
+          position: absolute;
+          top: -10px; right: 8px;
+          background: var(--bg-container-lowest);
+          padding: 0.65rem 0.9rem;
+          border-radius: var(--radius-md);
+          box-shadow: var(--soil-shadow);
+          border: 1px solid var(--outline-variant);
+          display: flex;
+          align-items: center;
+          gap: 0.6rem;
+          z-index: 2;
+        }
+        .hero-float-icon {
+          width: 32px; height: 32px;
+          border-radius: 50%;
+          background: var(--secondary-container);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--on-secondary-container);
+          flex-shrink: 0;
+        }
+
+        @media (min-width: 768px) {
+          .hero-section {
+            padding-top: 8.5rem;
+            padding-bottom: 4rem;
+          }
+          .hero-grid {
+            flex-direction: row;
+            align-items: center;
+            gap: 3.5rem;
+          }
+          .hero-text { flex: 1.1; }
+          .hero-visual { flex: 0.9; }
+          .hero-actions {
+            flex-direction: row;
+            gap: 1rem;
+          }
+          .hero-btn {
+            width: auto;
+          }
+          .hero-image {
+            max-height: 460px;
+          }
+          .hero-image-card {
+            border-radius: var(--radius-xl);
+          }
+        }
+      `}</style>
     </section>
   );
 }

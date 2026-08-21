@@ -1,254 +1,234 @@
 import React from 'react';
-import { MessageCircle, Sparkles, Check, Heart, Shield } from 'lucide-react';
+import { MessageCircle, Check } from 'lucide-react';
+
+const products = [
+  {
+    name: 'Karuppati',
+    tamil: 'கருப்பட்டி',
+    subtitle: 'Pure Dark Palm Jaggery',
+    img: '/images/karuppati.png',
+    badge: { label: 'Traditional Heritage', className: 'badge-green' },
+    desc: 'Rich, dark brown solid blocks of traditional Indian palm sugar. Purely unrefined, free from sulfur and bleaching chemicals.',
+    tags: ['Natural Iron Booster', 'Low Glycemic Index', 'Authentic Taste'],
+    waLink: 'https://wa.me/919597959549?text=Hi%2C%20I%20would%20like%20to%20order%20Karuppati%20(Palm%20Jaggery)',
+    grid: 'product-card--wide'
+  },
+  {
+    name: 'Panam Karkandu',
+    tamil: 'பனங்கற்கண்டு',
+    subtitle: 'Palm Candy Crystals',
+    img: '/images/panam-karkandu.png',
+    badge: { label: 'Natural Crystals', className: 'badge-orange' },
+    desc: 'Translucent, crystalline palm sugar naturally formed through slow evaporation. Celebrated in Siddha wellness.',
+    tags: ['Soothes Throat', 'Natural Coolant'],
+    waLink: 'https://wa.me/919597959549?text=Hi%2C%20I%20would%20like%20to%20order%20Panam%20Karkandu%20(Palm%20Candy)',
+    grid: 'product-card--narrow'
+  },
+  {
+    name: 'Chukku Karuppati',
+    tamil: 'சுக்கு கருப்பட்டி',
+    subtitle: 'Dry Ginger Palm Jaggery',
+    img: '/images/chukku-karuppati.png',
+    badge: { label: 'Healthy', className: 'badge-green' },
+    desc: 'Traditional palm jaggery infused with the warming goodness of dry ginger and black pepper. A time-tested remedy for cold and cough.',
+    tags: ['Warming & Soothing', 'Cold & Cough Relief', 'Immunity Booster'],
+    waLink: 'https://wa.me/919597959549?text=Hi%2C%20I%20would%20like%20to%20order%20Chukku%20Karuppati%20(Dry%20Ginger%20Palm%20Jaggery)',
+    grid: 'product-card--narrow'
+  },
+  {
+    name: 'Vellai Karuppati',
+    tamil: 'வெள்ளை கருப்பட்டி',
+    subtitle: 'Artisanal White Palm Jaggery',
+    img: '/images/vellai-karuppati.png',
+    badge: { label: 'Rare & Delicate', className: 'badge-cream' },
+    desc: 'Creamish-white palm jaggery blocks with a lighter, sophisticated flavor perfect for traditional sweets, tea, and filter coffee.',
+    tags: ['Delicate Caramel Notes', 'Unbleached Purity', 'Perfect for Beverages'],
+    waLink: 'https://wa.me/919597959549?text=Hi%2C%20I%20would%20like%20to%20order%20Vellai%20Karuppati%20(White%20Palm%20Jaggery)',
+    grid: 'product-card--wide'
+  }
+];
 
 export default function Products() {
   return (
-    <section id="products" style={{
-      padding: '5rem 0',
-      background: 'var(--bg-surface)'
-    }}>
+    <section id="products" className="products-section">
       <div className="container">
-        {/* Section Heading */}
-        <div style={{ textAlign: 'center', maxWidth: '720px', margin: '0 auto 3.5rem auto' }}>
-          <span className="badge-pill badge-cream" style={{ marginBottom: '1rem' }}>
-            Artisanal Collection
-          </span>
-          <h2 style={{ fontSize: 'clamp(2.2rem, 4vw, 3rem)', marginBottom: '1rem' }}>
-            Our Pure Palm Offerings
-          </h2>
-          <p style={{ color: 'var(--text-variant)', fontSize: '1.1rem', lineHeight: 1.6 }}>
+        <div className="products-header">
+          <span className="badge-pill badge-cream">Artisanal Collection</span>
+          <h2 className="products-title">Our Pure Palm Offerings</h2>
+          <p className="products-subtitle">
             Harvested sustainably and crafted using time-tested methods to preserve vital nutrients and unmatched rich flavor.
           </p>
         </div>
 
-        {/* Bento Grid */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(12, 1fr)',
-          gap: '2rem'
-        }}>
-          {/* Product 1: Karuppati (Large Feature Card: 7 cols on desktop) */}
-          <div className="soil-card product-card-large" style={{
-            gridColumn: 'span 7',
-            display: 'flex',
-            flexDirection: 'column',
-            overflow: 'hidden',
-            background: 'var(--bg-container-lowest)'
-          }}>
-            <div style={{ position: 'relative', height: '280px', overflow: 'hidden', background: '#2e140a' }}>
-              <img
-                src="/images/karuppati.png"
-                alt="Karuppati Palm Jaggery"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  transition: 'transform 0.5s ease'
-                }}
-                className="hover-zoom"
-              />
-              <div style={{
-                position: 'absolute',
-                top: '1rem',
-                left: '1rem',
-                zIndex: 2
-              }}>
-                <span className="badge-pill badge-green">Traditional Heritage</span>
+        <div className="products-grid">
+          {products.map((p, idx) => (
+            <div key={idx} className={`soil-card product-card ${p.grid}`}>
+              <div className="product-img-wrap">
+                <img src={p.img} alt={`${p.name} (${p.tamil})`} className="product-img" loading="lazy" />
+                <div className="product-badge-pos">
+                  <span className={`badge-pill ${p.badge.className}`}>{p.badge.label}</span>
+                </div>
               </div>
-            </div>
 
-            <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'space-between' }}>
-              <div>
-                <h3 style={{ fontSize: '1.6rem', marginBottom: '0.25rem' }}>
-                  Karuppati <span style={{ fontSize: '1.15rem', color: 'var(--secondary)', fontWeight: 600 }}>(கருப்பட்டி)</span>
+              <div className="product-body">
+                <h3 className="product-name">
+                  {p.name} <span className="product-tamil">({p.tamil})</span>
                 </h3>
-                <div style={{ fontSize: '0.95rem', color: 'var(--text-muted)', marginBottom: '1rem', fontWeight: 600 }}>
-                  Pure Dark Palm Jaggery
+                <div className="product-subtitle">{p.subtitle}</div>
+                <p className="product-desc">{p.desc}</p>
+
+                <div className="product-tags">
+                  {p.tags.map((tag, i) => (
+                    <span key={i} className="product-tag">
+                      <Check size={13} color="var(--secondary)" aria-hidden="true" />
+                      {tag}
+                    </span>
+                  ))}
                 </div>
-                <p style={{ color: 'var(--text-variant)', fontSize: '0.98rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
-                  Rich, dark brown solid blocks of traditional Indian palm sugar. Purely unrefined, free from sulfur and bleaching chemicals, and packed with bio-available iron and essential minerals.
-                </p>
 
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', marginBottom: '2rem' }}>
-                  <span style={tagStyle}><Check size={14} color="var(--secondary)" /> Natural Iron Booster</span>
-                  <span style={tagStyle}><Check size={14} color="var(--secondary)" /> Low Glycemic Index</span>
-                  <span style={tagStyle}><Check size={14} color="var(--secondary)" /> Authentic Taste</span>
-                </div>
-              </div>
-
-              <a
-                href="https://wa.me/919597959549?text=Hi%2C%20I%20would%20like%20to%20order%20Karuppati%20(Palm%20Jaggery)"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-whatsapp"
-                style={{ width: '100%', justifyContent: 'center' }}
-              >
-                <MessageCircle size={18} aria-hidden="true" />
-                <span>Order Karuppati via WhatsApp</span>
-              </a>
-            </div>
-          </div>
-
-          {/* Product 2: Panam Karkandu (5 cols on desktop) */}
-          <div className="soil-card product-card-medium" style={{
-            gridColumn: 'span 5',
-            display: 'flex',
-            flexDirection: 'column',
-            overflow: 'hidden',
-            background: 'var(--bg-container-lowest)'
-          }}>
-            <div style={{ position: 'relative', height: '240px', overflow: 'hidden', background: '#3b2f2f' }}>
-              <img
-                src="/images/panam-karkandu.png"
-                alt="Panam Karkandu Palm Candy"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  transition: 'transform 0.5s ease'
-                }}
-                className="hover-zoom"
-              />
-              <div style={{
-                position: 'absolute',
-                top: '1rem',
-                left: '1rem',
-                zIndex: 2
-              }}>
-                <span className="badge-pill badge-orange">Natural Crystals</span>
-              </div>
-            </div>
-
-            <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'space-between' }}>
-              <div>
-                <h3 style={{ fontSize: '1.5rem', marginBottom: '0.25rem' }}>
-                  Panam Karkandu <span style={{ fontSize: '1.1rem', color: 'var(--secondary)', fontWeight: 600 }}>(பனங்கற்கண்டு)</span>
-                </h3>
-                <div style={{ fontSize: '0.95rem', color: 'var(--text-muted)', marginBottom: '1rem', fontWeight: 600 }}>
-                  Palm Candy Crystals
-                </div>
-                <p style={{ color: 'var(--text-variant)', fontSize: '0.95rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
-                  Translucent, crystalline palm sugar naturally formed through slow evaporation. Widely celebrated in traditional Siddha wellness for throat comfort and refreshing natural sweetness.
-                </p>
-
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', marginBottom: '2rem' }}>
-                  <span style={tagStyle}><Check size={14} color="var(--secondary)" /> Soothes Throat</span>
-                  <span style={tagStyle}><Check size={14} color="var(--secondary)" /> Natural Coolant</span>
-                </div>
-              </div>
-
-              <a
-                href="https://wa.me/919597959549?text=Hi%2C%20I%20would%20like%20to%20order%20Panam%20Karkandu%20(Palm%20Candy)"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-whatsapp"
-                style={{ width: '100%', justifyContent: 'center' }}
-              >
-                <MessageCircle size={18} aria-hidden="true" />
-                <span>Order Panam Karkandu</span>
-              </a>
-            </div>
-          </div>
-
-          {/* Product 3: Vellai Karuppati (Full width 12 cols on desktop) */}
-          <div className="soil-card product-card-full" style={{
-            gridColumn: 'span 12',
-            display: 'flex',
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            overflow: 'hidden',
-            background: 'var(--bg-container-lowest)'
-          }}>
-            <div style={{
-              flex: '1 1 360px',
-              minHeight: '260px',
-              position: 'relative',
-              overflow: 'hidden',
-              background: '#4a382e'
-            }}>
-              <img
-                src="/images/vellai-karuppati.png"
-                alt="Vellai Karuppati White Palm Jaggery"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  transition: 'transform 0.5s ease'
-                }}
-                className="hover-zoom"
-              />
-              <div style={{
-                position: 'absolute',
-                top: '1rem',
-                left: '1rem',
-                zIndex: 2
-              }}>
-                <span className="badge-pill badge-cream">Rare & Delicate</span>
-              </div>
-            </div>
-
-            <div style={{
-              flex: '1 1 420px',
-              padding: '2.5rem',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center'
-            }}>
-              <h3 style={{ fontSize: '1.8rem', marginBottom: '0.35rem' }}>
-                Vellai Karuppati <span style={{ fontSize: '1.25rem', color: 'var(--secondary)', fontWeight: 600 }}>(வெள்ளை கருப்பட்டி)</span>
-              </h3>
-              <div style={{ fontSize: '1rem', color: 'var(--text-muted)', marginBottom: '1.25rem', fontWeight: 600 }}>
-                Artisanal White Palm Jaggery
-              </div>
-              <p style={{ color: 'var(--text-variant)', fontSize: '1.02rem', lineHeight: 1.7, marginBottom: '1.75rem', maxWidth: '640px' }}>
-                Delicate, creamish-white palm jaggery blocks processed with master craftsmanship. Provides a lighter, sophisticated flavor profile that pairs beautifully with traditional sweets, artisanal baking, tea, and filter coffee.
-              </p>
-
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.85rem', marginBottom: '2rem' }}>
-                <span style={tagStyle}><Check size={14} color="var(--secondary)" /> Delicate Caramel Notes</span>
-                <span style={tagStyle}><Check size={14} color="var(--secondary)" /> Unbleached Purity</span>
-                <span style={tagStyle}><Check size={14} color="var(--secondary)" /> Perfect for Beverages</span>
-              </div>
-
-              <div style={{ alignSelf: 'flex-start' }}>
                 <a
-                  href="https://wa.me/919597959549?text=Hi%2C%20I%20would%20like%20to%20order%20Vellai%20Karuppati%20(White%20Palm%20Jaggery)"
+                  href={p.waLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-whatsapp"
-                  style={{ padding: '0.85rem 1.8rem' }}
+                  className="btn btn-whatsapp product-order-btn"
                 >
                   <MessageCircle size={18} aria-hidden="true" />
-                  <span>Order Vellai Karuppati via WhatsApp</span>
+                  <span>Order {p.name}</span>
                 </a>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
 
       <style>{`
-        .hover-zoom:hover {
-          transform: scale(1.04);
+        .products-section {
+          padding: 3.5rem 0;
+          background: var(--bg-surface);
         }
-        @media (max-width: 900px) {
-          .product-card-large { grid-column: span 12 !important; }
-          .product-card-medium { grid-column: span 12 !important; }
-          .product-card-full { flex-direction: column !important; }
+        .products-header {
+          text-align: center;
+          max-width: 700px;
+          margin: 0 auto 2.5rem;
+        }
+        .products-title {
+          font-size: clamp(1.8rem, 4vw, 2.8rem);
+          margin-top: 0.75rem;
+          margin-bottom: 0.75rem;
+        }
+        .products-subtitle {
+          color: var(--text-variant);
+          font-size: clamp(0.95rem, 2vw, 1.1rem);
+          line-height: 1.6;
+        }
+
+        /* Mobile: stacked cards */
+        .products-grid {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+        .product-card {
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
+          background: var(--bg-container-lowest);
+        }
+        .product-img-wrap {
+          position: relative;
+          height: 200px;
+          overflow: hidden;
+        }
+        .product-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.4s ease;
+        }
+        .product-badge-pos {
+          position: absolute;
+          top: 0.75rem;
+          left: 0.75rem;
+          z-index: 2;
+        }
+        .product-body {
+          padding: 1.5rem;
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+        }
+        .product-name {
+          font-size: 1.3rem;
+          margin-bottom: 0.15rem;
+          line-height: 1.2;
+        }
+        .product-tamil {
+          font-size: 0.9rem;
+          color: var(--secondary);
+          font-weight: 600;
+        }
+        .product-subtitle {
+          font-size: 0.88rem;
+          color: var(--text-muted);
+          font-weight: 600;
+          margin-bottom: 0.75rem;
+        }
+        .product-desc {
+          color: var(--text-variant);
+          font-size: 0.92rem;
+          line-height: 1.6;
+          margin-bottom: 1rem;
+        }
+        .product-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+          margin-bottom: 1.25rem;
+        }
+        .product-tag {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.3rem;
+          padding: 0.3rem 0.6rem;
+          background: var(--bg-container-low);
+          border-radius: var(--radius-sm);
+          font-size: 0.78rem;
+          font-weight: 600;
+          color: var(--primary);
+        }
+        .product-order-btn {
+          width: 100%;
+          justify-content: center;
+          margin-top: auto;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+          .product-card:hover .product-img {
+            transform: scale(1.04);
+          }
+        }
+
+        /* Tablet & desktop: 2x2 bento grid
+           Row 1: Karuppati (7) + Panam Karkandu (5)
+           Row 2: Chukku Karuppati (5) + Vellai Karuppati (7) */
+        @media (min-width: 768px) {
+          .products-section { padding: 5rem 0; }
+          .products-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 2rem;
+          }
+          .product-card--wide {
+            grid-column: span 7;
+          }
+          .product-card--narrow {
+            grid-column: span 5;
+          }
+          .product-img-wrap { height: 260px; }
+          .product-body { padding: 2rem; }
+          .product-name { font-size: 1.5rem; }
         }
       `}</style>
     </section>
   );
 }
-
-const tagStyle = {
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: '0.4rem',
-  padding: '0.35rem 0.75rem',
-  background: 'var(--bg-container-low)',
-  borderRadius: 'var(--radius-sm)',
-  fontSize: '0.85rem',
-  fontWeight: 600,
-  color: 'var(--primary)'
-};

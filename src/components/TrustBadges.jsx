@@ -1,102 +1,90 @@
 import React from 'react';
 
 const badges = [
-  {
-    icon: '/images/no-artificial-colors.png',
-    title: 'No Artificial Colors',
-    desc: 'Pure, natural deep amber tone from slow reduction'
-  },
-  {
-    icon: '/images/zero-preservatives.png',
-    title: 'Zero Preservatives',
-    desc: 'Free of chemical additives, sulphur, or bleaching agents'
-  },
-  {
-    icon: '/images/locally-sourced.png',
-    title: 'Locally Sourced',
-    desc: 'Directly sourced from indigenous Tamil Nadu palmyra groves'
-  },
-  {
-    icon: '/images/hygienically-packed.png',
-    title: 'Hygienically Packed',
-    desc: 'Processed in clean food-grade facilities'
-  }
+  { icon: '/images/no-artificial-colors.png', title: 'No Artificial Colors' },
+  { icon: '/images/zero-preservatives.png', title: 'Zero Preservatives' },
+  { icon: '/images/locally-sourced.png', title: 'Locally Sourced' },
+  { icon: '/images/hygienically-packed.png', title: 'Hygienically Packed' }
 ];
 
 export default function TrustBadges() {
   return (
-    <section style={{
-      padding: '3rem 0',
-      background: 'var(--bg-surface)',
-      position: 'relative',
-      zIndex: 20
-    }}>
+    <section className="trust-section">
       <div className="container">
-        <div style={{
-          background: 'var(--bg-container-lowest)',
-          borderRadius: 'var(--radius-xl)',
-          padding: '2.5rem 1.5rem',
-          border: '1px solid var(--outline-variant)',
-          boxShadow: 'var(--soil-shadow)',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-          gap: '2rem',
-          alignItems: 'start'
-        }}>
+        <div className="trust-strip">
           {badges.map((item, idx) => (
-            <div
-              key={idx}
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textAlign: 'center',
-                gap: '0.75rem',
-                padding: '0.5rem'
-              }}
-            >
-              <div style={{
-                width: '72px',
-                height: '72px',
-                borderRadius: '50%',
-                background: 'var(--bg-container-high)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '0.85rem',
-                boxShadow: 'inset 0 2px 6px rgba(50, 23, 13, 0.06)'
-              }}>
-                <img
-                  src={item.icon}
-                  alt={item.title}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'contain'
-                  }}
-                />
+            <div key={idx} className="trust-item">
+              <div className="trust-icon-wrap">
+                <img src={item.icon} alt={item.title} className="trust-icon-img" />
               </div>
-              <h4 style={{
-                fontFamily: 'var(--font-sans)',
-                fontSize: '1rem',
-                fontWeight: 700,
-                color: 'var(--primary)',
-                lineHeight: 1.3
-              }}>
-                {item.title}
-              </h4>
-              <p style={{
-                fontSize: '0.85rem',
-                color: 'var(--text-muted)',
-                lineHeight: 1.5,
-                maxWidth: '220px'
-              }}>
-                {item.desc}
-              </p>
+              <span className="trust-label">{item.title}</span>
             </div>
           ))}
         </div>
       </div>
+
+      <style>{`
+        .trust-section {
+          padding: 1.5rem 0 2rem;
+          background: var(--bg-surface);
+          position: relative;
+          z-index: 20;
+        }
+        .trust-strip {
+          background: var(--bg-container-lowest);
+          border-radius: var(--radius-lg);
+          padding: 1.25rem;
+          border: 1px solid var(--outline-variant);
+          box-shadow: var(--soil-shadow-sm);
+          display: flex;
+          justify-content: space-around;
+          gap: 0.5rem;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+        }
+        .trust-strip::-webkit-scrollbar { display: none; }
+        .trust-item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          gap: 0.5rem;
+          min-width: 72px;
+          flex-shrink: 0;
+        }
+        .trust-icon-wrap {
+          width: 52px; height: 52px;
+          border-radius: 50%;
+          background: var(--bg-container-high);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0.6rem;
+        }
+        .trust-icon-img {
+          width: 100%; height: 100%;
+          object-fit: contain;
+        }
+        .trust-label {
+          font-size: 0.72rem;
+          font-weight: 700;
+          color: var(--primary);
+          line-height: 1.2;
+          max-width: 80px;
+        }
+
+        @media (min-width: 768px) {
+          .trust-section { padding: 2.5rem 0; }
+          .trust-strip {
+            padding: 2rem 2rem;
+            border-radius: var(--radius-xl);
+          }
+          .trust-icon-wrap { width: 68px; height: 68px; padding: 0.75rem; }
+          .trust-label { font-size: 0.88rem; max-width: 140px; }
+          .trust-item { min-width: auto; gap: 0.75rem; }
+        }
+      `}</style>
     </section>
   );
 }

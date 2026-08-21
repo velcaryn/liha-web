@@ -1,9 +1,9 @@
 import React from 'react';
-import { Phone, MessageCircle, Heart } from 'lucide-react';
+import { Phone, MessageCircle } from 'lucide-react';
 
-function InstagramIcon({ size = 18, color = 'currentColor' }) {
+function InstagramIcon({ size = 18 }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
       <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
       <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
@@ -13,126 +13,137 @@ function InstagramIcon({ size = 18, color = 'currentColor' }) {
 
 export default function Footer() {
   return (
-    <footer style={{
-      background: 'var(--primary)',
-      color: 'var(--on-primary)',
-      padding: '4.5rem 0 6rem 0',
-      borderTop: '2px solid var(--primary-container)'
-    }}>
+    <footer className="liha-footer">
       <div className="container">
-        <div style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'space-between',
-          alignItems: 'flex-start',
-          gap: '3rem',
-          paddingBottom: '3rem',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.12)'
-        }}>
-          {/* Brand Info */}
-          <div style={{ maxWidth: '360px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-              <img
-                src="/images/logo.png"
-                alt="Liha's Karuppati"
-                style={{
-                  width: '40px',
-                  height: '40px',
-                  borderRadius: '50%',
-                  objectFit: 'cover',
-                  border: '2px solid rgba(255, 255, 255, 0.4)'
-                }}
-              />
-              <span style={{
-                fontFamily: 'var(--font-serif)',
-                fontSize: '1.4rem',
-                fontWeight: 700,
-                color: '#ffffff'
-              }}>
-                Liha's Karuppati
-              </span>
+        <div className="footer-top">
+          <div className="footer-brand">
+            <div className="footer-brand-row">
+              <img src="/images/logo.png" alt="Liha's Karuppati" className="footer-logo" width="36" height="36" />
+              <span className="footer-brand-name">Liha's Karuppati</span>
             </div>
-            <p style={{ color: 'var(--on-primary-container)', fontSize: '0.95rem', lineHeight: 1.6 }}>
-              Preserving traditional Palmyra craftsmanship. Bringing the authentic, mineral-rich sweetness of Tamil Nadu directly to your family.
+            <p className="footer-desc">
+              Preserving traditional Palmyra craftsmanship. Bringing authentic, mineral-rich sweetness of Tamil Nadu to your family.
             </p>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 style={{ fontSize: '1rem', fontFamily: 'var(--font-sans)', fontWeight: 700, color: '#ffffff', marginBottom: '1rem' }}>
-              Quick Links
-            </h4>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', fontSize: '0.9rem' }}>
-              <a href="#products" style={footerLinkStyle}>Our Pure Products</a>
-              <a href="#benefits" style={footerLinkStyle}>Health & Nutrition</a>
-              <a href="#heritage" style={footerLinkStyle}>Artisanal Process</a>
-              <a href="#contact" style={footerLinkStyle}>Order & Enquiries</a>
-            </div>
+          <div className="footer-links">
+            <h4 className="footer-section-title">Quick Links</h4>
+            <a href="#products">Our Products</a>
+            <a href="#benefits">Health & Nutrition</a>
+            <a href="#heritage">Artisanal Process</a>
+            <a href="#contact">Order & Enquiries</a>
           </div>
 
-          {/* Social & Contact */}
-          <div>
-            <h4 style={{ fontSize: '1rem', fontFamily: 'var(--font-sans)', fontWeight: 700, color: '#ffffff', marginBottom: '1rem' }}>
-              Connect with Us
-            </h4>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              <a
-                href="https://www.instagram.com/lihas_karupatti/"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ ...footerLinkStyle, display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}
-              >
-                <InstagramIcon size={18} />
-                <span>@lihas_karupatti</span>
-              </a>
-
-              <a
-                href="https://wa.me/919597959549"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ ...footerLinkStyle, display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}
-              >
-                <MessageCircle size={18} aria-hidden="true" />
-                <span>+91 95979 59549 (WhatsApp)</span>
-              </a>
-
-              <a
-                href="tel:+919597959549"
-                style={{ ...footerLinkStyle, display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}
-              >
-                <Phone size={18} aria-hidden="true" />
-                <span>+91 95979 59549 (Call)</span>
-              </a>
-            </div>
+          <div className="footer-links">
+            <h4 className="footer-section-title">Connect</h4>
+            <a href="https://www.instagram.com/lihas_karupatti/" target="_blank" rel="noopener noreferrer">
+              <InstagramIcon size={16} /> @lihas_karupatti
+            </a>
+            <a href="https://wa.me/919597959549" target="_blank" rel="noopener noreferrer">
+              <MessageCircle size={16} aria-hidden="true" /> WhatsApp
+            </a>
+            <a href="tel:+919597959549">
+              <Phone size={16} aria-hidden="true" /> +91 95979 59549
+            </a>
           </div>
         </div>
 
-        {/* Copyright */}
-        <div style={{
-          paddingTop: '2rem',
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          gap: '1rem',
-          fontSize: '0.85rem',
-          color: 'var(--on-primary-container)'
-        }}>
-          <div>
-            &copy; {new Date().getFullYear()} Liha's Karuppati. All rights reserved.
-          </div>
-          <div>
-            Handcrafted with pride in Tamil Nadu, India.
-          </div>
+        <div className="footer-bottom">
+          <span>&copy; {new Date().getFullYear()} Liha's Karuppati. All rights reserved.</span>
+          <span>Handcrafted with pride in Tamil Nadu.</span>
         </div>
       </div>
+
+      <style>{`
+        .liha-footer {
+          background: var(--primary);
+          color: var(--on-primary);
+          padding: 3rem 0;
+          padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
+          border-top: 2px solid var(--primary-container);
+        }
+        .footer-top {
+          display: flex;
+          flex-direction: column;
+          gap: 2rem;
+          padding-bottom: 2rem;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .footer-brand-row {
+          display: flex;
+          align-items: center;
+          gap: 0.65rem;
+          margin-bottom: 0.75rem;
+        }
+        .footer-logo {
+          width: 36px; height: 36px;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        .footer-brand-name {
+          font-family: var(--font-serif);
+          font-size: 1.25rem;
+          font-weight: 700;
+          color: #ffffff;
+        }
+        .footer-desc {
+          color: var(--on-primary-container);
+          font-size: 0.88rem;
+          line-height: 1.6;
+          max-width: 340px;
+        }
+        .footer-links {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+        .footer-section-title {
+          font-size: 0.88rem;
+          font-family: var(--font-sans);
+          font-weight: 700;
+          color: #ffffff;
+          margin-bottom: 0.25rem;
+        }
+        .footer-links a {
+          color: var(--on-primary-container);
+          text-decoration: none;
+          font-size: 0.88rem;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.4rem;
+          padding: 0.3rem 0;
+          transition: color 0.2s;
+          touch-action: manipulation;
+          min-height: 40px;
+        }
+        .footer-links a:active { color: #ffffff; }
+        .footer-bottom {
+          padding-top: 1.5rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0.35rem;
+          font-size: 0.78rem;
+          color: var(--on-primary-container);
+          opacity: 0.8;
+        }
+
+        @media (min-width: 768px) {
+          .liha-footer {
+            padding: 4rem 0 2.5rem;
+          }
+          .footer-top {
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 3rem;
+          }
+          .footer-brand { max-width: 360px; }
+          .footer-bottom {
+            flex-direction: row;
+            justify-content: space-between;
+          }
+        }
+      `}</style>
     </footer>
   );
 }
-
-const footerLinkStyle = {
-  color: 'var(--on-primary-container)',
-  textDecoration: 'none',
-  transition: 'color 0.2s ease',
-  cursor: 'pointer'
-};

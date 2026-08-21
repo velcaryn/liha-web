@@ -1,56 +1,61 @@
 :root {
   --font-serif: 'Literata', Georgia, serif;
   --font-sans: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  
+
   --bg-surface: #fff8f6;
   --bg-container-lowest: #ffffff;
   --bg-container-low: #fff1ec;
   --bg-container: #fceae5;
   --bg-container-high: #f6e4df;
   --bg-container-highest: #f1dfda;
-  
+
   --primary: #32170d;
   --primary-container: #4b2c20;
   --on-primary: #ffffff;
   --on-primary-container: #bf9282;
-  
+
   --secondary: #2d5a27;
   --secondary-hover: #23471e;
   --secondary-container: #b9eeab;
   --on-secondary: #ffffff;
   --on-secondary-container: #1b4017;
-  
+
   --accent-orange: #d97706;
   --accent-gold: #b45309;
-  
+
   --text-main: #231a17;
   --text-variant: #504440;
   --text-muted: #83746f;
   --outline: #83746f;
   --outline-variant: #d5c3bd;
-  
+
   --soil-shadow-sm: 0 4px 12px rgba(50, 23, 13, 0.05);
   --soil-shadow: 0 10px 30px rgba(50, 23, 13, 0.07);
   --soil-shadow-hover: 0 16px 40px rgba(50, 23, 13, 0.12);
-  
+
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 24px;
   --radius-full: 9999px;
-  
+
   --transition-smooth: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Safe area for notch devices */
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
   scroll-behavior: smooth;
   background-color: var(--bg-surface);
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -60,6 +65,7 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Typography */
@@ -69,43 +75,72 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.25;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Container - mobile-first padding */
 .container {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 1rem;
 }
 
-/* Organic Soil Shadows */
+@media (min-width: 768px) {
+  .container { padding: 0 1.5rem; }
+}
+
+@media (min-width: 1024px) {
+  .container { padding: 0 2rem; }
+}
+
+/* ---------- Soil Cards ---------- */
 .soil-card {
   background: var(--bg-container-lowest);
   border: 1px solid var(--outline-variant);
   border-radius: var(--radius-lg);
-  box-shadow: var(--soil-shadow);
+  box-shadow: var(--soil-shadow-sm);
   transition: var(--transition-smooth);
 }
 
-.soil-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--soil-shadow-hover);
-  border-color: var(--primary-container);
+/* Hover lift only for pointer-capable devices */
+@media (hover: hover) and (pointer: fine) {
+  .soil-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--soil-shadow-hover);
+    border-color: var(--primary-container);
+  }
 }
 
-/* Button System */
+/* Touch - active press feedback */
+@media (hover: none) {
+  .soil-card:active {
+    transform: scale(0.985);
+    box-shadow: var(--soil-shadow);
+  }
+}
+
+/* ---------- Button System ---------- */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
   font-family: var(--font-sans);
   font-size: 0.95rem;
   font-weight: 600;
-  padding: 0.75rem 1.6rem;
+  padding: 0.85rem 1.5rem;
+  min-height: 48px; /* Apple HIG touch target */
   border-radius: var(--radius-sm);
   border: 1.5px solid transparent;
   cursor: pointer;
   text-decoration: none;
   transition: var(--transition-smooth);
+  touch-action: manipulation;
+  user-select: none;
 }
 
 .btn-primary {
@@ -114,10 +149,16 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 4px 14px rgba(45, 90, 39, 0.25);
 }
 
-.btn-primary:hover {
-  background-color: var(--secondary-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(45, 90, 39, 0.35);
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover {
+    background-color: var(--secondary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(45, 90, 39, 0.35);
+  }
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
 }
 
 .btn-outline {
@@ -126,10 +167,18 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--primary-container);
 }
 
-.btn-outline:hover {
+@media (hover: hover) and (pointer: fine) {
+  .btn-outline:hover {
+    background-color: var(--primary-container);
+    color: var(--on-primary);
+    transform: translateY(-2px);
+  }
+}
+
+.btn-outline:active {
   background-color: var(--primary-container);
   color: var(--on-primary);
-  transform: translateY(-2px);
+  transform: scale(0.97);
 }
 
 .btn-whatsapp {
@@ -139,22 +188,30 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
 }
 
-.btn-whatsapp:hover {
-  background-color: #20ba5a;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(37, 211, 102, 0.4);
+@media (hover: hover) and (pointer: fine) {
+  .btn-whatsapp:hover {
+    background-color: #20ba5a;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(37, 211, 102, 0.4);
+  }
 }
 
-/* Badges */
+.btn-whatsapp:active {
+  background-color: #1ca34f;
+  transform: scale(0.97);
+}
+
+/* ---------- Badges ---------- */
 .badge-pill {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
   padding: 0.35rem 0.9rem;
   border-radius: var(--radius-full);
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.03em;
+  white-space: nowrap;
 }
 
 .badge-green {
@@ -174,42 +231,67 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid #fde68a;
 }
 
-/* Subtle pattern overlay */
+/* ---------- Subtle pattern overlay ---------- */
 .palm-pattern-bg {
   background-image: radial-gradient(circle at 1px 1px, rgba(75, 44, 32, 0.04) 1px, transparent 0);
   background-size: 24px 24px;
 }
 
-/* Floating WhatsApp Quick Action Button */
+/* ---------- Floating WhatsApp ---------- */
 .floating-whatsapp {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  z-index: 90;
+  z-index: 80;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
   background-color: #25D366;
   color: #ffffff;
-  padding: 0.85rem 1.4rem;
   border-radius: var(--radius-full);
   box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
   text-decoration: none;
   font-weight: 600;
-  font-size: 0.95rem;
   transition: var(--transition-smooth);
+  touch-action: manipulation;
 }
 
-.floating-whatsapp:hover {
-  transform: translateY(-3px) scale(1.03);
-  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.55);
+/* Desktop: full label, bottom-right */
+.floating-whatsapp {
+  bottom: 2rem;
+  right: 2rem;
+  padding: 0.85rem 1.4rem;
+  font-size: 0.95rem;
 }
 
-@media (max-width: 768px) {
+/* Mobile: icon-only pill above mobile nav */
+@media (max-width: 899px) {
   .floating-whatsapp {
-    bottom: 5.5rem;
-    right: 1.25rem;
-    padding: 0.75rem 1.1rem;
-    font-size: 0.88rem;
+    bottom: calc(4.5rem + var(--safe-bottom));
+    right: 1rem;
+    padding: 0.85rem;
+    font-size: 0;
   }
+  .floating-whatsapp span { display: none; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .floating-whatsapp:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 12px 30px rgba(37, 211, 102, 0.55);
+  }
+}
+
+.floating-whatsapp:active {
+  transform: scale(0.95);
+}
+
+/* ---------- Focus-visible ring for a11y ---------- */
+:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 2px;
+}
+
+/* ---------- Selection colour ---------- */
+::selection {
+  background: rgba(45, 90, 39, 0.18);
+  color: var(--primary);
 }
