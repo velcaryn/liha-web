@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import TrustBadges from './components/TrustBadges';
 import Products from './components/Products';
+import CarouselGallery from './components/CarouselGallery';
 import HealthBenefits from './components/HealthBenefits';
 import HeritageStory from './components/HeritageStory';
 import ContactSection from './components/ContactSection';
@@ -21,6 +22,7 @@ export default function App() {
         <Hero />
         <TrustBadges />
         <Products />
+        <CarouselGallery />
         <HealthBenefits />
         <HeritageStory />
         <ContactSection />
