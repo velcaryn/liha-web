@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import TrustBadges from './components/TrustBadges';
+import StatsStrip from './components/StatsStrip';
 import Products from './components/Products';
 import CarouselGallery from './components/CarouselGallery';
 import HealthBenefits from './components/HealthBenefits';
@@ -21,6 +22,7 @@ export default function App() {
       <main>
         <Hero />
         <TrustBadges />
+        <StatsStrip />
         <Products />
         <CarouselGallery />
         <HealthBenefits />
