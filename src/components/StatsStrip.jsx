@@ -6,7 +6,7 @@ const stats = [
     icon: Calendar,
     value: 'Since 2019',
     label: '7+ Years of Purity',
-    sub: 'Traditional Palmyra craftsmanship'
+    sub: 'Traditional Palmyra craft'
   },
   {
     icon: Package,
@@ -18,13 +18,13 @@ const stats = [
     icon: Users,
     value: '85%+',
     label: 'Repeat Customers',
-    sub: 'Families trusting natural health'
+    sub: 'Families trusting health'
   },
   {
     icon: Coffee,
     value: '50+ Cafes',
     label: 'Coffee Houses & Brands',
-    sub: 'Trusted for artisanal brews'
+    sub: 'Artisanal brew partners'
   }
 ];
 
@@ -53,29 +53,32 @@ export default function StatsStrip() {
 
       <style>{`
         .stats-strip-section {
-          padding: 1.25rem 0 2rem 0;
+          padding: 0.5rem 0 2rem 0;
           background: var(--bg-surface);
           position: relative;
           z-index: 10;
         }
+        /* Solid, non-scrollable, responsive layout */
         .stats-strip-box {
           background: var(--bg-container-low);
           border: 1px solid var(--outline-variant);
           border-radius: var(--radius-lg);
-          padding: 1.5rem 1.25rem;
+          padding: 1.25rem 1rem;
           display: grid;
           grid-template-columns: repeat(2, 1fr);
-          gap: 1.5rem 1rem;
+          gap: 1.25rem 0.75rem;
+          overflow: hidden; /* Solid, no horizontal scroll */
         }
         .stats-item {
           display: flex;
           align-items: flex-start;
-          gap: 0.75rem;
+          gap: 0.6rem;
+          width: 100%;
         }
         .stats-icon-wrap {
-          width: 36px;
-          height: 36px;
-          border-radius: 10px;
+          width: 34px;
+          height: 34px;
+          border-radius: 9px;
           background: var(--bg-container-lowest);
           border: 1px solid var(--outline-variant);
           display: flex;
@@ -83,36 +86,37 @@ export default function StatsStrip() {
           justify-content: center;
           color: var(--secondary);
           flex-shrink: 0;
-          margin-top: 2px;
+          margin-top: 1px;
         }
         .stats-content {
           display: flex;
           flex-direction: column;
+          min-width: 0;
         }
         .stats-value {
           font-family: var(--font-serif);
-          font-size: 1.2rem;
+          font-size: 1.15rem;
           font-weight: 700;
           color: var(--primary);
           line-height: 1.15;
-          margin-bottom: 0.15rem;
+          margin-bottom: 0.1rem;
         }
         .stats-label {
-          font-size: 0.82rem;
+          font-size: 0.78rem;
           font-weight: 600;
           color: var(--secondary);
           line-height: 1.25;
         }
         .stats-sub {
-          font-size: 0.75rem;
+          font-size: 0.7rem;
           color: var(--text-muted);
           line-height: 1.3;
-          margin-top: 0.15rem;
+          margin-top: 0.1rem;
         }
 
         @media (min-width: 900px) {
           .stats-strip-section {
-            padding: 1.5rem 0 2.5rem 0;
+            padding: 1rem 0 2.5rem 0;
           }
           .stats-strip-box {
             grid-template-columns: repeat(4, 1fr);

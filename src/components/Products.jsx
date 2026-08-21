@@ -6,7 +6,7 @@ const products = [
     name: 'Karuppati',
     tamil: 'கருப்பட்டி',
     subtitle: 'Pure Dark Palm Jaggery',
-    img: '/images/karuppati.png',
+    img: '/images/karuppati.webp',
     badge: { label: 'Traditional Heritage', className: 'badge-green' },
     desc: 'Rich, dark brown solid blocks of traditional Indian palm sugar. Purely unrefined, free from sulfur and bleaching chemicals.',
     tags: ['Natural Iron Booster', 'Low Glycemic Index', 'Authentic Taste'],
@@ -17,7 +17,7 @@ const products = [
     name: 'Panam Karkandu',
     tamil: 'பனங்கற்கண்டு',
     subtitle: 'Palm Candy Crystals',
-    img: '/images/panam-karkandu.png',
+    img: '/images/panam-karkandu.webp',
     badge: { label: 'Natural Crystals', className: 'badge-orange' },
     desc: 'Translucent, crystalline palm sugar naturally formed through slow evaporation. Celebrated in Siddha wellness.',
     tags: ['Soothes Throat', 'Natural Coolant'],
@@ -28,7 +28,7 @@ const products = [
     name: 'Chukku Karuppati',
     tamil: 'சுக்கு கருப்பட்டி',
     subtitle: 'Dry Ginger Palm Jaggery',
-    img: '/images/chukku-karuppati.png',
+    img: '/images/chukku-karuppati.webp',
     badge: { label: 'Healthy Remedy', className: 'badge-green' },
     desc: 'Traditional palm jaggery infused with the warming goodness of dry ginger and black pepper. A time-tested remedy for cold and cough.',
     tags: ['Warming & Soothing', 'Cold & Cough Relief', 'Immunity Booster'],
@@ -39,7 +39,7 @@ const products = [
     name: 'Vattu Karuppati',
     tamil: 'வட்டு கருப்பட்டி',
     subtitle: 'Rare Male Palm Nectar Delicacy',
-    img: '/images/vellai-karuppati.png',
+    img: '/images/vellai-karuppati.webp',
     badge: { label: 'Rare & Limited Edition', className: 'badge-cream' },
     desc: 'An exquisite artisanal delicacy crafted exclusively from the limited Padaneer tapped from Male Palm trees (ஆண் பனை). This unique nectar gives Vattu Karuppati its distinctive lighter golden shade and refined, melt-in-the-mouth sweetness. Available in strictly limited seasonal batches.',
     tags: ['Tapped from Male Palms', 'Distinctive Light Shade', 'Seasonal & Limited Stock'],
@@ -64,7 +64,13 @@ export default function Products() {
           {products.map((p, idx) => (
             <div key={idx} className={`soil-card product-card ${p.grid}`}>
               <div className="product-img-wrap">
-                <img src={p.img} alt={`${p.name} (${p.tamil})`} className="product-img" loading="lazy" />
+                <img
+                  src={p.img}
+                  alt={`${p.name} (${p.tamil})`}
+                  className="product-img"
+                  loading="lazy"
+                  decoding="async"
+                />
                 <div className="product-badge-pos">
                   <span className={`badge-pill ${p.badge.className}`}>{p.badge.label}</span>
                 </div>
@@ -208,9 +214,7 @@ export default function Products() {
           }
         }
 
-        /* Tablet & desktop: 2x2 bento grid
-           Row 1: Karuppati (7) + Panam Karkandu (5)
-           Row 2: Chukku Karuppati (5) + Vattu Karuppati (7) */
+        /* Tablet & desktop: 2x2 bento grid */
         @media (min-width: 768px) {
           .products-section { padding: 5rem 0; }
           .products-grid {

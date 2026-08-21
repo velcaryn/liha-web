@@ -59,7 +59,7 @@ export default function Hero() {
           <div className="hero-visual">
             <div className="hero-image-card">
               <img
-                src="/images/palm-illustration.png"
+                src="/images/palm-illustration.webp"
                 alt="Palmyra Palm Trees Heritage"
                 className="hero-image"
                 loading="eager"

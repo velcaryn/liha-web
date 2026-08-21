@@ -25,7 +25,7 @@ export default function Navbar() {
         {/* Brand Logo */}
         <a href="#" className="navbar-brand">
           <img
-            src="/images/logo.png"
+            src="/images/logo.webp"
             alt="Liha's Karuppati"
             className="navbar-logo"
             width="40"
