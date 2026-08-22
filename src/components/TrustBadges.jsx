@@ -1,11 +1,6 @@
 import React from 'react';
+import { trustBadges as badges } from '../config/site';
 
-const badges = [
-  { icon: '/images/no-artificial-colors.webp', title: 'No Artificial Colors' },
-  { icon: '/images/zero-preservatives.webp', title: 'Zero Preservatives' },
-  { icon: '/images/locally-sourced.webp', title: 'Locally Sourced' },
-  { icon: '/images/hygienically-packed.webp', title: 'Hygienically Packed' }
-];
 
 export default function TrustBadges() {
   return (

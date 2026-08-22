@@ -1,103 +1,55 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
+import React from 'react';
+import { Sparkles } from 'lucide-react';
+import DepthCarousel from './DepthCarousel';
 
-const slides = [
+const CAROUSEL_SLIDES = [
   {
-    src: '/images/carousel/carousel-1-hero-wooden-spread.webp',
-    title: 'Authentic Palmyra Harvest',
-    caption: 'Tradition meets elegance in every handcrafted block'
+    image: '/images/carousel/carousel-1-hero-wooden-spread.webp',
+    title: 'Farm-Fresh Palmyra Nectar',
+    desc: 'Pure Padaneer collected in natural clay pots and reduced over wood fires.',
+    alt: 'Fresh Palmyra palm nectar and wooden spread'
   },
   {
-    src: '/images/carousel/carousel-2-palm-candy-jar.webp',
-    title: 'Pure Artisanal Packaging',
-    caption: 'Hygienically stored to preserve natural aroma and mineral richness'
+    image: '/images/carousel/carousel-2-palm-candy-jar.webp',
+    title: 'Panam Karkandu Crystals',
+    desc: 'Golden translucent crystals with a delicate caramel sweetness.',
+    alt: 'Panam Karkandu in glass jar'
   },
   {
-    src: '/images/carousel/carousel-3-product-range-flatlay.webp',
-    title: 'Complete Pure Palm Collection',
-    caption: 'From dark Karuppati blocks to crystalline Panam Karkandu'
+    image: '/images/carousel/carousel-3-product-range-flatlay.webp',
+    title: 'Artisanal Pure Collection',
+    desc: '100% unrefined Karuppati, Panam Karkandu, Chukku & Vattu varieties.',
+    alt: 'Complete Liha product range'
   },
   {
-    src: '/images/carousel/carousel-4-lifestyle-pour.webp',
-    title: 'The Perfect Morning Ritual',
-    caption: 'Wholesome natural sweetness for traditional filter coffee and herbal tea'
+    image: '/images/carousel/carousel-4-lifestyle-pour.webp',
+    title: 'Daily Healthy Sweetener',
+    desc: 'The perfect nutrient-dense alternative for tea, coffee, and milk.',
+    alt: 'Beverage sweetened with palm jaggery'
   },
   {
-    src: '/images/carousel/carousel-5-palm-candy-closeup.webp',
-    title: 'Golden Crystalline Clarity',
-    caption: 'Naturally evaporated panam karkandu for soothing throat comfort'
+    image: '/images/carousel/carousel-5-palm-candy-closeup.webp',
+    title: 'Traditional Crystal Purity',
+    desc: 'Zero chemicals, zero bleach, crafted through slow natural crystallisation.',
+    alt: 'Close up of natural palm candy crystals'
   },
   {
-    src: '/images/carousel/carousel-6-clear-pouch-showcase.webp',
-    title: 'Farm-Fresh Sealed Pouch',
-    caption: 'Direct from Tamil Nadu palm artisans to your doorstep'
+    image: '/images/carousel/carousel-6-clear-pouch-showcase.webp',
+    title: 'Hygienically Packed',
+    desc: 'Sealed airtight to preserve fresh farm aroma and medicinal properties.',
+    alt: 'Airtight packaging of Liha products'
   },
   {
-    src: '/images/carousel/carousel-7-panam-karkandu-lifestyle.webp',
-    title: 'Nature’s Restorative Superfood',
-    caption: 'Zero chemicals, zero refining, 100% natural goodness'
+    image: '/images/carousel/carousel-7-panam-karkandu-lifestyle.webp',
+    title: 'Generations of Craftsmanship',
+    desc: 'Preserving Tamil Nadu native Palmyra palm heritage since 2019.',
+    alt: 'Traditional palm heritage lifestyle'
   }
 ];
 
 export default function CarouselGallery() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const scrollContainerRef = useRef(null);
-  const isInteractingRef = useRef(false);
-
-  // Sync active dot with native scroll position
-  const handleScroll = useCallback(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-    const slideWidth = container.clientWidth;
-    if (slideWidth === 0) return;
-    const newIndex = Math.round(container.scrollLeft / slideWidth);
-    if (newIndex >= 0 && newIndex < slides.length && newIndex !== activeIndex) {
-      setActiveIndex(newIndex);
-    }
-  }, [activeIndex]);
-
-  // Smooth scroll to a specific index
-  const scrollToIndex = useCallback((index) => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-    const slideWidth = container.clientWidth;
-    container.scrollTo({
-      left: index * slideWidth,
-      behavior: 'smooth'
-    });
-    setActiveIndex(index);
-  }, []);
-
-  const prevSlide = () => {
-    const nextIdx = activeIndex === 0 ? slides.length - 1 : activeIndex - 1;
-    scrollToIndex(nextIdx);
-  };
-
-  const nextSlide = () => {
-    const nextIdx = activeIndex === slides.length - 1 ? 0 : activeIndex + 1;
-    scrollToIndex(nextIdx);
-  };
-
-  // Optional Gentle Auto-Advance (only when user is not touching/hovering)
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (!isInteractingRef.current) {
-        const container = scrollContainerRef.current;
-        if (!container) return;
-        const slideWidth = container.clientWidth;
-        const nextIdx = (activeIndex + 1) % slides.length;
-        container.scrollTo({
-          left: nextIdx * slideWidth,
-          behavior: 'smooth'
-        });
-      }
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [activeIndex]);
-
   return (
-    <section className="carousel-section">
+    <section id="gallery" className="carousel-section">
       <div className="container">
         <div className="carousel-header">
           <span className="badge-pill badge-cream">
@@ -110,242 +62,72 @@ export default function CarouselGallery() {
           </p>
         </div>
 
-        {/* Outer Frame */}
-        <div
-          className="carousel-outer"
-          onMouseEnter={() => { isInteractingRef.current = true; }}
-          onMouseLeave={() => { isInteractingRef.current = false; }}
-          onTouchStart={() => { isInteractingRef.current = true; }}
-          onTouchEnd={() => {
-            // Resume gentle auto-scroll after a short delay
-            setTimeout(() => { isInteractingRef.current = false; }, 3000);
-          }}
-        >
-          {/* Native Hardware-Accelerated Scroll Snap Track */}
-          <div
-            ref={scrollContainerRef}
-            onScroll={handleScroll}
-            className="carousel-scroll-track"
-          >
-            {slides.map((slide, idx) => (
-              <div key={idx} className="carousel-snap-item">
-                <img
-                  src={slide.src}
-                  alt={slide.title}
-                  className="carousel-img"
-                  loading={idx === 0 ? 'eager' : 'lazy'}
-                  decoding="async"
-                  draggable="false"
-                />
-                <div className="carousel-caption-overlay">
-                  <h3 className="carousel-slide-title">{slide.title}</h3>
-                  <p className="carousel-slide-desc">{slide.caption}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Desktop Navigation Arrows */}
-          <button
-            onClick={prevSlide}
-            aria-label="Previous slide"
-            className="carousel-nav-btn carousel-nav-prev"
-          >
-            <ChevronLeft size={22} aria-hidden="true" />
-          </button>
-          <button
-            onClick={nextSlide}
-            aria-label="Next slide"
-            className="carousel-nav-btn carousel-nav-next"
-          >
-            <ChevronRight size={22} aria-hidden="true" />
-          </button>
-
-          {/* Dot Indicators */}
-          <div className="carousel-pagination">
-            {slides.map((_, dotIdx) => (
-              <button
-                key={dotIdx}
-                onClick={() => scrollToIndex(dotIdx)}
-                aria-label={`Go to slide ${dotIdx + 1}`}
-                className={`carousel-dot-btn ${activeIndex === dotIdx ? 'is-active' : ''}`}
-              />
-            ))}
-          </div>
+        {/* 3D Depth Carousel Container with compact, zero-waste spacing */}
+        <div className="depth-carousel-wrapper">
+          <DepthCarousel
+            items={CAROUSEL_SLIDES}
+            tiltDirection="right"
+            tint="#32170d"
+            radius={18}
+            autoplay={true}
+            autoplayDelay={3600}
+            loop={true}
+          />
         </div>
       </div>
 
       <style>{`
         .carousel-section {
-          padding: 3.5rem 0;
+          padding: 2.25rem 0 2.25rem 0;
           background: var(--bg-surface);
           position: relative;
+          overflow: hidden;
         }
         .carousel-header {
           text-align: center;
           max-width: 680px;
-          margin: 0 auto 2rem;
+          margin: 0 auto 1.25rem;
         }
         .carousel-headline {
-          font-size: clamp(1.8rem, 4vw, 2.7rem);
-          margin-top: 0.75rem;
-          margin-bottom: 0.5rem;
+          font-size: clamp(1.8rem, 3.8vw, 2.5rem);
+          margin-top: 0.6rem;
+          margin-bottom: 0.35rem;
         }
         .carousel-subtitle {
           color: var(--text-variant);
-          font-size: 0.95rem;
-          line-height: 1.6;
+          font-size: 0.94rem;
+          line-height: 1.5;
         }
 
-        .carousel-outer {
+        .depth-carousel-wrapper {
           position: relative;
           width: 100%;
-          max-width: 1040px;
+          max-width: 1160px;
+          height: 510px;
           margin: 0 auto;
-          border-radius: var(--radius-xl);
-          overflow: hidden;
-          box-shadow: var(--soil-shadow-hover);
-          border: 3px solid var(--bg-container-lowest);
-          background: #1e120d;
-        }
-
-        /* 120Hz Hardware Accelerated Scroll Snap Container */
-        .carousel-scroll-track {
-          display: flex;
-          width: 100%;
-          overflow-x: auto;
-          overflow-y: hidden;
-          scroll-snap-type: x mandatory;
-          scroll-behavior: smooth;
-          -webkit-overflow-scrolling: touch;
-          scrollbar-width: none;
-          user-select: none;
-          -webkit-user-select: none;
-          touch-action: pan-x;
-        }
-        .carousel-scroll-track::-webkit-scrollbar {
-          display: none;
-        }
-
-        .carousel-snap-item {
-          flex: 0 0 100%;
-          width: 100%;
-          scroll-snap-align: start;
-          scroll-snap-stop: always;
-          position: relative;
-          aspect-ratio: 16 / 9;
-        }
-
-        .carousel-img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-          pointer-events: none;
-        }
-
-        .carousel-caption-overlay {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          padding: 2.5rem 1.75rem 1.5rem 1.75rem;
-          background: linear-gradient(to top, rgba(35, 26, 23, 0.92) 0%, rgba(35, 26, 23, 0.5) 60%, transparent 100%);
-          color: #ffffff;
-          pointer-events: none;
-        }
-
-        .carousel-slide-title {
-          font-family: var(--font-serif);
-          font-size: clamp(1.15rem, 3vw, 1.6rem);
-          font-weight: 700;
-          color: #ffffff;
-          margin-bottom: 0.25rem;
-        }
-
-        .carousel-slide-desc {
-          font-size: clamp(0.82rem, 1.8vw, 0.95rem);
-          color: #ffd6cc;
-          line-height: 1.4;
-        }
-
-        /* Navigation Arrows */
-        .carousel-nav-btn {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          width: 44px;
-          height: 44px;
-          border-radius: 50%;
-          background: rgba(255, 248, 246, 0.9);
-          border: 1px solid var(--outline-variant);
-          color: var(--primary);
           display: flex;
           align-items: center;
           justify-content: center;
-          cursor: pointer;
-          transition: transform 0.2s ease, background-color 0.2s ease;
-          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
-          z-index: 10;
-          touch-action: manipulation;
         }
 
-        .carousel-nav-btn:hover {
-          background: #ffffff;
-          transform: translateY(-50%) scale(1.08);
-        }
-
-        .carousel-nav-btn:active {
-          transform: translateY(-50%) scale(0.95);
-        }
-
-        .carousel-nav-prev { left: 1rem; }
-        .carousel-nav-next { right: 1rem; }
-
-        /* Pagination Dots */
-        .carousel-pagination {
-          position: absolute;
-          bottom: 1rem;
-          right: 1.5rem;
-          display: flex;
-          align-items: center;
-          gap: 0.45rem;
-          z-index: 10;
-        }
-
-        .carousel-dot-btn {
-          width: 8px;
-          height: 8px;
-          border-radius: var(--radius-full);
-          background: rgba(255, 255, 255, 0.4);
-          border: none;
-          cursor: pointer;
-          padding: 0;
-          transition: width 0.3s ease, background-color 0.3s ease;
-        }
-
-        .carousel-dot-btn.is-active {
-          width: 24px;
-          background: var(--secondary-container);
+        @media (max-width: 1024px) {
+          .carousel-section {
+            padding: 2rem 0 2rem 0;
+          }
+          .depth-carousel-wrapper {
+            height: 450px;
+          }
         }
 
         @media (max-width: 768px) {
-          .carousel-nav-btn {
-            display: none; /* Fluid native swipe on mobile */
+          .carousel-section {
+            padding: 1.25rem 0 1.25rem 0;
           }
-          .carousel-snap-item {
-            aspect-ratio: 4 / 3;
+          .carousel-header {
+            margin: 0 auto 0.75rem;
           }
-          .carousel-caption-overlay {
-            padding: 1.5rem 1rem 1rem 1rem;
-          }
-          .carousel-pagination {
-            right: 50%;
-            transform: translateX(50%);
-            bottom: 0.6rem;
-          }
-          .carousel-outer {
-            border-radius: var(--radius-lg);
+          .depth-carousel-wrapper {
+            height: 375px;
           }
         }
       `}</style>

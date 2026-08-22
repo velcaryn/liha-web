@@ -1,3 +1,4 @@
+import { contact } from '../config/site';
 import React, { useEffect } from 'react';
 import { X, ShieldCheck, Truck, RotateCcw, FileText } from 'lucide-react';
 
@@ -34,7 +35,7 @@ const policies = {
         <p>Because palm jaggery, palm candy, and traditional sweeteners are consumable and perishable food products, we cannot accept returns once a package has been opened or unsealed, in accordance with standard food safety regulations.</p>
 
         <h4>2. Transit Damage & Replacement Guarantee</h4>
-        <p>If your order arrives damaged, broken, or spoiled during transit, please notify us within 24 hours of delivery by sharing a photo or unboxing video of the package on WhatsApp at <strong>+91 95979 59549</strong>.</p>
+        <p>If your order arrives damaged, broken, or spoiled during transit, please notify us within 24 hours of delivery by sharing a photo or unboxing video of the package on WhatsApp at <strong>{contact.phoneDisplay}</strong>.</p>
         <p>We will immediately dispatch a free replacement or initiate a full refund to your original payment method.</p>
 
         <h4>3. Order Cancellations</h4>

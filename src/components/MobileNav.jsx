@@ -1,32 +1,60 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { waLink } from '../config/site';
 import { Home, ShoppingBag, HeartPulse, HelpCircle } from 'lucide-react';
+import WhatsAppIcon from './WhatsAppIcon';
 
-function WhatsAppIcon({ size = 20, color = '#ffffff' }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill={color} aria-hidden="true">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-    </svg>
-  );
-}
+const NAV_ITEMS = [
+  { id: 'home', href: '#', label: 'Home', icon: Home, section: null },
+  { id: 'products', href: '#products', label: 'Products', icon: ShoppingBag, section: 'products' },
+  { id: 'benefits', href: '#benefits', label: 'Health', icon: HeartPulse, section: 'benefits' },
+  { id: 'faq', href: '#faq', label: 'FAQs', icon: HelpCircle, section: 'faq' },
+];
 
 export default function MobileNav() {
+  const [activeTab, setActiveTab] = useState('home');
+
+  const updateActiveSection = useCallback(() => {
+    const scrollY = window.scrollY + 200;
+    let current = 'home';
+
+    for (let i = NAV_ITEMS.length - 1; i >= 0; i--) {
+      const item = NAV_ITEMS[i];
+      if (!item.section) continue;
+      const el = document.getElementById(item.section);
+      if (el && el.offsetTop <= scrollY) {
+        current = item.id;
+        break;
+      }
+    }
+    setActiveTab(current);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('scroll', updateActiveSection, { passive: true });
+    return () => window.removeEventListener('scroll', updateActiveSection);
+  }, [updateActiveSection]);
+
   return (
-    <nav className="mobile-nav">
-      {/* 1. Home */}
-      <a href="#" className="mobile-nav-tab">
-        <Home size={18} aria-hidden="true" />
-        <span>Home</span>
-      </a>
+    <nav className="mobile-nav" aria-label="Mobile navigation">
+      {NAV_ITEMS.slice(0, 2).map(item => {
+        const Icon = item.icon;
+        const isActive = activeTab === item.id;
+        return (
+          <a
+            key={item.id}
+            href={item.href}
+            className={`mobile-nav-tab${isActive ? ' is-active' : ''}`}
+            aria-current={isActive ? 'true' : undefined}
+          >
+            <Icon size={18} aria-hidden="true" />
+            <span>{item.label}</span>
+          </a>
+        );
+      })}
 
-      {/* 2. Products */}
-      <a href="#products" className="mobile-nav-tab">
-        <ShoppingBag size={18} aria-hidden="true" />
-        <span>Products</span>
-      </a>
-
-      {/* 3. Subtle Lightweight Projected WhatsApp Center Button */}
+      {/* Center WhatsApp Order Button */}
       <a
-        href="https://wa.me/919597959549?text=Hi%20Liha's%20Karuppati%20team%2C%20I%20would%20like%20to%20order%20pure%20palm%20jaggery"
+        href={waLink("Hi Liha's Karuppati team, I would like to order pure palm jaggery")}
         target="_blank"
         rel="noopener noreferrer"
         className="mobile-nav-center-btn"
@@ -38,17 +66,21 @@ export default function MobileNav() {
         <span className="center-btn-label">Order</span>
       </a>
 
-      {/* 4. Health */}
-      <a href="#benefits" className="mobile-nav-tab">
-        <HeartPulse size={18} aria-hidden="true" />
-        <span>Health</span>
-      </a>
-
-      {/* 5. FAQs */}
-      <a href="#faq" className="mobile-nav-tab">
-        <HelpCircle size={18} aria-hidden="true" />
-        <span>FAQs</span>
-      </a>
+      {NAV_ITEMS.slice(2).map(item => {
+        const Icon = item.icon;
+        const isActive = activeTab === item.id;
+        return (
+          <a
+            key={item.id}
+            href={item.href}
+            className={`mobile-nav-tab${isActive ? ' is-active' : ''}`}
+            aria-current={isActive ? 'true' : undefined}
+          >
+            <Icon size={18} aria-hidden="true" />
+            <span>{item.label}</span>
+          </a>
+        );
+      })}
 
       <style>{`
         .mobile-nav {
@@ -87,6 +119,11 @@ export default function MobileNav() {
         .mobile-nav-tab:active {
           color: var(--primary);
           transform: scale(0.95);
+        }
+
+        /* Active tab styling */
+        .mobile-nav-tab.is-active {
+          color: var(--secondary);
         }
 
         /* Subtle Center WhatsApp Button */

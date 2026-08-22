@@ -1,0 +1,219 @@
+.depth-carousel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: var(--dc-perspective, 1400px);
+  perspective-origin: 50% 50%;
+  touch-action: pan-y pinch-zoom;
+  outline: none;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+}
+
+.depth-carousel:active {
+  cursor: grabbing;
+}
+
+.depth-carousel:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 4px;
+  border-radius: 14px;
+}
+
+.depth-carousel__stage {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.depth-carousel__card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center center;
+  overflow: hidden;
+  background: #231a17;
+  border: 2.5px solid rgba(255, 248, 246, 0.9);
+  box-shadow:
+    0 24px 48px -12px rgba(50, 23, 13, 0.38),
+    0 8px 20px -6px rgba(50, 23, 13, 0.25);
+  will-change: transform, opacity, filter;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  border-radius: var(--radius-lg);
+  transition: box-shadow 0.3s ease;
+}
+
+.depth-carousel__card:hover {
+  box-shadow:
+    0 32px 64px -16px rgba(50, 23, 13, 0.48),
+    0 12px 28px -8px rgba(50, 23, 13, 0.32);
+}
+
+.depth-carousel__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+.depth-carousel__tint {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  transition: opacity 0.3s ease;
+}
+
+/* Slide Caption Overlay on each card */
+.depth-carousel__caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2.4rem 1.35rem 1.25rem 1.35rem;
+  background: linear-gradient(to top, rgba(35, 26, 23, 0.96) 0%, rgba(35, 26, 23, 0.65) 60%, transparent 100%);
+  color: #ffffff;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 5;
+}
+
+.depth-carousel__slide-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.1rem, 2.4vw, 1.35rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.25rem;
+  line-height: 1.2;
+}
+
+.depth-carousel__slide-desc {
+  font-size: clamp(0.8rem, 1.5vw, 0.92rem);
+  color: #ffd6cc;
+  line-height: 1.35;
+  opacity: 0.95;
+}
+
+/* Arrow Navigation Buttons */
+.depth-carousel__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 30;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid var(--outline-variant);
+  border-radius: 999px;
+  background: rgba(255, 248, 246, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--primary);
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(50, 23, 13, 0.12);
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  touch-action: manipulation;
+}
+
+.depth-carousel__arrow:hover {
+  background: #ffffff;
+  border-color: var(--primary-container);
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 6px 20px rgba(50, 23, 13, 0.2);
+}
+
+.depth-carousel__arrow:active {
+  transform: translateY(-50%) scale(0.94);
+}
+
+.depth-carousel__arrow--prev {
+  left: 16px;
+}
+
+.depth-carousel__arrow--next {
+  right: 16px;
+}
+
+/* Dot Indicators */
+.depth-carousel__dots {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  display: flex;
+  gap: 8px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(255, 248, 246, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--outline-variant);
+  box-shadow: 0 2px 10px rgba(50, 23, 13, 0.08);
+}
+
+.depth-carousel__dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: var(--outline-variant);
+  cursor: pointer;
+  transition:
+    width 0.25s ease,
+    background 0.25s ease;
+}
+
+.depth-carousel__dot.is-active {
+  width: 22px;
+  background: var(--secondary);
+}
+
+@media (max-width: 1024px) {
+  .depth-carousel__arrow--prev {
+    left: 8px;
+  }
+  .depth-carousel__arrow--next {
+    right: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .depth-carousel__arrow {
+    display: none; /* Smooth drag/swipe on mobile */
+  }
+  .depth-carousel__caption {
+    padding: 1.6rem 1rem 1rem 1rem;
+  }
+  .depth-carousel__dots {
+    bottom: -2px;
+    padding: 4px 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .depth-carousel__card {
+    will-change: auto;
+  }
+  .depth-carousel__arrow,
+  .depth-carousel__dot {
+    transition: none;
+  }
+}

@@ -1,261 +1,282 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Menu, X, Phone } from 'lucide-react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
+import { brand, contact, phoneHref, waLink } from '../config/site';
+import { gsap } from 'gsap';
+import { Phone, ArrowUpRight } from 'lucide-react';
+import './CardNav.css';
+import WhatsAppIcon from './WhatsAppIcon';
 
-function WhatsAppIcon({ size = 16, color = '#ffffff' }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill={color} aria-hidden="true">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-    </svg>
-  );
-}
+
+const NAV_CARDS = [
+  {
+    label: "Pure Products",
+    bgColor: "#32170d",
+    textColor: "#ffffff",
+    links: [
+      { label: "Karuppati (கருப்பட்டி)", href: "#products", ariaLabel: "Pure Dark Palm Jaggery" },
+      { label: "Panam Karkandu (பனங்கற்கண்டு)", href: "#products", ariaLabel: "Palm Candy Crystals" },
+      { label: "Chukku Karuppati (சுக்கு)", href: "#products", ariaLabel: "Dry Ginger Palm Jaggery" },
+      { label: "Vattu Karuppati (வட்டு)", href: "#products", ariaLabel: "Rare Male Palm Nectar" }
+    ]
+  },
+  {
+    label: "Heritage & Health",
+    bgColor: "#4b2c20",
+    textColor: "#ffffff",
+    links: [
+      { label: "Nutritional Benefits", href: "#benefits", ariaLabel: "Health & Nutrition" },
+      { label: "Artisanal Heritage", href: "#heritage", ariaLabel: "Traditional Process" },
+      { label: "Frequently Asked Questions", href: "#faq", ariaLabel: "FAQs" }
+    ]
+  },
+  {
+    label: "Order & Direct Help",
+    bgColor: "#2d5a27",
+    textColor: "#ffffff",
+    links: [
+      { label: "Order via WhatsApp", href: waLink(`Hi ${brand.name} team, I would like to order`), ariaLabel: "WhatsApp Order" },
+      { label: `Call ${contact.phoneDisplay}`, href: phoneHref, ariaLabel: "Direct Call" },
+      { label: "Quick Order Configurator", href: "#contact", ariaLabel: "Order Form" }
+    ]
+  }
+];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+  const navRef = useRef(null);
+  const cardsRef = useRef([]);
+  const tlRef = useRef(null);
+
+  const calculateMobileHeight = () => {
+    const navEl = navRef.current;
+    if (!navEl) return 260;
+    const contentEl = navEl.querySelector('.card-nav-content');
+    if (contentEl) {
+      const wasVisible = contentEl.style.visibility;
+      const wasPointerEvents = contentEl.style.pointerEvents;
+      const wasPosition = contentEl.style.position;
+      const wasHeight = contentEl.style.height;
+
+      contentEl.style.visibility = 'visible';
+      contentEl.style.pointerEvents = 'auto';
+      contentEl.style.position = 'static';
+      contentEl.style.height = 'auto';
+
+      contentEl.offsetHeight;
+
+      const topBar = 60;
+      const padding = 16;
+      const contentHeight = contentEl.scrollHeight;
+
+      contentEl.style.visibility = wasVisible;
+      contentEl.style.pointerEvents = wasPointerEvents;
+      contentEl.style.position = wasPosition;
+      contentEl.style.height = wasHeight;
+
+      return topBar + contentHeight + padding;
+    }
+    return 260;
+  };
+
+  const createTimeline = () => {
+    const navEl = navRef.current;
+    if (!navEl) return null;
+
+    const isMobile = window.matchMedia('(max-width: 899px)').matches;
+    if (!isMobile) return null;
+
+    gsap.set(navEl, { height: 60, overflow: 'hidden' });
+    gsap.set(cardsRef.current, { y: 40, opacity: 0 });
+
+    const tl = gsap.timeline({ paused: true });
+
+    tl.to(navEl, {
+      height: calculateMobileHeight,
+      duration: 0.4,
+      ease: 'power3.out'
+    });
+
+    tl.to(cardsRef.current, { y: 0, opacity: 1, duration: 0.35, ease: 'power3.out', stagger: 0.07 }, '-=0.15');
+
+    return tl;
+  };
+
+  useLayoutEffect(() => {
+    const tl = createTimeline();
+    tlRef.current = tl;
+
+    return () => {
+      tl?.kill();
+      tlRef.current = null;
+    };
   }, []);
 
-  // Lock body scroll when mobile menu is open
-  useEffect(() => {
-    document.body.style.overflow = mobileOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [mobileOpen]);
+  useLayoutEffect(() => {
+    const handleResize = () => {
+      const isMobile = window.matchMedia('(max-width: 899px)').matches;
+      if (!isMobile) {
+        if (tlRef.current) {
+          tlRef.current.kill();
+          tlRef.current = null;
+        }
+        if (navRef.current) {
+          gsap.set(navRef.current, { clearProps: 'all' });
+        }
+        setIsExpanded(false);
+        setIsHamburgerOpen(false);
+        return;
+      }
 
-  const closeMenu = useCallback(() => setMobileOpen(false), []);
+      if (isExpanded) {
+        const newHeight = calculateMobileHeight();
+        gsap.set(navRef.current, { height: newHeight });
+
+        tlRef.current?.kill();
+        const newTl = createTimeline();
+        if (newTl) {
+          newTl.progress(1);
+          tlRef.current = newTl;
+        }
+      } else {
+        tlRef.current?.kill();
+        const newTl = createTimeline();
+        if (newTl) {
+          tlRef.current = newTl;
+        }
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isExpanded]);
+
+  const toggleMobileMenu = () => {
+    const tl = tlRef.current || createTimeline();
+    if (!tl) return;
+    tlRef.current = tl;
+
+    if (!isExpanded) {
+      setIsHamburgerOpen(true);
+      setIsExpanded(true);
+      tl.play(0);
+    } else {
+      setIsHamburgerOpen(false);
+      tl.eventCallback('onReverseComplete', () => setIsExpanded(false));
+      tl.reverse();
+    }
+  };
+
+  const closeMobileMenu = () => {
+    const tl = tlRef.current;
+    if (!tl || !isExpanded) return;
+    setIsHamburgerOpen(false);
+    tl.eventCallback('onReverseComplete', () => setIsExpanded(false));
+    tl.reverse();
+  };
+
+  const setCardRef = i => el => {
+    if (el) cardsRef.current[i] = el;
+  };
 
   return (
-    <header className="liha-navbar" data-scrolled={scrolled}>
-      <div className="container navbar-inner">
-        {/* Brand Logo */}
-        <a href="#" className="navbar-brand">
-          <img
-            src="/images/logo.webp"
-            alt="Liha's Karuppati"
-            className="navbar-logo"
-            width="40"
-            height="40"
-          />
-          <div className="navbar-brand-text">
-            <span className="navbar-brand-name">Liha's Karuppati</span>
-            <span className="navbar-brand-tagline">PURE PALM JAGGERY</span>
+    <header className="navbar-wrapper">
+      {/* Desktop Floating Pill Island Header (>= 900px) */}
+      <nav className="desktop-navbar">
+        <a href="#" className="desktop-brand">
+          <img src="/images/logo.webp" alt="Liha's Karuppati" className="desktop-logo" width="38" height="38" />
+          <div className="desktop-brand-text">
+            <span className="desktop-brand-title">Liha's Karuppati</span>
+            <span className="desktop-brand-tagline">PURE PALM JAGGERY</span>
           </div>
         </a>
 
-        {/* Desktop Navigation Links */}
-        <nav className="navbar-links">
+        <div className="desktop-nav-links">
           <a href="#products">Our Products</a>
           <a href="#benefits">Health Benefits</a>
           <a href="#heritage">Our Heritage</a>
           <a href="#faq">FAQs</a>
           <a href="#contact">Order</a>
-        </nav>
+        </div>
 
-        {/* Desktop CTAs */}
-        <div className="navbar-ctas">
-          <a href="tel:+919597959549" className="btn btn-outline navbar-btn-sm" title="Call Liha">
-            <Phone size={15} aria-hidden="true" />
-            <span className="navbar-phone-text">+91 95979 59549</span>
+        <div className="desktop-actions">
+          <a href={phoneHref} className="desktop-btn desktop-btn-outline" title="Call Liha">
+            <Phone size={14} aria-hidden="true" />
+            <span>{contact.phoneDisplay}</span>
           </a>
           <a
-            href="https://wa.me/919597959549?text=Hi%2C%20I%20would%20like%20to%20order%20pure%20Karuppati%20from%20Liha"
+            href={waLink("Hi, I would like to order pure Karuppati from Liha")}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-whatsapp navbar-btn-sm"
+            className="desktop-btn desktop-btn-whatsapp"
           >
-            <WhatsAppIcon size={16} color="#ffffff" />
+            <WhatsAppIcon size={15} color="#ffffff" />
             <span>Order on WhatsApp</span>
           </a>
         </div>
+      </nav>
 
-        {/* Mobile Hamburger Toggle */}
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-          className="navbar-mobile-toggle"
-        >
-          {mobileOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
-        </button>
-      </div>
+      {/* Mobile CardNav Island (< 900px) */}
+      <div className="mobile-cardnav-container">
+        <nav ref={navRef} className={`card-nav ${isExpanded ? 'open' : ''}`}>
+          <div className="card-nav-top">
+            <a href="#" className="logo-container" onClick={closeMobileMenu}>
+              <img src="/images/logo.webp" alt="Liha's Karuppati" className="logo-image" width="38" height="38" />
+              <div className="logo-text-col">
+                <span className="logo-title">Liha's Karuppati</span>
+                <span className="logo-tagline">PURE PALM JAGGERY</span>
+              </div>
+            </a>
 
-      {/* Mobile Drawer Overlay */}
-      {mobileOpen && (
-        <>
-          <div className="navbar-overlay" onClick={closeMenu} />
-          <div className="navbar-drawer">
-            <a href="#products" onClick={closeMenu}>Our Products</a>
-            <a href="#benefits" onClick={closeMenu}>Health Benefits</a>
-            <a href="#heritage" onClick={closeMenu}>Our Heritage</a>
-            <a href="#faq" onClick={closeMenu}>FAQs</a>
-            <a href="#contact" onClick={closeMenu}>Order</a>
-
-            <div className="navbar-drawer-actions">
-              <a
-                href="https://wa.me/919597959549?text=Hi%2C%20I%20would%20like%20to%20order%20pure%20Karuppati%20from%20Liha"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-whatsapp"
-                style={{ width: '100%', justifyContent: 'center' }}
-              >
-                <WhatsAppIcon size={18} color="#ffffff" />
-                <span>Order on WhatsApp</span>
-              </a>
-              <a href="tel:+919597959549" className="btn btn-outline" style={{ width: '100%', justifyContent: 'center' }}>
-                <Phone size={16} aria-hidden="true" />
-                <span>Call +91 95979 59549</span>
-              </a>
+            <div
+              className={`hamburger-menu ${isHamburgerOpen ? 'open' : ''}`}
+              onClick={toggleMobileMenu}
+              onKeyDown={e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  toggleMobileMenu();
+                }
+              }}
+              role="button"
+              aria-label={isExpanded ? 'Close menu' : 'Open menu'}
+              aria-expanded={isExpanded}
+              tabIndex={0}
+            >
+              <div className="hamburger-line" />
+              <div className="hamburger-line" />
             </div>
           </div>
-        </>
-      )}
 
-      <style>{`
-        .liha-navbar {
-          position: fixed;
-          top: 0; left: 0; right: 0;
-          z-index: 50;
-          padding: 1rem 0;
-          background: rgba(255, 248, 246, 0.8);
-          border-bottom: 1px solid transparent;
-          transition: all 0.3s ease;
-        }
-        .liha-navbar[data-scrolled="true"] {
-          padding: 0.6rem 0;
-          background: rgba(255, 248, 246, 0.96);
-          backdrop-filter: blur(14px);
-          -webkit-backdrop-filter: blur(14px);
-          border-bottom-color: var(--outline-variant);
-          box-shadow: 0 2px 12px rgba(50, 23, 13, 0.04);
-        }
-        .navbar-inner {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 1rem;
-        }
-        .navbar-brand {
-          display: flex;
-          align-items: center;
-          gap: 0.65rem;
-          text-decoration: none;
-          color: var(--primary);
-          flex-shrink: 0;
-        }
-        .navbar-logo {
-          width: 38px; height: 38px;
-          border-radius: 50%;
-          object-fit: cover;
-          border: 2px solid var(--primary-container);
-        }
-        .navbar-brand-name {
-          font-family: var(--font-serif);
-          font-size: 1.15rem;
-          font-weight: 700;
-          letter-spacing: -0.01em;
-          display: block;
-          line-height: 1.1;
-        }
-        .navbar-brand-tagline {
-          font-size: 0.65rem;
-          color: var(--secondary);
-          font-weight: 700;
-          letter-spacing: 0.06em;
-        }
-
-        /* Desktop links */
-        .navbar-links {
-          display: none;
-          align-items: center;
-          gap: 1.75rem;
-        }
-        .navbar-links a {
-          color: var(--text-variant);
-          text-decoration: none;
-          font-size: 0.92rem;
-          font-weight: 600;
-          transition: color 0.2s;
-        }
-        .navbar-links a:hover { color: var(--primary); }
-
-        /* Desktop CTAs */
-        .navbar-ctas { display: none; align-items: center; gap: 0.6rem; }
-        .navbar-btn-sm { padding: 0.5rem 0.9rem !important; font-size: 0.85rem !important; min-height: 40px !important; }
-
-        /* Mobile toggle */
-        .navbar-mobile-toggle {
-          display: flex;
-          background: transparent;
-          border: none;
-          color: var(--primary);
-          cursor: pointer;
-          padding: 0.5rem;
-          min-width: 44px;
-          min-height: 44px;
-          align-items: center;
-          justify-content: center;
-          touch-action: manipulation;
-        }
-
-        /* Overlay */
-        .navbar-overlay {
-          position: fixed;
-          inset: 0;
-          background: rgba(35, 26, 23, 0.35);
-          z-index: 49;
-          animation: fadeIn 0.2s ease;
-        }
-
-        /* Drawer */
-        .navbar-drawer {
-          position: fixed;
-          top: 0; right: 0; bottom: 0;
-          width: min(320px, 85vw);
-          background: var(--bg-surface);
-          z-index: 51;
-          padding: 5rem 1.5rem 2rem 1.5rem;
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-          box-shadow: -8px 0 30px rgba(50, 23, 13, 0.12);
-          animation: slideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-          overflow-y: auto;
-          -webkit-overflow-scrolling: touch;
-        }
-        .navbar-drawer a {
-          color: var(--text-variant);
-          text-decoration: none;
-          font-size: 1.1rem;
-          font-weight: 600;
-          padding: 0.75rem 0;
-          border-bottom: 1px solid var(--outline-variant);
-          transition: color 0.2s;
-        }
-        .navbar-drawer a:active { color: var(--secondary); }
-
-        .navbar-drawer-actions {
-          margin-top: auto;
-          padding-top: 1.5rem;
-          display: flex;
-          flex-direction: column;
-          gap: 0.75rem;
-        }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
-
-        @media (min-width: 900px) {
-          .navbar-links { display: flex; }
-          .navbar-ctas { display: flex; }
-          .navbar-mobile-toggle { display: none; }
-        }
-
-        @media (max-width: 1080px) and (min-width: 900px) {
-          .navbar-phone-text { display: none; }
-        }
-      `}</style>
+          <div className="card-nav-content" aria-hidden={!isExpanded}>
+            {NAV_CARDS.map((card, idx) => (
+              <div
+                key={`${card.label}-${idx}`}
+                className="nav-card"
+                ref={setCardRef(idx)}
+                style={{ backgroundColor: card.bgColor, color: card.textColor }}
+              >
+                <div className="nav-card-label">{card.label}</div>
+                <div className="nav-card-links">
+                  {card.links?.map((lnk, i) => (
+                    <a
+                      key={`${lnk.label}-${i}`}
+                      className="nav-card-link"
+                      href={lnk.href}
+                      aria-label={lnk.ariaLabel}
+                      onClick={closeMobileMenu}
+                      target={lnk.href?.startsWith('http') ? '_blank' : undefined}
+                      rel={lnk.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    >
+                      <ArrowUpRight size={15} className="nav-card-link-icon" aria-hidden="true" />
+                      {lnk.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </nav>
+      </div>
     </header>
   );
 }

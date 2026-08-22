@@ -2,25 +2,42 @@ import React from 'react';
 import { Activity, ShieldCheck, Heart, Sparkles, Check, X } from 'lucide-react';
 
 const benefits = [
-  { icon: Activity, title: 'Rich in Natural Iron', desc: 'Helps prevent anemia and boosts hemoglobin levels naturally.' },
-  { icon: Heart, title: 'Low Glycemic Index', desc: 'GI of ~35 to 42, releasing sustained energy without sugar spikes.' },
-  { icon: ShieldCheck, title: 'Digestive & Respiratory', desc: 'Used in traditional Siddha medicine to clear toxins and aid digestion.' },
-  { icon: Sparkles, title: 'Essential Minerals', desc: 'Calcium, potassium, and magnesium in a naturally bioavailable form.' }
+  {
+    icon: Activity,
+    title: 'Low Glycemic Index',
+    desc: 'GI of 35-42 provides steady energy without triggering sudden blood sugar spikes.'
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Rich in Natural Iron',
+    desc: 'Packed with bioavailable iron to help boost hemoglobin and combat fatigue.'
+  },
+  {
+    icon: Heart,
+    title: 'Calcium & Minerals',
+    desc: 'Abundant in potassium, magnesium, and calcium to support bone strength.'
+  },
+  {
+    icon: Sparkles,
+    title: 'Aids Digestion',
+    desc: 'Activates digestive enzymes naturally and helps soothe the digestive tract.'
+  }
 ];
 
 const comparisons = [
-  { attr: 'Process', good: 'Wood-Fired Evaporation', bad: 'Chemical Bleaching & Sulphur' },
-  { attr: 'Nutrients', good: 'Iron, Potassium, Calcium', bad: 'Zero Nutrients (Empty Calories)' },
-  { attr: 'GI Index', good: 'Low (~35 to 42)', bad: 'High (65 to 75)' },
-  { attr: 'Additives', good: 'Zero Chemicals, 100% Pure', bad: 'Anti-caking & refining agents' }
+  { attr: 'Processing', good: 'Unrefined, wood-fired nectar reduction', bad: 'Heavily chemical bleached & processed' },
+  { attr: 'Glycemic Index (GI)', good: 'Low GI (~35 to 42)', bad: 'High GI (~65 to 70)' },
+  { attr: 'Nutrient Value', good: 'Packed with Iron, Calcium, Potassium', bad: 'Zero nutrients, empty calories' },
+  { attr: 'Chemical Additives', good: '100% Free from sulfur, lime & colors', bad: 'Treated with sulfur dioxide & additives' },
+  { attr: 'Impact on Digestion', good: 'Stimulates natural digestive enzymes', bad: 'Causes energy crashes and acidity' }
 ];
 
 function IconText({ icon, text, className }) {
   return (
-    <div className={`icon-text-row ${className || ''}`}>
+    <span className={`icon-text-row ${className}`}>
       <span className="icon-text-icon">{icon}</span>
       <span className="icon-text-label">{text}</span>
-    </div>
+    </span>
   );
 }
 
@@ -30,28 +47,26 @@ export default function HealthBenefits() {
       <div className="container">
         <div className="benefits-header">
           <span className="badge-pill badge-green">Nutritional Wisdom</span>
-          <h2 className="benefits-title">Why Palm Jaggery Outshines Refined Sugar</h2>
+          <h2 className="benefits-title">Why Palm Jaggery Outshines White Sugar</h2>
           <p className="benefits-subtitle">
-            For centuries, South Indian heritage recognized Karuppati not just as a sweetener, but as a restorative superfood.
+            Nature's unrefined sweetener, cherished for centuries in traditional Siddha and Ayurvedic wellness.
           </p>
         </div>
 
-        {/* Benefits Cards - horizontal scroll on mobile */}
-        <div className="benefits-scroll-wrap">
-          <div className="benefits-cards">
-            {benefits.map((item, idx) => {
-              const Icon = item.icon;
-              return (
-                <div key={idx} className="soil-card benefit-card">
-                  <div className="benefit-icon-wrap">
-                    <Icon size={22} aria-hidden="true" />
-                  </div>
-                  <h3 className="benefit-card-title">{item.title}</h3>
-                  <p className="benefit-card-desc">{item.desc}</p>
+        {/* Space-efficient compact 2x2 grid on mobile with proper padding */}
+        <div className="benefits-grid">
+          {benefits.map((item, idx) => {
+            const Icon = item.icon;
+            return (
+              <div key={idx} className="soil-card benefit-card">
+                <div className="benefit-icon-wrap">
+                  <Icon size={18} aria-hidden="true" />
                 </div>
-              );
-            })}
-          </div>
+                <h3 className="benefit-card-title">{item.title}</h3>
+                <p className="benefit-card-desc">{item.desc}</p>
+              </div>
+            );
+          })}
         </div>
 
         {/* Comparison - card layout on mobile, table on desktop */}
@@ -64,12 +79,12 @@ export default function HealthBenefits() {
               <div key={i} className="comparison-item">
                 <div className="comparison-attr">{c.attr}</div>
                 <IconText
-                  icon={<Check size={16} color="var(--secondary)" aria-hidden="true" />}
+                  icon={<Check size={15} color="var(--secondary)" aria-hidden="true" />}
                   text={c.good}
                   className="comparison-good"
                 />
                 <IconText
-                  icon={<X size={16} color="#ba1a1a" aria-hidden="true" />}
+                  icon={<X size={15} color="#ba1a1a" aria-hidden="true" />}
                   text={c.bad}
                   className="comparison-bad"
                 />
@@ -114,99 +129,92 @@ export default function HealthBenefits() {
         .icon-text-row {
           display: inline-flex;
           align-items: center;
-          gap: 0.45rem;
+          gap: 0.4rem;
         }
         .icon-text-icon {
           display: inline-flex;
           align-items: center;
           justify-content: center;
           flex-shrink: 0;
-          width: 18px;
-          height: 18px;
+          width: 16px;
+          height: 16px;
           line-height: 0;
         }
         .icon-text-icon svg {
           display: block;
         }
         .icon-text-label {
-          line-height: 1.4;
+          line-height: 1.35;
         }
 
         /* ---- Section ---- */
         .benefits-section {
-          padding: 3.5rem 0;
+          padding: 2.5rem 0;
           background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-container-low) 100%);
         }
         .benefits-header {
           text-align: center;
           max-width: 700px;
-          margin: 0 auto 2rem;
+          margin: 0 auto 1.5rem;
         }
         .benefits-title {
-          font-size: clamp(1.7rem, 4vw, 2.8rem);
-          margin-top: 0.75rem;
-          margin-bottom: 0.75rem;
+          font-size: clamp(1.7rem, 4vw, 2.7rem);
+          margin-top: 0.6rem;
+          margin-bottom: 0.5rem;
         }
         .benefits-subtitle {
           color: var(--text-variant);
-          font-size: clamp(0.92rem, 2vw, 1.1rem);
-          line-height: 1.6;
+          font-size: clamp(0.9rem, 2vw, 1.05rem);
+          line-height: 1.5;
         }
 
-        /* Horizontal scroll on mobile */
-        .benefits-scroll-wrap {
-          overflow-x: auto;
-          -webkit-overflow-scrolling: touch;
-          scroll-snap-type: x mandatory;
-          scrollbar-width: none;
-          margin: 0 -1rem;
-          padding: 0.5rem 1rem 1.5rem;
-        }
-        .benefits-scroll-wrap::-webkit-scrollbar { display: none; }
-        .benefits-cards {
-          display: flex;
-          gap: 1rem;
+        /* 2x2 grid on mobile with comfortable gutter padding */
+        .benefits-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 0.75rem;
+          margin-bottom: 1.5rem;
         }
         .benefit-card {
-          min-width: 240px;
-          max-width: 280px;
-          padding: 1.5rem;
+          padding: 0.95rem 0.85rem;
           display: flex;
           flex-direction: column;
-          gap: 0.75rem;
-          flex-shrink: 0;
-          scroll-snap-align: start;
+          gap: 0.35rem;
+          background: var(--bg-container-lowest);
+          border-radius: var(--radius-md);
         }
         .benefit-icon-wrap {
-          width: 44px; height: 44px;
-          border-radius: 10px;
+          width: 36px; height: 36px;
+          border-radius: 8px;
           background: var(--secondary-container);
           display: flex;
           align-items: center;
           justify-content: center;
           color: var(--on-secondary-container);
+          margin-bottom: 0.2rem;
+          flex-shrink: 0;
         }
         .benefit-card-title {
-          font-size: 1.1rem;
+          font-size: 0.95rem;
           font-family: var(--font-serif);
           color: var(--primary);
+          line-height: 1.25;
         }
         .benefit-card-desc {
           color: var(--text-variant);
-          font-size: 0.88rem;
-          line-height: 1.5;
+          font-size: 0.78rem;
+          line-height: 1.4;
         }
 
         /* ---- Comparison card ---- */
         .comparison-card {
-          margin-top: 2rem;
-          padding: 1.5rem;
+          padding: 1.15rem 1rem;
           background: var(--bg-container-lowest);
         }
         .comparison-title {
-          font-size: clamp(1.15rem, 3vw, 1.5rem);
+          font-size: clamp(1.05rem, 3vw, 1.4rem);
           text-align: center;
-          margin-bottom: 1.5rem;
+          margin-bottom: 1.15rem;
           color: var(--primary);
         }
 
@@ -214,51 +222,55 @@ export default function HealthBenefits() {
         .comparison-mobile {
           display: flex;
           flex-direction: column;
-          gap: 1.25rem;
+          gap: 0.9rem;
         }
         .comparison-item {
-          padding-bottom: 1.25rem;
+          padding-bottom: 0.9rem;
           border-bottom: 1px solid var(--outline-variant);
           display: flex;
           flex-direction: column;
-          gap: 0.4rem;
+          gap: 0.3rem;
         }
         .comparison-item:last-child { border-bottom: none; padding-bottom: 0; }
         .comparison-attr {
           font-weight: 700;
           color: var(--primary);
-          font-size: 0.92rem;
-          margin-bottom: 0.15rem;
+          font-size: 0.88rem;
+          margin-bottom: 0.1rem;
         }
         .comparison-good {
           color: var(--secondary);
           font-weight: 600;
-          font-size: 0.88rem;
+          font-size: 0.82rem;
         }
         .comparison-bad {
           color: var(--text-muted);
-          font-size: 0.85rem;
+          font-size: 0.8rem;
         }
 
         /* Desktop table - hidden on mobile */
         .comparison-table { display: none; }
 
         @media (min-width: 768px) {
-          .benefits-section { padding: 5.5rem 0; }
-          .benefits-scroll-wrap {
-            overflow-x: visible;
-            margin: 0;
-            padding: 0 0 2rem;
-          }
-          .benefits-cards {
-            display: grid;
+          .benefits-section { padding: 4.5rem 0; }
+          .benefits-header { margin-bottom: 2.25rem; }
+          .benefits-grid {
             grid-template-columns: repeat(4, 1fr);
             gap: 1.5rem;
+            margin-bottom: 2.5rem;
           }
           .benefit-card {
-            min-width: 0;
-            max-width: none;
+            padding: 1.35rem 1.25rem;
+            gap: 0.5rem;
           }
+          .benefit-icon-wrap {
+            width: 42px; height: 42px;
+            border-radius: 10px;
+            margin-bottom: 0.4rem;
+          }
+          .benefit-card-title { font-size: 1.1rem; }
+          .benefit-card-desc { font-size: 0.88rem; line-height: 1.5; }
+
           .comparison-card { padding: 2.5rem; }
           .comparison-mobile { display: none; }
           .comparison-table {
