@@ -1,6 +1,50 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Netlify Badge & Drawer Permanent Elimination -->
+    <style>
+      #netlify-drawer, .netlify-drawer, [data-netlify-drawer], [id^="netlify-drawer"], [class^="netlify-drawer"],
+      .netlify-badge, [data-netlify-badge], iframe[src*="netlify"], iframe[id*="netlify"],
+      div[id*="netlify"], div[class*="netlify"], button[data-testid="feedback-trigger"],
+      div[data-testid="feedback-drawer"], [id*="feedback-drawer"], [class*="feedback-drawer"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        position: absolute !important;
+        left: -99999px !important;
+        top: -99999px !important;
+        width: 0 !important;
+        height: 0 !important;
+        z-index: -99999 !important;
+      }
+    </style>
+    <script>
+      (function() {
+        var kill = function() {
+          var sel = [
+            '#netlify-drawer', '.netlify-drawer', '[data-netlify-drawer]', '[id^="netlify-drawer"]',
+            '[class^="netlify-drawer"]', '.netlify-badge', '[data-netlify-badge]', 'iframe[src*="netlify"]',
+            'iframe[id*="netlify"]', 'div[id*="netlify"]', 'div[class*="netlify"]',
+            'button[data-testid="feedback-trigger"]', 'div[data-testid="feedback-drawer"]'
+          ];
+          sel.forEach(function(s) {
+            document.querySelectorAll(s).forEach(function(el) {
+              if (el && el.parentNode) {
+                el.parentNode.removeChild(el);
+              }
+            });
+          });
+        };
+        if (typeof window !== 'undefined') {
+          window.addEventListener('DOMContentLoaded', kill);
+          window.addEventListener('load', kill);
+          if (window.MutationObserver) {
+            new MutationObserver(kill).observe(document.documentElement, { childList: true, subtree: true });
+          }
+        }
+      })();
+    </script>
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/webp" href="/images/logo.webp" />

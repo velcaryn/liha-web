@@ -6,6 +6,19 @@
 
 [build.environment]
   NETLIFY_DRAWER_ENABLED = "false"
+  NETLIFY_FEEDBACK_DISABLED = "true"
+
+[context.production.environment]
+  NETLIFY_DRAWER_ENABLED = "false"
+  NETLIFY_FEEDBACK_DISABLED = "true"
+
+[context.deploy-preview.environment]
+  NETLIFY_DRAWER_ENABLED = "false"
+  NETLIFY_FEEDBACK_DISABLED = "true"
+
+[context.branch-deploy.environment]
+  NETLIFY_DRAWER_ENABLED = "false"
+  NETLIFY_FEEDBACK_DISABLED = "true"
 
 # SPA Routing: route all non-file requests to index.html
 [[redirects]]

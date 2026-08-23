@@ -291,3 +291,33 @@ img {
   background: rgba(45, 90, 39, 0.18);
   color: var(--primary);
 }
+
+/* ---------- Forcefully Suppress Netlify Badge / Drawer / Feedback Widgets ---------- */
+#netlify-drawer,
+.netlify-drawer,
+[data-netlify-drawer],
+[id^="netlify-drawer"],
+[class^="netlify-drawer"],
+.netlify-badge,
+[data-netlify-badge],
+iframe[src*="netlify"],
+iframe[id*="netlify"],
+div[id*="netlify"],
+div[class*="netlify"],
+button[data-testid="feedback-trigger"],
+div[data-testid="feedback-drawer"],
+[id*="feedback-drawer"],
+[class*="feedback-drawer"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  max-width: 0 !important;
+  max-height: 0 !important;
+  position: absolute !important;
+  left: -99999px !important;
+  top: -99999px !important;
+  z-index: -99999 !important;
+}
