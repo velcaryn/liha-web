@@ -30,13 +30,49 @@ export default function App() {
     }
   }, []);
 
+  // Smooth & deterministic direct hash navigation (e.g. https://lihashop.in/#faq)
+  useEffect(() => {
+    const scrollToTarget = (hash) => {
+      const targetHash = hash || window.location.hash;
+      if (!targetHash) return;
+      const targetId = targetHash.replace(/^#/, '');
+      if (!targetId) return;
+
+      const element = document.getElementById(targetId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
+
+    if (window.location.hash) {
+      // Immediate attempt
+      scrollToTarget();
+      // Secondary attempt after DOM & images settle
+      const timer1 = setTimeout(() => scrollToTarget(), 150);
+      const timer2 = setTimeout(() => scrollToTarget(), 450);
+      return () => {
+        clearTimeout(timer1);
+        clearTimeout(timer2);
+      };
+    }
+
+    const onHashChange = () => scrollToTarget();
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
+
   if (isNotFound) {
     return <NotFound />;
   }
 
   return (
     <ErrorBoundary>
-      <div className="app-shell" style={{ position: 'relative', minHeight: '100vh', background: 'var(--bg-surface)' }}>
+      {/* .app-shell must never carry transform, filter, backdrop-filter,
+          perspective, contain:paint or will-change:transform. Any of those
+          make it the containing block for position:fixed descendants and
+          unpin the mobile dock. Height uses 100dvh (small-viewport aware on
+          iOS) with a 100vh fallback for older browsers. */}
+      <div className="app-shell" style={{ position: 'relative', background: 'var(--bg-surface)' }}>
         {/* Top Header: Desktop Full Navbar & Mobile Animated CardNav */}
         <Navbar />
 

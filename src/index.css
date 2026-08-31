@@ -56,6 +56,11 @@ html {
   scroll-behavior: smooth;
   background-color: var(--bg-surface);
   -webkit-text-size-adjust: 100%;
+  /* Must sit on html AND body together. With overflow-x:hidden on body only,
+     iOS Safari promotes body to the scroll container, and position:fixed
+     children then resolve against it - the bottom nav drifts up mid-screen
+     during scroll and snaps back on settle. Do not remove from either. */
+  overflow-x: hidden;
 }
 
 body {
@@ -66,6 +71,9 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Guarantees the viewport stays the containing block for fixed children. */
+  position: relative;
+  min-height: 100%;
 }
 
 /* Typography */
@@ -292,7 +300,12 @@ img {
   color: var(--primary);
 }
 
-/* ---------- Forcefully Suppress Netlify Badge / Drawer / Feedback Widgets ---------- */
+/* ---------- Forcefully Suppress Netlify Badge / Drawer / Feedback Widgets ----------
+   The live badge is <iframe id="nl-badge-frame"> (owner toolbar: nl-hud-frame),
+   injected at the edge after build. See index.html and netlify.toml. */
+#nl-badge-frame,
+#nl-hud-frame,
+iframe[id^="nl-"],
 #netlify-drawer,
 .netlify-drawer,
 [data-netlify-drawer],
@@ -320,4 +333,27 @@ div[data-testid="feedback-drawer"],
   left: -99999px !important;
   top: -99999px !important;
   z-index: -99999 !important;
+}
+
+/* ---------- Section Scroll Margins for Floating Header Clearance ---------- */
+section[id],
+div[id] {
+  scroll-margin-top: 85px;
+}
+
+@media (max-width: 899px) {
+  section[id],
+  div[id] {
+    scroll-margin-top: 72px;
+  }
+}
+
+/* ---------- App shell height ----------
+   100vh on iOS is the LARGE viewport (URL bar hidden), so it overshoots the
+   visible area while the bar is showing. 100dvh tracks the live viewport.
+   Order matters: vh first as the fallback, dvh second for browsers that
+   support it. See the note in App.jsx before adding effects to this element. */
+.app-shell {
+  min-height: 100vh;
+  min-height: 100dvh;
 }
