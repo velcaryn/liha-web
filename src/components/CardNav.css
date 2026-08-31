@@ -340,8 +340,10 @@
     white-space: nowrap;
   }
 
-  .nav-card-link:hover {
-    opacity: 1;
+  @media (hover: hover) {
+    .nav-card-link:hover {
+      opacity: 1;
+    }
   }
 
   .nav-card-link:active {

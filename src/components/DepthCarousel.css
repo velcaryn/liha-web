@@ -51,10 +51,12 @@
   transition: box-shadow 0.3s ease;
 }
 
-.depth-carousel__card:hover {
-  box-shadow:
-    0 32px 64px -16px rgba(50, 23, 13, 0.48),
-    0 12px 28px -8px rgba(50, 23, 13, 0.32);
+@media (hover: hover) {
+  .depth-carousel__card:hover {
+    box-shadow:
+      0 32px 64px -16px rgba(50, 23, 13, 0.48),
+      0 12px 28px -8px rgba(50, 23, 13, 0.32);
+  }
 }
 
 .depth-carousel__img {
@@ -131,11 +133,13 @@
   touch-action: manipulation;
 }
 
-.depth-carousel__arrow:hover {
-  background: #ffffff;
-  border-color: var(--primary-container);
-  transform: translateY(-50%) scale(1.08);
-  box-shadow: 0 6px 20px rgba(50, 23, 13, 0.2);
+@media (hover: hover) {
+  .depth-carousel__arrow:hover {
+    background: #ffffff;
+    border-color: var(--primary-container);
+    transform: translateY(-50%) scale(1.08);
+    box-shadow: 0 6px 20px rgba(50, 23, 13, 0.2);
+  }
 }
 
 .depth-carousel__arrow:active {
