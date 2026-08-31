@@ -20,6 +20,23 @@
   NETLIFY_DRAWER_ENABLED = "false"
   NETLIFY_FEEDBACK_DISABLED = "true"
 
+# ---- Netlify badge / HUD / RUM: neutralise at the edge ----
+# Netlify injects <script src="/.netlify/scripts/hud"> and
+# /.netlify/scripts/rum into every published HTML response, AFTER our build.
+# These rules are matched before the SPA catch-all, so the injected tags
+# resolve to an empty 204 and the badge iframe is never constructed.
+[[redirects]]
+  from = "/.netlify/scripts/hud"
+  to = "/nf-noop.js"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/.netlify/scripts/rum"
+  to = "/nf-noop.js"
+  status = 200
+  force = true
+
 # SPA Routing: route all non-file requests to index.html
 [[redirects]]
   from = "/*"
