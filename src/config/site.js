@@ -14,7 +14,7 @@ export const brand = {
   name: "Liha's Karuppati",
   shortName: 'Liha',
   tagline: 'Palm & Soil',
-  domain: 'https://lihaskaruppati.com',
+  domain: 'https://lihashop.in',
   logo: '/images/logo.webp',
   ogImage: '/images/og-preview.jpg',
   description:
@@ -28,7 +28,8 @@ export const contact = {
   phoneDisplay: '+91 95979 59549', // as shown to humans
   email: null,
   address: null,
-  instagram: 'https://instagram.com/lihas_karuppati',
+  instagram: 'https://www.instagram.com/lihas_karupatti/',
+  instagramHandle: 'lihas_karupatti',
 };
 
 export const phoneHref = `tel:+${contact.phone}`;

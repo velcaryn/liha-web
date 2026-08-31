@@ -1,3 +1,4 @@
+import { contact } from '../config/site';
 import React from 'react';
 import { ExternalLink } from 'lucide-react';
 
@@ -11,7 +12,7 @@ function InstagramIcon({ size = 18, color = 'currentColor' }) {
   );
 }
 
-const INSTAGRAM_HANDLE = 'lihas_karupatti';
+const INSTAGRAM_HANDLE = contact.instagramHandle;
 const INSTAGRAM_URL = `https://www.instagram.com/${INSTAGRAM_HANDLE}/`;
 
 export default function InstagramFeed() {
@@ -85,9 +86,11 @@ export default function InstagramFeed() {
           text-decoration: none;
           transition: color 0.2s ease;
         }
-        .ig-handle-link:hover {
-          color: var(--secondary-hover);
-          text-decoration: underline;
+        @media (hover: hover) {
+          .ig-handle-link:hover {
+            color: var(--secondary-hover);
+            text-decoration: underline;
+          }
         }
 
         .ig-embed-wrapper {

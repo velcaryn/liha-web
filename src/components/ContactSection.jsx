@@ -101,13 +101,13 @@ export default function ContactSection() {
                 </div>
               </a>
 
-              <a href="https://www.instagram.com/lihas_karupatti/" target="_blank" rel="noopener noreferrer" className="contact-info-item">
+              <a href={contact.instagram} target="_blank" rel="noopener noreferrer" className="contact-info-item">
                 <div className="contact-info-icon" style={{ background: 'linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)' }}>
                   <InstagramIcon size={18} color="#ffffff" />
                 </div>
                 <div>
                   <div className="contact-info-label">Instagram Community</div>
-                  <div className="contact-info-value">@lihas_karupatti</div>
+                  <div className="contact-info-value">@{contact.instagramHandle}</div>
                 </div>
               </a>
             </div>
@@ -366,8 +366,10 @@ export default function ContactSection() {
           transition: all 0.2s ease;
           touch-action: manipulation;
         }
-        .custom-select-trigger:hover {
-          border-color: var(--primary-container);
+        @media (hover: hover) {
+          .custom-select-trigger:hover {
+            border-color: var(--primary-container);
+          }
         }
         .custom-select-trigger.open {
           border-color: var(--secondary);
@@ -432,8 +434,12 @@ export default function ContactSection() {
         .custom-select-option:last-child {
           border-bottom: none;
         }
-        .custom-select-option:hover {
-          background: var(--bg-container-low);
+        /* Guarded: on touch this highlight sticks after a tap and reads
+           as a selected option. */
+        @media (hover: hover) {
+          .custom-select-option:hover {
+            background: var(--bg-container-low);
+          }
         }
         .custom-select-option.selected {
           background: #f0fdf4;

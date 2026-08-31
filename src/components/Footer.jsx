@@ -66,9 +66,9 @@ export default function Footer({ onOpenPolicy }) {
           <div className="footer-connect-col">
             <h4 className="footer-section-title">Direct Connect</h4>
             <div className="footer-connect-items">
-              <a href="https://www.instagram.com/lihas_karupatti/" target="_blank" rel="noopener noreferrer" className="footer-contact-chip">
+              <a href={contact.instagram} target="_blank" rel="noopener noreferrer" className="footer-contact-chip">
                 <InstagramIcon size={14} />
-                <span>@lihas_karupatti</span>
+                <span>@{contact.instagramHandle}</span>
               </a>
               <a href={waDefault} target="_blank" rel="noopener noreferrer" className="footer-contact-chip">
                 <MessageCircle size={14} aria-hidden="true" />
