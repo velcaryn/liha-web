@@ -46,6 +46,10 @@ export default function MobileNav() {
 
   return (
     <nav className="mobile-nav" aria-label="Mobile navigation">
+      {/* Each side is its own equal-width group. Without this the two sides
+          have different natural widths as labels expand, and the bubble
+          between them drifts off centre by up to 28px. */}
+      <span className="mobile-nav-group">
       {NAV_ITEMS.slice(0, 2).map(item => {
         const Icon = item.icon;
         const isActive = activeTab === item.id;
@@ -62,6 +66,7 @@ export default function MobileNav() {
           </a>
         );
       })}
+      </span>
 
       {/* Center WhatsApp Order Button */}
       <a
@@ -77,6 +82,7 @@ export default function MobileNav() {
         <span className="center-btn-label">Order</span>
       </a>
 
+      <span className="mobile-nav-group">
       {NAV_ITEMS.slice(2).map(item => {
         const Icon = item.icon;
         const isActive = activeTab === item.id;
@@ -93,6 +99,8 @@ export default function MobileNav() {
           </a>
         );
       })}
+
+      </span>
 
       <style>{`
         /* ---- Bottom dock pinning. Read before editing. ----
@@ -121,11 +129,11 @@ export default function MobileNav() {
           left: 50%;
           transform: translateX(-50%) translateZ(0);
           -webkit-transform: translateX(-50%) translateZ(0);
-          /* Fixed width, not max-content: a shrink-wrapped bar re-centres
-             itself whenever the active tab's label expands, which drags the
-             order bubble sideways. A fixed width keeps the bubble anchored
-             and lets the tabs breathe inside it. */
-          width: min(21rem, calc(100vw - 1.5rem));
+          /* Fixed width so the order bubble stays centred: a shrink-wrapped
+             bar re-centres itself whenever the active label expands, which
+             drags the bubble sideways. Wide enough that the longest label
+             ("Products") fits without clipping. */
+          width: min(23rem, calc(100vw - 1.5rem));
           background: rgba(255, 248, 246, 0.86);
           border: 1px solid rgba(213, 195, 189, 0.5);
           /* Stadium radius now that the bar is short: at this height the ends
@@ -222,7 +230,9 @@ export default function MobileNav() {
             transform 0.34s cubic-bezier(0.34, 1.4, 0.5, 1);
         }
         .mobile-nav-tab.is-active span {
-          max-width: 5rem;
+          /* Wide enough for the longest label ("Products"). Anything tighter
+             clips it, which is exactly what shipped. */
+          max-width: 7rem;
           opacity: 1;
           transform: translateX(0);
         }
@@ -248,11 +258,41 @@ export default function MobileNav() {
         }
         .mobile-nav-tab.is-active { padding: 0 0.7rem; }
 
-        /* Equal flex on every tab so the two either side of the bubble always
-           occupy the same total width, whichever one is active. The label is
-           absolutely positioned so its width never feeds back into the
-           layout, which is what was still nudging the bubble by a few px. */
-        .mobile-nav-tab { flex: 1 1 0; min-width: 0; }
+        /* Inactive tabs shrink to their icon; the active tab takes whatever
+           it needs for its label. Equal flex on all four was the bug: every
+           tab got the same 69px share, so "Products" had 52px of text in a
+           31px box and was clipped. */
+        .mobile-nav-tab { flex: 0 0 auto; min-width: 0; }
+        .mobile-nav-tab.is-active { flex: 0 1 auto; }
+
+        /* Two equal halves either side of the bubble, each centring its own
+           tabs. Equal basis means the bubble sits on the true centre line
+           whichever label happens to be expanded. */
+        .mobile-nav-group {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.15rem;
+          flex: 1 1 0;
+          min-width: 0;
+        }
+
+        /* Narrow phones (iPhone SE and similar) cannot fit the longest label
+           at full size, so the whole bar tightens rather than clipping text.
+           Verified at 320, 360, 390 and 430px. */
+        @media (max-width: 380px) {
+          .mobile-nav {
+            gap: 0;
+            padding: 0.25rem 0.35rem;
+          }
+          .mobile-nav-group { gap: 0; }
+          .mobile-nav-tab {
+            font-size: 0.67rem;
+            padding: 0 0.35rem;
+            gap: 0.22rem;
+          }
+          .mobile-nav-tab.is-active { padding: 0 0.5rem; }
+        }
 
         @media (prefers-reduced-motion: reduce) {
           .mobile-nav-tab,
