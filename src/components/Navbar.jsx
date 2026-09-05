@@ -12,10 +12,10 @@ const NAV_CARDS = [
     bgColor: "#32170d",
     textColor: "#ffffff",
     links: [
-      { label: "Karuppati (கருப்பட்டி)", href: "#products", ariaLabel: "Pure Dark Palm Jaggery" },
-      { label: "Panam Karkandu (பனங்கற்கண்டு)", href: "#products", ariaLabel: "Palm Candy Crystals" },
-      { label: "Chukku Karuppati (சுக்கு)", href: "#products", ariaLabel: "Dry Ginger Palm Jaggery" },
-      { label: "Vattu Karuppati (வட்டு)", href: "#products", ariaLabel: "Rare Male Palm Nectar" }
+      { label: "Karuppati (கருப்பட்டி)", href: "/karuppati", ariaLabel: "Pure Dark Palm Jaggery" },
+      { label: "Panam Karkandu (பனங்கற்கண்டு)", href: "/panam-karkandu", ariaLabel: "Palm Candy Crystals" },
+      { label: "Chukku Karuppati (சுக்கு)", href: "/chukku-karuppati", ariaLabel: "Dry Ginger Palm Jaggery" },
+      { label: "Vattu Karuppati (வட்டு)", href: "/vattu-karuppati", ariaLabel: "Rare Male Palm Nectar" }
     ]
   },
   {
@@ -41,6 +41,16 @@ const NAV_CARDS = [
 ];
 
 export default function Navbar() {
+  // On a product page a bare "#products" points at a section that does not
+  // exist there, so the link does nothing. Off the home page every anchor has
+  // to be prefixed with "/" to go back to the home page first. The brand mark
+  // is always a plain link home.
+  const onHome =
+    typeof window === 'undefined' ||
+    ['/', '', '/index.html'].includes(window.location.pathname.replace(/\/+$/, '') || '/');
+  const homeHref = onHome ? '#' : '/';
+  const sec = (hash) => (onHome ? hash : `/${hash}`);
+
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -183,7 +193,7 @@ export default function Navbar() {
     <header className="navbar-wrapper">
       {/* Desktop Floating Pill Island Header (>= 900px) */}
       <nav className="desktop-navbar">
-        <a href="#" className="desktop-brand">
+        <a href={homeHref} className="desktop-brand">
           <img src="/images/logo.webp" alt="Liha's Karuppati" className="desktop-logo" width="38" height="38" />
           <div className="desktop-brand-text">
             <span className="desktop-brand-title">Liha's Karuppati</span>
@@ -192,11 +202,11 @@ export default function Navbar() {
         </a>
 
         <div className="desktop-nav-links">
-          <a href="#products">Our Products</a>
-          <a href="#benefits">Health Benefits</a>
-          <a href="#heritage">Our Heritage</a>
-          <a href="#faq">FAQs</a>
-          <a href="#contact">Order</a>
+          <a href={sec('#products')}>Our Products</a>
+          <a href={sec('#benefits')}>Health Benefits</a>
+          <a href={sec('#heritage')}>Our Heritage</a>
+          <a href={sec('#faq')}>FAQs</a>
+          <a href={sec('#contact')}>Order</a>
         </div>
 
         <div className="desktop-actions">
@@ -220,7 +230,7 @@ export default function Navbar() {
       <div className="mobile-cardnav-container">
         <nav ref={navRef} className={`card-nav ${isExpanded ? 'open' : ''}`}>
           <div className="card-nav-top">
-            <a href="#" className="logo-container" onClick={closeMobileMenu}>
+            <a href={homeHref} className="logo-container" onClick={closeMobileMenu}>
               <img src="/images/logo.webp" alt="Liha's Karuppati" className="logo-image" width="38" height="38" />
               <div className="logo-text-col">
                 <span className="logo-title">Liha's Karuppati</span>

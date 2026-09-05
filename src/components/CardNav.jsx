@@ -12,10 +12,10 @@ const DEFAULT_ITEMS = [
     bgColor: "#32170d",
     textColor: "#ffffff",
     links: [
-      { label: "Karuppati (கருப்பட்டி)", href: "#products", ariaLabel: "Pure Dark Palm Jaggery" },
-      { label: "Panam Karkandu (பனங்கற்கண்டு)", href: "#products", ariaLabel: "Palm Candy Crystals" },
-      { label: "Chukku Karuppati (சுக்கு)", href: "#products", ariaLabel: "Dry Ginger Palm Jaggery" },
-      { label: "Vattu Karuppati (வட்டு)", href: "#products", ariaLabel: "Rare Male Palm Nectar" }
+      { label: "Karuppati (கருப்பட்டி)", href: "/karuppati", ariaLabel: "Pure Dark Palm Jaggery" },
+      { label: "Panam Karkandu (பனங்கற்கண்டு)", href: "/panam-karkandu", ariaLabel: "Palm Candy Crystals" },
+      { label: "Chukku Karuppati (சுக்கு)", href: "/chukku-karuppati", ariaLabel: "Dry Ginger Palm Jaggery" },
+      { label: "Vattu Karuppati (வட்டு)", href: "/vattu-karuppati", ariaLabel: "Rare Male Palm Nectar" }
     ]
   },
   {
