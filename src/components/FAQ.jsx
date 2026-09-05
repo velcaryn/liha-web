@@ -4,7 +4,12 @@ import { ChevronDown, HelpCircle } from 'lucide-react';
 import WhatsAppIcon from './WhatsAppIcon';
 
 
-const faqs = [
+// Exported as the single source of truth for FAQ content. The FAQPage
+// JSON-LD in index.html is generated from this array by
+// scripts/sync-faq-schema.mjs, so the two can never drift. Google treats
+// structured data that disagrees with the visible page as a spam signal.
+// Edit questions and answers here only.
+export const faqs = [
   {
     question: 'How long does Karuppati stay fresh and how should I store it?',
     answer: 'Pure Palm Jaggery has a natural shelf-life of 6 to 12 months. Store it in an airtight container in a cool, dry place away from direct moisture. Because our Karuppati is 100% natural with zero preservatives, refrigeration in warm humid months will help preserve its firm texture.'
