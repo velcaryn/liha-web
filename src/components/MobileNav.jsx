@@ -140,7 +140,11 @@ export default function MobileNav() {
           align-items: center;
           gap: 0.15rem;
           padding: 0.25rem 0.5rem;
-          position: relative;
+          /* NOTE: do not add a second position declaration here. This rule
+             already sets position: fixed above, and a later declaration in
+             the same block silently wins: a stray position: relative here
+             made the bar scroll away with the page, which read as the dock
+             vanishing at random. */
           /* Layer promotion is folded into the centring transform above, so
              iOS still composites this against the viewport. */
           will-change: transform;

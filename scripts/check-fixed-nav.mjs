@@ -52,6 +52,20 @@ if (!navRule) {
   if (!/position\s*:\s*fixed/.test(body)) {
     fail('.mobile-nav must be position: fixed.');
   }
+
+  // A second `position` later in the same block silently wins over the
+  // fixed one. This shipped: a stray `position: relative` left behind after
+  // an edit made the dock scroll away with the page, which reads to a user
+  // as the bar randomly disappearing.
+  const positions = body.match(/(^|[;{\s])position\s*:\s*[a-z-]+/g) || [];
+  if (positions.length > 1) {
+    fail(
+      `.mobile-nav declares position ${positions.length} times ` +
+      `(${positions.map((p) => p.trim().replace(/^[;{\s]+/, '')).join(', ')}).\n` +
+      '      The last one wins, so the fixed positioning is silently lost.\n' +
+      '      Keep exactly one position declaration in this rule.'
+    );
+  }
   // These create a containing block and unpin fixed descendants.
   for (const prop of ['backdrop-filter', 'filter', 'perspective']) {
     const re = new RegExp(`(^|[;{\\s])-?(webkit-)?${prop}\\s*:`, 'i');
