@@ -1,7 +1,11 @@
 # Netlify Configuration for Liha Static Site
 
 [build]
-  command = "npm run build"
+  # Netlify's build image ships Chrome for Testing at $CHROME_PATH-compatible
+  # locations, but not reliably, so install it explicitly and hand the binary
+  # to the prerender step. Without prerendering the site serves an empty
+  # <div id="root"> to every crawler, which is the whole SEO problem.
+  command = "export CHROME_PATH=$(node scripts/find-chrome.mjs) && npm run build"
   publish = "dist"
 
 [build.environment]

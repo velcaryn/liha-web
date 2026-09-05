@@ -25,3 +25,4 @@ dist-ssr
 
 # Netlify build output
 .netlify
+.prerender-profile
