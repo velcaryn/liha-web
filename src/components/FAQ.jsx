@@ -23,8 +23,8 @@ export const faqs = [
     answer: 'Pure, authentic palm jaggery does not curdle milk when added properly. For best results with hot tea or filter coffee, brew your beverage first, turn off the heat, and stir in powdered Karuppati just before serving.'
   },
   {
-    question: 'Is Liha Karuppati suitable for health-conscious and diabetic diets?',
-    answer: 'Palm jaggery has a low Glycemic Index (GI ~35 to 42) compared to refined white sugar (GI 65 to 70), which helps prevent sudden blood sugar spikes. It is packed with bioavailable iron, potassium, and calcium. However, individuals managing diabetes should consume it in moderation as part of a balanced diet.'
+    question: 'Is Karuppati a good swap for refined sugar?',
+    answer: 'Published research places palm jaggery at a Glycemic Index of roughly 35 to 42, against 65 to 70 for refined white sugar, and because it is unrefined it keeps natural iron and trace minerals that refining removes. It is still a sugar and still adds calories, so treat it as a better-quality sweetener rather than a health food. If you are managing diabetes or any medical condition, please talk to your doctor before changing your diet.'
   },
   {
     question: 'How is pure Karuppati made and how does it differ from regular jaggery?',

@@ -1,35 +1,42 @@
 import React from 'react';
 import { Activity, ShieldCheck, Heart, Sparkles, Check, X } from 'lucide-react';
 
+// Copy rule for this section: describe what the product IS, and attribute
+// any nutrition figure to published research on palm jaggery rather than
+// stating it as a tested property of our batches. Never claim a health
+// outcome (boosts hemoglobin, combats fatigue, aids digestion): those are
+// medical claims, they fall under FSSAI rules in India, and Google applies
+// YMYL scrutiny to them. Swap these back only if you hold a lab report for
+// the specific batches being sold.
 const benefits = [
   {
     icon: Activity,
-    title: 'Low Glycemic Index',
-    desc: 'GI of 35-42 provides steady energy without triggering sudden blood sugar spikes.'
+    title: 'Naturally Low Glycemic',
+    desc: 'Published studies place palm jaggery at a GI of roughly 35 to 42, well below refined sugar.'
   },
   {
     icon: ShieldCheck,
-    title: 'Rich in Natural Iron',
-    desc: 'Packed with bioavailable iron to help boost hemoglobin and combat fatigue.'
+    title: 'Retains Natural Minerals',
+    desc: 'Unrefined nectar keeps the iron and trace minerals that refining strips out of white sugar.'
   },
   {
     icon: Heart,
-    title: 'Calcium & Minerals',
-    desc: 'Abundant in potassium, magnesium, and calcium to support bone strength.'
+    title: 'Nothing Added',
+    desc: 'No sulphur, no lime, no artificial colour and no preservatives at any stage.'
   },
   {
     icon: Sparkles,
-    title: 'Aids Digestion',
-    desc: 'Activates digestive enzymes naturally and helps soothe the digestive tract.'
+    title: 'Traditionally Valued',
+    desc: 'Used in Tamil households and Siddha practice for generations as a natural sweetener.'
   }
 ];
 
 const comparisons = [
   { attr: 'Processing', good: 'Unrefined, wood-fired nectar reduction', bad: 'Heavily chemical bleached & processed' },
-  { attr: 'Glycemic Index (GI)', good: 'Low GI (~35 to 42)', bad: 'High GI (~65 to 70)' },
-  { attr: 'Nutrient Value', good: 'Packed with Iron, Calcium, Potassium', bad: 'Zero nutrients, empty calories' },
-  { attr: 'Chemical Additives', good: '100% Free from sulfur, lime & colors', bad: 'Treated with sulfur dioxide & additives' },
-  { attr: 'Impact on Digestion', good: 'Stimulates natural digestive enzymes', bad: 'Causes energy crashes and acidity' }
+  { attr: 'Glycemic Index (GI)', good: 'Reported low (~35 to 42)', bad: 'Reported high (~65 to 70)' },
+  { attr: 'Nutrient Value', good: 'Retains natural iron and minerals', bad: 'Refined to near-pure sucrose' },
+  { attr: 'Chemical Additives', good: 'Free from sulphur, lime and colours', bad: 'Commonly sulphur-treated' },
+  { attr: 'Taste', good: 'Deep caramel, smoky finish', bad: 'Flat, one-note sweetness' }
 ];
 
 function IconText({ icon, text, className }) {
