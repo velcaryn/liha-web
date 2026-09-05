@@ -25,7 +25,10 @@ export default function ProductPage({ slug, onOpenPolicy }) {
   useEffect(() => {
     if (!product || !page) return;
     const url = `${brand.domain}/${slug}`;
-    const title = `${product.name} (${product.tamil}) | ${brand.name}`;
+    // Title carries the buying intent, not just the product name: people
+    // search "buy karuppati online", not "karuppati liha". Kept under the
+    // ~60 characters Google shows before truncating.
+    const title = `Buy ${product.name} Online | ${product.subtitle}`;
     const description = page.intro.slice(0, 155).trim();
 
     document.title = title;

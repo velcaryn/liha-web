@@ -79,12 +79,19 @@ export default function FAQ() {
                   </span>
                 </button>
 
-                {isOpen && (
+                {/* Always rendered, collapsed with CSS rather than removed
+                    from the DOM. Answers that only exist after a click are
+                    invisible to crawlers: GPTBot, PerplexityBot and Google's
+                    AI Overviews fetchers do not expand accordions, so the
+                    page offered questions with no answers to cite. hidden
+                    keeps it out of the accessibility tree when closed. */}
+                {(
                   <div
                     className="faq-answer-wrap"
                     id={`faq-answer-${idx}`}
                     role="region"
                     aria-labelledby={`faq-trigger-${idx}`}
+                    hidden={!isOpen}
                   >
                     <p className="faq-answer-text">{item.answer}</p>
                   </div>
