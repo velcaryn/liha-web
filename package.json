@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/prerender.mjs",
+    "build": "vite build && node scripts/prerender.mjs && node scripts/make-404.mjs",
     "preview": "vite preview",
     "check": "node scripts/check-brand-leak.mjs",
     "verify": "npm run check && npm run check:nav && npm run check:faq && npm run build",
