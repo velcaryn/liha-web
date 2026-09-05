@@ -30,6 +30,7 @@ export default function Products() {
                   width={900}
                   height={900}
                   className="product-img"
+                  fill
                   objectPosition={p.focus}
                   data-focus-slug={p.slug}
                   loading="lazy"

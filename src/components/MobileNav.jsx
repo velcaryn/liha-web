@@ -121,8 +121,11 @@ export default function MobileNav() {
           left: 50%;
           transform: translateX(-50%) translateZ(0);
           -webkit-transform: translateX(-50%) translateZ(0);
-          width: max-content;
-          max-width: calc(100vw - 1.5rem);
+          /* Fixed width, not max-content: a shrink-wrapped bar re-centres
+             itself whenever the active tab's label expands, which drags the
+             order bubble sideways. A fixed width keeps the bubble anchored
+             and lets the tabs breathe inside it. */
+          width: min(21rem, calc(100vw - 1.5rem));
           background: rgba(255, 248, 246, 0.86);
           border: 1px solid rgba(213, 195, 189, 0.5);
           /* Stadium radius now that the bar is short: at this height the ends
@@ -137,6 +140,7 @@ export default function MobileNav() {
           align-items: center;
           gap: 0.15rem;
           padding: 0.25rem 0.5rem;
+          position: relative;
           /* Layer promotion is folded into the centring transform above, so
              iOS still composites this against the viewport. */
           will-change: transform;
@@ -187,7 +191,7 @@ export default function MobileNav() {
           min-height: 44px;
           position: relative;
           touch-action: manipulation;
-          transition: color 0.15s, background-color 0.15s;
+          /* Transition is declared with the active-state rules below. */
           -webkit-tap-highlight-color: transparent;
         }
         .mobile-nav-tab::after {
@@ -206,15 +210,50 @@ export default function MobileNav() {
           overflow: hidden;
           white-space: nowrap;
           opacity: 0;
-          transition: max-width 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+          transform: translateX(-4px);
+          /* Slight overshoot so the label springs out rather than sliding. */
+          transition:
+            max-width 0.34s cubic-bezier(0.34, 1.4, 0.5, 1),
+            opacity 0.22s ease 0.04s,
+            transform 0.34s cubic-bezier(0.34, 1.4, 0.5, 1);
         }
         .mobile-nav-tab.is-active span {
           max-width: 5rem;
           opacity: 1;
+          transform: translateX(0);
         }
         .mobile-nav-tab.is-active {
           background: var(--secondary-container);
           color: var(--primary);
+        }
+        /* The icon lifts as its tab takes focus. */
+        .mobile-nav-tab svg {
+          transition: transform 0.3s cubic-bezier(0.34, 1.4, 0.5, 1);
+        }
+        .mobile-nav-tab.is-active svg {
+          transform: translateY(-1px) scale(1.08);
+        }
+
+        /* The chip background is what actually reads as movement between
+           tabs, so give it the same spring as the label. */
+        .mobile-nav-tab {
+          transition:
+            color 0.2s ease,
+            background-color 0.28s cubic-bezier(0.34, 1.4, 0.5, 1),
+            padding 0.3s cubic-bezier(0.34, 1.4, 0.5, 1);
+        }
+        .mobile-nav-tab.is-active { padding: 0 0.7rem; }
+
+        /* Equal flex on every tab so the two either side of the bubble always
+           occupy the same total width, whichever one is active. The label is
+           absolutely positioned so its width never feeds back into the
+           layout, which is what was still nudging the bubble by a few px. */
+        .mobile-nav-tab { flex: 1 1 0; min-width: 0; }
+
+        @media (prefers-reduced-motion: reduce) {
+          .mobile-nav-tab,
+          .mobile-nav-tab span,
+          .mobile-nav-tab svg { transition: none; }
         }
         .mobile-nav-tab:active {
           color: var(--primary);
@@ -230,6 +269,9 @@ export default function MobileNav() {
         /* The order button is the primary action, so it sits proud of the bar
            rather than sitting in the row. It needs the dock to allow overflow
            (see the contain note above) or the top of the circle is clipped. */
+        /* The order button is the fixed anchor of the bar. Tabs either side
+           expand and contract as the active section changes; this stays put,
+           so the primary action never moves under the thumb. */
         .mobile-nav-center-btn {
           display: flex;
           flex-direction: column;
@@ -237,10 +279,12 @@ export default function MobileNav() {
           justify-content: center;
           text-decoration: none;
           position: relative;
-          /* Sits in the row now rather than towering over a tall bar: on a
-             short pill a big overhang looks bolted on. */
           top: -10px;
-          margin: 0 0.15rem;
+          margin: 0;
+          /* Stays in the flex flow (absolute positioning escapes the promoted
+             layer on .mobile-nav), but never grows or shrinks, so the tabs
+             resizing around it cannot squeeze it. */
+          flex: 0 0 46px;
           touch-action: manipulation;
           -webkit-tap-highlight-color: transparent;
         }

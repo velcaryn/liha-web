@@ -45,6 +45,9 @@ export default function FrameTool() {
       const down = (e) => {
         dragging = true;
         img.style.cursor = 'grabbing';
+        // Show the crop edges only while dragging, so the framing can be
+        // judged against the box the visitor will actually see.
+        img.parentElement?.classList.add('is-framing');
         const pt = e.touches ? e.touches[0] : e;
         startX = pt.clientX; startY = pt.clientY;
         [baseX, baseY] = parse();
@@ -68,7 +71,11 @@ export default function FrameTool() {
         e.preventDefault();
       };
 
-      const up = () => { dragging = false; img.style.cursor = 'grab'; };
+      const up = () => {
+        dragging = false;
+        img.style.cursor = 'grab';
+        img.parentElement?.classList.remove('is-framing');
+      };
 
       img.addEventListener('mousedown', down);
       img.addEventListener('touchstart', down, { passive: false });

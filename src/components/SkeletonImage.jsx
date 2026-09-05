@@ -11,7 +11,20 @@ import React, { useEffect, useRef, useState } from 'react';
  * the right space and the page reflows on load, which is the layout shift
  * this is meant to prevent.
  */
-export default function SkeletonImage({ src, alt, width, height, className = '', objectPosition, ...rest }) {
+export default function SkeletonImage({
+  src,
+  alt,
+  width,
+  height,
+  className = '',
+  objectPosition,
+  // fill: let an ancestor decide the box instead of reserving one from
+  // width/height. The product cards crop a square photo into a fixed-height
+  // landscape frame, and an aspect-ratio wrapper would undo that crop, which
+  // is exactly what stopped object-position from doing anything.
+  fill = false,
+  ...rest
+}) {
   const [loaded, setLoaded] = useState(false);
   const ref = useRef(null);
 
@@ -22,8 +35,8 @@ export default function SkeletonImage({ src, alt, width, height, className = '',
 
   return (
     <span
-      className={`skeleton-wrap${loaded ? '' : ' skeleton'}`}
-      style={{ aspectRatio: `${width} / ${height}` }}
+      className={`skeleton-wrap${fill ? ' skeleton-wrap--fill' : ''}${loaded ? '' : ' skeleton'}`}
+      style={fill ? undefined : { aspectRatio: `${width} / ${height}` }}
     >
       <img
         ref={ref}
