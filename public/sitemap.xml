@@ -1,39 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Fragment URLs (/#products, /#faq) were removed on 2026-09-05. Google treats
+  a fragment as the same document as the page it hangs off, so listing them
+  declared one page six times rather than six pages. Real additional URLs
+  need real routes; see the SEO plan.
+-->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://lihashop.in/</loc>
-    <lastmod>2026-08-22</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://lihashop.in/#products</loc>
-    <lastmod>2026-08-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://lihashop.in/#benefits</loc>
-    <lastmod>2026-08-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://lihashop.in/#heritage</loc>
-    <lastmod>2026-08-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://lihashop.in/#faq</loc>
-    <lastmod>2026-08-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://lihashop.in/#contact</loc>
-    <lastmod>2026-08-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
   </url>
 </urlset>
