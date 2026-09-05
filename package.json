@@ -12,7 +12,8 @@
     "check:nav": "node scripts/check-fixed-nav.mjs",
     "prerender": "node scripts/prerender.mjs",
     "sync:faq": "node scripts/sync-faq-schema.mjs",
-    "check:faq": "node scripts/sync-faq-schema.mjs --check"
+    "check:faq": "node scripts/sync-faq-schema.mjs --check",
+    "indexnow": "node scripts/indexnow.mjs"
   },
   "dependencies": {
     "gsap": "^3.15.0",
