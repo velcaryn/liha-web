@@ -52,7 +52,11 @@ export default function ProductPage({ slug, onOpenPolicy }) {
     setMeta('meta[property="og:title"]', 'content', title);
     setMeta('meta[property="og:description"]', 'content', description);
     setMeta('meta[property="og:url"]', 'content', url);
-    setMeta('meta[property="og:image"]', 'content', `${brand.domain}${product.img}`);
+    // og:image is left as the site-wide 1200x630 JPEG. Pointing it at the
+    // product WebP contradicted the inherited og:image:type (image/jpeg) and
+    // og:image:width/height (1200x630) tags, and WhatsApp, which is how this
+    // shop actually gets shared, does not reliably render WebP previews.
+    // A per-product preview needs a real 1200x630 JPEG rendered for it.
     setMeta('meta[name="twitter:title"]', 'content', title);
     setMeta('meta[name="twitter:description"]', 'content', description);
 
@@ -88,6 +92,17 @@ export default function ProductPage({ slug, onOpenPolicy }) {
           category: 'Palm Jaggery',
           brand: { '@type': 'Brand', name: brand.name },
           url,
+          // No price: nothing on this site quotes one, and inventing a
+          // number for a rich result that then contradicts what we tell a
+          // customer on WhatsApp is worse than having no price at all. Add a
+          // real price here and Google can show it in results.
+          offers: {
+            '@type': 'Offer',
+            url,
+            availability: 'https://schema.org/InStock',
+            priceCurrency: 'INR',
+            seller: { '@id': `${brand.domain}/#store` },
+          },
         },
         {
           '@type': 'BreadcrumbList',
