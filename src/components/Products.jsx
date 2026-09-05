@@ -23,7 +23,7 @@ export default function Products() {
               {/* Image and title link to the product's own page. The card is
                   not wrapped in a single anchor because it already contains
                   the WhatsApp order link, and nesting anchors is invalid. */}
-              <a href={`/${p.slug}`} className="product-img-wrap product-img-link">
+              <a href={`/${p.slug}/`} className="product-img-wrap product-img-link">
                 <SkeletonImage
                   src={p.img}
                   alt={`${p.name} (${p.tamil})`}
@@ -43,7 +43,7 @@ export default function Products() {
 
               <div className="product-body">
                 <h3 className="product-name">
-                  <a href={`/${p.slug}`} className="product-name-link">
+                  <a href={`/${p.slug}/`} className="product-name-link">
                     {p.name} <span className="product-tamil" lang="ta">({p.tamil})</span>
                   </a>
                 </h3>
@@ -73,7 +73,7 @@ export default function Products() {
                 {/* Internal link to the product's own page. This is how
                     crawlers discover those routes, and how a visitor who
                     wants detail gets it without leaving for WhatsApp. */}
-                <a href={`/${p.slug}`} className="product-learn-more">
+                <a href={`/${p.slug}/`} className="product-learn-more">
                   Read about {p.name} &rsaquo;
                 </a>
               </div>

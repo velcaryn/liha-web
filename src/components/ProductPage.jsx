@@ -24,7 +24,11 @@ export default function ProductPage({ slug, onOpenPolicy }) {
   // in this stack, and the prerender step bakes the result into each file.
   useEffect(() => {
     if (!product || !page) return;
-    const url = `${brand.domain}/${slug}`;
+    // Trailing slash: Netlify serves these as directory index files and
+    // 301s /karuppati to /karuppati/. The canonical has to name the URL that
+    // actually returns 200, or it points at a redirect and splits the
+    // ranking signal between two addresses.
+    const url = `${brand.domain}/${slug}/`;
     // Title carries the buying intent, not just the product name: people
     // search "buy karuppati online", not "karuppati liha". Kept under the
     // ~60 characters Google shows before truncating.
@@ -171,7 +175,7 @@ export default function ProductPage({ slug, onOpenPolicy }) {
                 .filter((p) => p.slug !== slug)
                 .map((p) => (
                   <li key={p.slug}>
-                    <a href={`/${p.slug}`}>
+                    <a href={`/${p.slug}/`}>
                       {p.name} <span lang="ta">({p.tamil})</span>
                     </a>
                   </li>
