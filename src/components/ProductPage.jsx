@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { products, productPages, brand, waLink } from '../config/site';
 import WhatsAppIcon from './WhatsAppIcon';
+import SkeletonImage from './SkeletonImage';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import MobileNav from './MobileNav';
@@ -125,12 +126,12 @@ export default function ProductPage({ slug, onOpenPolicy }) {
             </a>
           </header>
 
-          <img
+          <SkeletonImage
             src={product.img}
             alt={`${product.name} (${product.tamil}) from ${brand.name}`}
+            width={900}
+            height={900}
             className="product-page-img"
-            width="720"
-            height="540"
             loading="eager"
             decoding="async"
           />

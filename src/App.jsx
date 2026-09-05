@@ -17,6 +17,7 @@ import MobileNav from './components/MobileNav';
 import PolicyModal from './components/PolicyModal';
 import NotFound from './components/NotFound';
 import ProductPage from './components/ProductPage';
+import RouteLoader from './components/RouteLoader';
 import WhatsAppIcon from './components/WhatsAppIcon';
 
 export default function App() {
@@ -76,6 +77,7 @@ export default function App() {
           onOpenPolicy={(key) => setActivePolicy(key)}
         />
         <PolicyModal policyKey={activePolicy} onClose={() => setActivePolicy(null)} />
+        <RouteLoader />
       </ErrorBoundary>
     );
   }
@@ -130,6 +132,8 @@ export default function App() {
           <WhatsAppIcon size={22} color="#ffffff" />
           <span>Order on WhatsApp</span>
         </a>
+
+        <RouteLoader />
       </div>
     </ErrorBoundary>
   );

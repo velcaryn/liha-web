@@ -1,5 +1,6 @@
 import React from 'react';
 import WhatsAppIcon from './WhatsAppIcon';
+import SkeletonImage from './SkeletonImage';
 import { products, copy, waOrder } from '../config/site';
 
 
@@ -23,9 +24,11 @@ export default function Products() {
                   not wrapped in a single anchor because it already contains
                   the WhatsApp order link, and nesting anchors is invalid. */}
               <a href={`/${p.slug}`} className="product-img-wrap product-img-link">
-                <img
+                <SkeletonImage
                   src={p.img}
                   alt={`${p.name} (${p.tamil})`}
+                  width={900}
+                  height={900}
                   className="product-img"
                   loading="lazy"
                   decoding="async"
