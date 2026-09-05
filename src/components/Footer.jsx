@@ -94,8 +94,17 @@ export default function Footer({ onOpenPolicy }) {
           background: var(--primary);
           color: var(--on-primary);
           padding: 2.25rem 0 1.5rem 0;
-          padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
           border-top: 2px solid var(--primary-container);
+        }
+
+        /* The mobile dock floats clear of the bottom edge, so the footer has
+           to reserve the bar height plus the gap underneath it, or the last
+           row sits behind the bar. Mobile only: the dock is hidden at 900px
+           and above. */
+        @media (max-width: 899px) {
+          .liha-footer {
+            padding-bottom: calc(8rem + env(safe-area-inset-bottom, 0px));
+          }
         }
 
         .footer-grid {

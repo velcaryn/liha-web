@@ -108,16 +108,26 @@ export default function MobileNav() {
               entirely while looking identical. */
         .mobile-nav {
           position: fixed;
-          bottom: 0; left: 0; right: 0;
-          background: rgba(255, 248, 246, 0.94);
-          border-top: 1px solid rgba(213, 195, 189, 0.7);
-          box-shadow: 0 -2px 10px rgba(50, 23, 13, 0.05);
+          /* Detached floating pill. The safe-area inset is applied as an
+             offset from the bottom, NOT as inner padding: the bar no longer
+             reaches the screen edge, so padding would leave a gap inside the
+             pill while the pill itself sat on the home indicator. */
+          bottom: calc(0.65rem + env(safe-area-inset-bottom, 0px));
+          left: 0.75rem;
+          right: 0.75rem;
+          background: rgba(255, 248, 246, 0.82);
+          border: 1px solid rgba(213, 195, 189, 0.55);
+          /* 22px reads as a modern floating bar. A full stadium radius makes
+             the outer tabs sit awkwardly inside the curve. */
+          border-radius: 22px;
+          box-shadow:
+            0 10px 30px -6px rgba(50, 23, 13, 0.18),
+            0 2px 8px rgba(50, 23, 13, 0.06);
           z-index: 90;
           display: flex;
           justify-content: space-around;
           align-items: center;
-          padding: 0.15rem 0.35rem;
-          padding-bottom: calc(0.25rem + env(safe-area-inset-bottom, 0px));
+          padding: 0.35rem 0.3rem 0.3rem;
           /* Promote to its own layer so iOS composites it against the
              viewport rather than repositioning it per scroll frame. */
           transform: translateZ(0);
@@ -140,8 +150,11 @@ export default function MobileNav() {
           content: "";
           position: absolute;
           inset: 0;
-          backdrop-filter: blur(18px);
-          -webkit-backdrop-filter: blur(18px);
+          /* Must match the pill radius, or the blur paints square corners
+             behind the rounded bar. */
+          border-radius: inherit;
+          backdrop-filter: blur(20px) saturate(1.4);
+          -webkit-backdrop-filter: blur(20px) saturate(1.4);
           pointer-events: none;
           z-index: -1;
         }
@@ -156,7 +169,9 @@ export default function MobileNav() {
           text-decoration: none;
           font-size: 0.64rem;
           font-weight: 600;
-          padding: 0.2rem 0.35rem;
+          padding: 0.3rem 0.35rem 0.15rem;
+          /* Rounded hit area so the pressed state matches the pill shape. */
+          border-radius: var(--radius-md);
           /* Apple HIG / playbook section 10 minimum touch target. */
           min-height: 48px;
           flex: 1;
