@@ -357,3 +357,139 @@ div[id] {
   min-height: 100vh;
   min-height: 100dvh;
 }
+
+/* ---------- Per-product pages (/karuppati, /panam-karkandu, ...) ----------
+   Long-form editorial layout. Measure is capped near 68ch because these
+   pages are read, not skimmed, and full-width prose at 1200px is unreadable.
+   Top padding clears the fixed navbar. */
+.product-page {
+  padding-top: 7rem;
+  padding-bottom: 4rem;
+}
+
+.breadcrumb {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.breadcrumb a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+.breadcrumb [aria-current='page'] {
+  color: var(--text-main);
+  font-weight: 600;
+}
+@media (hover: hover) {
+  .breadcrumb a:hover { color: var(--secondary); text-decoration: underline; }
+}
+
+.product-page-head { max-width: 68ch; }
+
+.product-page-title {
+  font-family: var(--font-serif, inherit);
+  font-size: clamp(1.9rem, 4.5vw, 3rem);
+  line-height: 1.15;
+  color: var(--primary);
+  margin: 0.75rem 0 0.35rem;
+}
+
+.product-page-tamil {
+  font-size: 1.15rem;
+  color: var(--secondary);
+  margin: 0 0 1.25rem;
+  font-weight: 600;
+}
+
+.product-page-intro {
+  font-size: 1.08rem;
+  line-height: 1.75;
+  color: var(--text-main);
+  margin-bottom: 1.75rem;
+}
+
+.product-page-cta { margin-bottom: 2.5rem; }
+
+.product-page-img {
+  display: block;
+  width: 100%;
+  max-width: 620px;
+  height: auto;
+  border-radius: var(--radius-lg);
+  margin: 0 0 3rem;
+  background: var(--bg-container-lowest);
+}
+
+.product-page-section {
+  max-width: 68ch;
+  margin-bottom: 2.5rem;
+}
+.product-page-section h2 {
+  font-size: clamp(1.25rem, 2.5vw, 1.6rem);
+  color: var(--primary);
+  margin: 0 0 0.6rem;
+}
+.product-page-section p {
+  font-size: 1.02rem;
+  line-height: 1.75;
+  color: var(--text-main);
+  margin: 0 0 1.1rem;
+}
+
+.product-page-siblings {
+  border-top: 1px solid var(--bg-container-high);
+  padding-top: 2rem;
+  margin-top: 1rem;
+}
+.product-page-siblings h2 {
+  font-size: 1.2rem;
+  color: var(--primary);
+  margin: 0 0 1rem;
+}
+.product-page-siblings ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.product-page-siblings a {
+  display: inline-block;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--bg-container-high);
+  border-radius: var(--radius-full);
+  background: var(--bg-container-lowest);
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+@media (hover: hover) {
+  .product-page-siblings a:hover {
+    border-color: var(--secondary);
+    color: var(--secondary);
+  }
+}
+
+/* The fixed mobile dock overlaps the last section on small screens. */
+@media (max-width: 899px) {
+  .product-page { padding-top: 5.5rem; padding-bottom: 6rem; }
+}
+
+/* Internal link from each home page product card to its own page. */
+.product-learn-more {
+  display: block;
+  text-align: center;
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--secondary);
+  text-decoration: none;
+}
+@media (hover: hover) {
+  .product-learn-more:hover { text-decoration: underline; }
+}

@@ -27,12 +27,22 @@
  * no hydration-mismatch risk. Do not switch to hydrateRoot without also
  * making the prerendered output deterministic.
  */
-import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { join, extname } from 'node:path';
 import { spawn } from 'node:child_process';
 
 const DIST = 'dist';
+
+// Every route that must exist as its own crawlable HTML file. Netlify serves
+// index.html for unknown paths, so without these each product URL would ship
+// an empty <div id="root"> exactly like the home page did.
+const ROUTES = ['/', ...
+  (() => {
+    const cfg = readFileSync('src/config/site.js', 'utf8');
+    return [...cfg.matchAll(/slug:\s*'([^']+)'/g)].map((m) => `/${m[1]}`);
+  })(),
+];
 const PORT = 4179;
 const CDP_PORT = 9333;
 
@@ -126,48 +136,56 @@ const cdp = async (method, params, ws, state) =>
   });
   await new Promise((r) => ws.addEventListener('open', r, { once: true }));
 
-  // Let React mount, fonts settle and the carousel lay out.
-  await sleep(6000);
-
   const evaluate = async (expression) =>
     (await cdp('Runtime.evaluate', { expression, returnByValue: true }, ws, state)).result.value;
 
-  // Strip the bundle's own <script> tags out of the captured DOM. They are
-  // re-appended from the original HTML below; capturing them here as well
-  // would load the bundle twice.
-  const bodyHTML = await evaluate(
-    `(() => {
-       const clone = document.body.cloneNode(true);
-       clone.querySelectorAll('script').forEach((s) => s.remove());
-       return clone.innerHTML;
-     })()`
-  );
-  const wordCount = await evaluate('document.body.innerText.trim().split(/\\s+/).length');
+  const template = readFileSync(join(DIST, 'index.html'), 'utf8');
+  const openTag = template.match(/<body[^>]*>/)[0];
+  const results = [];
+
+  for (const route of ROUTES) {
+    await cdp('Page.navigate', { url: `http://127.0.0.1:${PORT}${route}` }, ws, state);
+    // Let React mount, fonts settle and the route's head effect run.
+    await sleep(5000);
+
+    const bodyHTML = await evaluate(
+      `(() => {
+         const clone = document.body.cloneNode(true);
+         clone.querySelectorAll('script').forEach((s) => s.remove());
+         return clone.innerHTML;
+       })()`
+    );
+    const words = await evaluate('document.body.innerText.trim().split(/\\s+/).length');
+    // The per-route <head> is written by an effect, so capture it after paint.
+    const headHTML = await evaluate('document.head.innerHTML');
+
+    if (!bodyHTML || words < 200) {
+      console.error(`FAIL: ${route} captured only ${words} words. Refusing to write a broken page.`);
+      ws.close();
+      chrome.kill();
+      server.close();
+      process.exit(1);
+    }
+
+    let html = template.replace(/<head[^>]*>[\s\S]*<\/head>/, `<head>\n${headHTML}\n</head>`);
+    html = html.replace(/<body[^>]*>[\s\S]*<\/body>/, `${openTag}\n${bodyHTML}\n</body>`);
+
+    const outPath = route === '/'
+      ? join(DIST, 'index.html')
+      : join(DIST, route.replace(/^\//, ''), 'index.html');
+    if (route !== '/') mkdirSync(join(DIST, route.replace(/^\//, '')), { recursive: true });
+    writeFileSync(outPath, html);
+    results.push([route, words, (Buffer.byteLength(html) / 1024).toFixed(0)]);
+  }
 
   ws.close();
   try { await fetch(`http://127.0.0.1:${CDP_PORT}/json/close/${target.id}`); } catch {}
   chrome.kill();
   server.close();
 
-  if (!bodyHTML || wordCount < 200) {
-    console.error(`FAIL: prerender captured only ${wordCount} words. Refusing to write a broken page.`);
-    process.exit(1);
+  for (const [route, words, kb] of results) {
+    console.log(`OK: prerendered ${route.padEnd(20)} ${String(words).padStart(4)} words  ${kb} KB`);
   }
-
-  // Splice the rendered body in. Vite emits the module script in <head>
-  // with defer semantics, so the bundle still loads and nothing needs to be
-  // re-appended here - doing so would load it twice.
-  const htmlPath = join(DIST, 'index.html');
-  const html = readFileSync(htmlPath, 'utf8');
-  const openTag = html.match(/<body[^>]*>/)[0];
-  const rebuilt = html.replace(
-    /<body[^>]*>[\s\S]*<\/body>/,
-    `${openTag}\n${bodyHTML}\n</body>`
-  );
-
-  writeFileSync(htmlPath, rebuilt);
-  const kb = (Buffer.byteLength(rebuilt) / 1024).toFixed(1);
-  console.log(`OK: prerendered ${wordCount} words into dist/index.html (${kb} KB).`);
 })().catch((e) => {
   console.error('FAIL:', e.message);
   process.exit(1);

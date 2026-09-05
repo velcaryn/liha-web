@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { waLink } from './config/site';
+import { waLink, products } from './config/site';
 import ErrorBoundary from './components/ErrorBoundary';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -16,19 +16,22 @@ import Footer from './components/Footer';
 import MobileNav from './components/MobileNav';
 import PolicyModal from './components/PolicyModal';
 import NotFound from './components/NotFound';
+import ProductPage from './components/ProductPage';
 import WhatsAppIcon from './components/WhatsAppIcon';
 
 export default function App() {
   const [activePolicy, setActivePolicy] = useState(null);
-  const [isNotFound, setIsNotFound] = useState(false);
 
-  useEffect(() => {
-    const path = window.location.pathname;
-    const validPaths = ['/', '', '/index.html'];
-    if (!validPaths.includes(path)) {
-      setIsNotFound(true);
-    }
-  }, []);
+  // Route from the pathname. Deliberately not react-router: there are five
+  // static routes and no nested or dynamic segments, so a lookup is enough
+  // and it keeps the bundle small. Netlify serves index.html for every path
+  // (see the SPA redirect in netlify.toml) and the prerender step bakes each
+  // route to its own HTML file.
+  const path = typeof window === 'undefined' ? '/' : window.location.pathname;
+  const normalised = path.replace(/\/+$/, '') || '/';
+  const isHome = normalised === '/' || normalised === '/index.html';
+  const productSlug = products.find((p) => `/${p.slug}` === normalised)?.slug;
+  const isNotFound = !isHome && !productSlug;
 
   // Smooth & deterministic direct hash navigation (e.g. https://lihashop.in/#faq)
   useEffect(() => {
@@ -63,6 +66,18 @@ export default function App() {
 
   if (isNotFound) {
     return <NotFound />;
+  }
+
+  if (productSlug) {
+    return (
+      <ErrorBoundary>
+        <ProductPage
+          slug={productSlug}
+          onOpenPolicy={(key) => setActivePolicy(key)}
+        />
+        <PolicyModal policyKey={activePolicy} onClose={() => setActivePolicy(null)} />
+      </ErrorBoundary>
+    );
   }
 
   return (

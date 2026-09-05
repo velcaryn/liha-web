@@ -58,6 +58,13 @@ export default function Products() {
                   <WhatsAppIcon size={17} color="#ffffff" />
                   <span>Order {p.name}</span>
                 </a>
+
+                {/* Internal link to the product's own page. This is how
+                    crawlers discover those routes, and how a visitor who
+                    wants detail gets it without leaving for WhatsApp. */}
+                <a href={`/${p.slug}`} className="product-learn-more">
+                  Read about {p.name}
+                </a>
               </div>
             </div>
           ))}

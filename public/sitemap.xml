@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Fragment URLs (/#products, /#faq) were removed on 2026-09-05. Google treats
-  a fragment as the same document as the page it hangs off, so listing them
-  declared one page six times rather than six pages. Real additional URLs
-  need real routes; see the SEO plan.
+  Fragment URLs (/#products, /#faq) were removed on 2026-09-05: Google treats
+  a fragment as the same document as its parent, so listing them declared one
+  page six times. These are real routes, each prerendered to its own HTML file
+  with its own title, description, canonical and Product schema.
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
@@ -11,5 +11,29 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://lihashop.in/karuppati</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://lihashop.in/panam-karkandu</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://lihashop.in/chukku-karuppati</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://lihashop.in/vattu-karuppati</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
 </urlset>
