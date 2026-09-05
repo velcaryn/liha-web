@@ -3,15 +3,25 @@ import { waLink } from '../config/site';
 import { Home, ShoppingBag, HeartPulse, HelpCircle } from 'lucide-react';
 import WhatsAppIcon from './WhatsAppIcon';
 
+// hash: the in-page anchor when we are already on the home page.
+// The href is resolved per render, because a bare "#products" does nothing on
+// a product page: it has no such section. On those pages every tab points
+// back at the home page anchor instead.
 const NAV_ITEMS = [
-  { id: 'home', href: '#', label: 'Home', icon: Home, section: null },
-  { id: 'products', href: '#products', label: 'Products', icon: ShoppingBag, section: 'products' },
-  { id: 'benefits', href: '#benefits', label: 'Health', icon: HeartPulse, section: 'benefits' },
-  { id: 'faq', href: '#faq', label: 'FAQs', icon: HelpCircle, section: 'faq' },
+  { id: 'home', hash: '#', label: 'Home', icon: Home, section: null },
+  { id: 'products', hash: '#products', label: 'Products', icon: ShoppingBag, section: 'products' },
+  { id: 'benefits', hash: '#benefits', label: 'Health', icon: HeartPulse, section: 'benefits' },
+  { id: 'faq', hash: '#faq', label: 'FAQs', icon: HelpCircle, section: 'faq' },
 ];
 
 export default function MobileNav() {
   const [activeTab, setActiveTab] = useState('home');
+
+  const onHome =
+    typeof window === 'undefined' ||
+    ['/', '', '/index.html'].includes(window.location.pathname.replace(/\/+$/, '') || '/');
+
+  const hrefFor = (item) => (onHome ? item.hash : `/${item.hash}`);
 
   const updateActiveSection = useCallback(() => {
     const scrollY = window.scrollY + 200;
@@ -42,7 +52,7 @@ export default function MobileNav() {
         return (
           <a
             key={item.id}
-            href={item.href}
+            href={hrefFor(item)}
             className={`mobile-nav-tab${isActive ? ' is-active' : ''}`}
             aria-current={isActive ? 'true' : undefined}
           >
@@ -61,7 +71,7 @@ export default function MobileNav() {
         aria-label="Order on WhatsApp"
       >
         <div className="center-btn-bubble">
-          <WhatsAppIcon size={20} color="#ffffff" />
+          <WhatsAppIcon size={26} color="#ffffff" />
         </div>
         <span className="center-btn-label">Order</span>
       </a>
@@ -72,7 +82,7 @@ export default function MobileNav() {
         return (
           <a
             key={item.id}
-            href={item.href}
+            href={hrefFor(item)}
             className={`mobile-nav-tab${isActive ? ' is-active' : ''}`}
             aria-current={isActive ? 'true' : undefined}
           >
@@ -115,8 +125,13 @@ export default function MobileNav() {
           will-change: transform;
           /* Never inherit a transform/animation from an ancestor. */
           animation: none !important;
-          /* Keep the dock out of the page's scroll/layout calculations. */
-          contain: layout paint;
+          /* Layout containment ONLY. Do not add paint containment here: it
+             clips everything drawn outside the border box, which sliced the
+             top off the raised WhatsApp bubble. Layout alone gives the same
+             scroll isolation without the clipping. */
+          contain: layout;
+          /* The bubble is deliberately taller than the bar. */
+          overflow: visible;
         }
 
         /* Blur carrier. Isolated so backdrop-filter never sits on the fixed
@@ -160,29 +175,36 @@ export default function MobileNav() {
         }
 
         /* Subtle Center WhatsApp Button */
+        /* The order button is the primary action, so it sits proud of the bar
+           rather than sitting in the row. It needs the dock to allow overflow
+           (see the contain note above) or the top of the circle is clipped. */
         .mobile-nav-center-btn {
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-content: center;
+          justify-content: flex-end;
           text-decoration: none;
           position: relative;
-          top: -8px;
+          top: -18px;
           flex: 1;
           touch-action: manipulation;
           -webkit-tap-highlight-color: transparent;
         }
 
         .center-btn-bubble {
-          width: 44px;
-          height: 44px;
+          width: 54px;
+          height: 54px;
           border-radius: 50%;
           background: var(--secondary);
           display: flex;
           align-items: center;
           justify-content: center;
-          box-shadow: 0 3px 10px rgba(45, 90, 39, 0.3);
-          border: 2.5px solid var(--bg-surface);
+          /* Ring in the bar colour so the circle reads as lifted off the bar,
+             plus a shadow underneath for the same reason. */
+          border: 3px solid var(--bg-surface);
+          box-shadow:
+            0 6px 16px rgba(45, 90, 39, 0.34),
+            0 2px 6px rgba(50, 23, 13, 0.12);
           transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease;
         }
 
@@ -195,7 +217,7 @@ export default function MobileNav() {
           font-size: 0.62rem;
           font-weight: 700;
           color: var(--secondary);
-          margin-top: 0.1rem;
+          margin-top: 0.2rem;
           letter-spacing: 0.01em;
         }
 

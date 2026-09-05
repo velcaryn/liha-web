@@ -19,7 +19,10 @@ export default function Products() {
         <div className="products-grid">
           {products.map((p, idx) => (
             <div key={idx} className={`soil-card product-card ${p.grid}`}>
-              <div className="product-img-wrap">
+              {/* Image and title link to the product's own page. The card is
+                  not wrapped in a single anchor because it already contains
+                  the WhatsApp order link, and nesting anchors is invalid. */}
+              <a href={`/${p.slug}`} className="product-img-wrap product-img-link">
                 <img
                   src={p.img}
                   alt={`${p.name} (${p.tamil})`}
@@ -30,11 +33,13 @@ export default function Products() {
                 <div className="product-badge-pos">
                   <span className={`badge-pill ${p.badge.className}`}>{p.badge.label}</span>
                 </div>
-              </div>
+              </a>
 
               <div className="product-body">
                 <h3 className="product-name">
-                  {p.name} <span className="product-tamil" lang="ta">({p.tamil})</span>
+                  <a href={`/${p.slug}`} className="product-name-link">
+                    {p.name} <span className="product-tamil" lang="ta">({p.tamil})</span>
+                  </a>
                 </h3>
                 <div className="product-subtitle">{p.subtitle}</div>
                 <p className="product-desc">{p.desc}</p>
@@ -63,7 +68,7 @@ export default function Products() {
                     crawlers discover those routes, and how a visitor who
                     wants detail gets it without leaving for WhatsApp. */}
                 <a href={`/${p.slug}`} className="product-learn-more">
-                  Read about {p.name}
+                  Read about {p.name} &rsaquo;
                 </a>
               </div>
             </div>

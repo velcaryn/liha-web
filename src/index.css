@@ -493,3 +493,20 @@ div[id] {
 @media (hover: hover) {
   .product-learn-more:hover { text-decoration: underline; }
 }
+
+/* Product card image and title link through to the product's own page. */
+.product-img-link {
+  display: block;
+  cursor: pointer;
+}
+.product-name-link {
+  color: inherit;
+  text-decoration: none;
+}
+@media (hover: hover) {
+  .product-name-link:hover { color: var(--secondary); }
+  .product-img-link:hover .product-img { transform: scale(1.03); }
+}
+.product-img-link .product-img {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
