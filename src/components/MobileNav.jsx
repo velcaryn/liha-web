@@ -55,6 +55,7 @@ export default function MobileNav() {
             href={hrefFor(item)}
             className={`mobile-nav-tab${isActive ? ' is-active' : ''}`}
             aria-current={isActive ? 'true' : undefined}
+            aria-label={item.label}
           >
             <Icon size={18} aria-hidden="true" />
             <span>{item.label}</span>
@@ -71,7 +72,7 @@ export default function MobileNav() {
         aria-label="Order on WhatsApp"
       >
         <div className="center-btn-bubble">
-          <WhatsAppIcon size={26} color="#ffffff" />
+          <WhatsAppIcon size={22} color="#ffffff" />
         </div>
         <span className="center-btn-label">Order</span>
       </a>
@@ -85,6 +86,7 @@ export default function MobileNav() {
             href={hrefFor(item)}
             className={`mobile-nav-tab${isActive ? ' is-active' : ''}`}
             aria-current={isActive ? 'true' : undefined}
+            aria-label={item.label}
           >
             <Icon size={18} aria-hidden="true" />
             <span>{item.label}</span>
@@ -112,26 +114,31 @@ export default function MobileNav() {
              offset from the bottom, NOT as inner padding: the bar no longer
              reaches the screen edge, so padding would leave a gap inside the
              pill while the pill itself sat on the home indicator. */
-          bottom: calc(0.65rem + env(safe-area-inset-bottom, 0px));
-          left: 0.75rem;
-          right: 0.75rem;
-          background: rgba(255, 248, 246, 0.82);
-          border: 1px solid rgba(213, 195, 189, 0.55);
-          /* 22px reads as a modern floating bar. A full stadium radius makes
-             the outer tabs sit awkwardly inside the curve. */
-          border-radius: 22px;
+          bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+          /* Centred and only as wide as its contents, rather than stretched
+             edge to edge: a full-width bar reads as a strip, a shrink-wrapped
+             one reads as a pill. */
+          left: 50%;
+          transform: translateX(-50%) translateZ(0);
+          -webkit-transform: translateX(-50%) translateZ(0);
+          width: max-content;
+          max-width: calc(100vw - 1.5rem);
+          background: rgba(255, 248, 246, 0.86);
+          border: 1px solid rgba(213, 195, 189, 0.5);
+          /* Stadium radius now that the bar is short: at this height the ends
+             are true semicircles and the tabs still sit clear of the curve. */
+          border-radius: var(--radius-full);
           box-shadow:
-            0 10px 30px -6px rgba(50, 23, 13, 0.18),
-            0 2px 8px rgba(50, 23, 13, 0.06);
+            0 8px 24px -8px rgba(50, 23, 13, 0.2),
+            0 2px 6px rgba(50, 23, 13, 0.05);
           z-index: 90;
           display: flex;
-          justify-content: space-around;
+          justify-content: center;
           align-items: center;
-          padding: 0.35rem 0.3rem 0.3rem;
-          /* Promote to its own layer so iOS composites it against the
-             viewport rather than repositioning it per scroll frame. */
-          transform: translateZ(0);
-          -webkit-transform: translateZ(0);
+          gap: 0.15rem;
+          padding: 0.25rem 0.5rem;
+          /* Layer promotion is folded into the centring transform above, so
+             iOS still composites this against the viewport. */
           will-change: transform;
           /* Never inherit a transform/animation from an ancestor. */
           animation: none !important;
@@ -159,25 +166,55 @@ export default function MobileNav() {
           z-index: -1;
         }
 
+        /* Icon over label is what made the bar 85px tall. The label now sits
+           beside the icon and only on the active tab, which keeps the pill
+           short while the current section stays named. Inactive tabs keep
+           their accessible name via aria-label. */
         .mobile-nav-tab {
           display: flex;
-          flex-direction: column;
+          flex-direction: row;
           align-items: center;
           justify-content: center;
-          gap: 0.1rem;
+          gap: 0.3rem;
           color: var(--text-muted);
           text-decoration: none;
-          font-size: 0.64rem;
+          font-size: 0.72rem;
           font-weight: 600;
-          padding: 0.3rem 0.35rem 0.15rem;
-          /* Rounded hit area so the pressed state matches the pill shape. */
-          border-radius: var(--radius-md);
-          /* Apple HIG / playbook section 10 minimum touch target. */
-          min-height: 48px;
-          flex: 1;
+          padding: 0 0.55rem;
+          border-radius: var(--radius-full);
+          /* The 48px touch target is kept, but as a transparent hit area that
+             overhangs the short pill rather than as visible height. */
+          min-height: 44px;
+          position: relative;
           touch-action: manipulation;
-          transition: color 0.15s;
+          transition: color 0.15s, background-color 0.15s;
           -webkit-tap-highlight-color: transparent;
+        }
+        .mobile-nav-tab::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          height: 48px;
+        }
+
+        /* Label is revealed only for the active tab. */
+        .mobile-nav-tab span {
+          max-width: 0;
+          overflow: hidden;
+          white-space: nowrap;
+          opacity: 0;
+          transition: max-width 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+        }
+        .mobile-nav-tab.is-active span {
+          max-width: 5rem;
+          opacity: 1;
+        }
+        .mobile-nav-tab.is-active {
+          background: var(--secondary-container);
+          color: var(--primary);
         }
         .mobile-nav-tab:active {
           color: var(--primary);
@@ -197,18 +234,20 @@ export default function MobileNav() {
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-content: flex-end;
+          justify-content: center;
           text-decoration: none;
           position: relative;
-          top: -18px;
-          flex: 1;
+          /* Sits in the row now rather than towering over a tall bar: on a
+             short pill a big overhang looks bolted on. */
+          top: -10px;
+          margin: 0 0.15rem;
           touch-action: manipulation;
           -webkit-tap-highlight-color: transparent;
         }
 
         .center-btn-bubble {
-          width: 54px;
-          height: 54px;
+          width: 46px;
+          height: 46px;
           border-radius: 50%;
           background: var(--secondary);
           display: flex;
@@ -228,12 +267,15 @@ export default function MobileNav() {
           background: var(--secondary-hover);
         }
 
+        /* The bubble is self-explanatory and the pill is short, so the label
+           would only add height. Kept in the DOM for screen readers. */
         .center-btn-label {
-          font-size: 0.62rem;
-          font-weight: 700;
-          color: var(--secondary);
-          margin-top: 0.2rem;
-          letter-spacing: 0.01em;
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          overflow: hidden;
+          clip-path: inset(50%);
+          white-space: nowrap;
         }
 
         @media (min-width: 900px) {
