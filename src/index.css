@@ -615,3 +615,50 @@ div[id] {
   height: 100%;
   object-fit: cover;
 }
+
+/* ---------- Dev-only image framing tool ----------
+   Stripped from production by import.meta.env.DEV in App.jsx. */
+.frame-tool {
+  position: fixed;
+  top: 5.5rem;
+  right: 1rem;
+  z-index: 300;
+  font-size: 0.8rem;
+}
+.frame-tool-toggle {
+  background: var(--secondary);
+  color: #fff;
+  border: 0;
+  border-radius: var(--radius-full);
+  padding: 0.5rem 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(45, 90, 39, 0.3);
+}
+.frame-tool-panel {
+  margin-top: 0.5rem;
+  background: var(--bg-container-lowest);
+  border: 1px solid var(--bg-container-high);
+  border-radius: var(--radius-md);
+  padding: 0.75rem;
+  max-width: 260px;
+  box-shadow: 0 8px 24px rgba(50, 23, 13, 0.16);
+}
+.frame-tool-panel p { margin: 0 0 0.5rem; color: var(--text-muted); }
+.frame-tool-panel pre {
+  margin: 0 0 0.5rem;
+  font-size: 0.75rem;
+  background: var(--bg-container-low);
+  padding: 0.5rem;
+  border-radius: var(--radius-sm);
+  white-space: pre-wrap;
+}
+.frame-tool-panel button {
+  background: var(--primary);
+  color: #fff;
+  border: 0;
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 0.7rem;
+  cursor: pointer;
+  font-weight: 600;
+}

@@ -11,7 +11,7 @@ import React, { useEffect, useRef, useState } from 'react';
  * the right space and the page reflows on load, which is the layout shift
  * this is meant to prevent.
  */
-export default function SkeletonImage({ src, alt, width, height, className = '', ...rest }) {
+export default function SkeletonImage({ src, alt, width, height, className = '', objectPosition, ...rest }) {
   const [loaded, setLoaded] = useState(false);
   const ref = useRef(null);
 
@@ -32,6 +32,7 @@ export default function SkeletonImage({ src, alt, width, height, className = '',
         width={width}
         height={height}
         className={`${className} img-skeleton ${loaded ? 'is-loaded' : 'is-loading'}`}
+        style={objectPosition ? { objectPosition } : undefined}
         onLoad={() => setLoaded(true)}
         onError={() => setLoaded(true)}
         {...rest}

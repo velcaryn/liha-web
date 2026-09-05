@@ -18,6 +18,7 @@ import PolicyModal from './components/PolicyModal';
 import NotFound from './components/NotFound';
 import ProductPage from './components/ProductPage';
 import RouteLoader from './components/RouteLoader';
+import FrameTool from './components/FrameTool';
 import WhatsAppIcon from './components/WhatsAppIcon';
 
 export default function App() {
@@ -134,6 +135,11 @@ export default function App() {
         </a>
 
         <RouteLoader />
+
+        {/* Dev-only image framing tool. import.meta.env.DEV is statically
+            false in a production build, so this whole subtree, and the
+            component import, are dropped by the bundler. */}
+        {import.meta.env.DEV && <FrameTool />}
       </div>
     </ErrorBoundary>
   );

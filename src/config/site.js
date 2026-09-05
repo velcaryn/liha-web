@@ -54,6 +54,9 @@ export const products = [
   {
     name: 'Karuppati',
     slug: 'karuppati',
+    // Framing for the cropped card image, set with the drag tool
+    // (npm run frame) and baked in here. See scripts/frame-images.md.
+    focus: '50% 50%',
     tamil: 'கருப்பட்டி',
     subtitle: 'Pure Dark Palm Jaggery',
     img: '/images/karuppati.webp',
@@ -65,6 +68,9 @@ export const products = [
   {
     name: 'Panam Karkandu',
     slug: 'panam-karkandu',
+    // Framing for the cropped card image, set with the drag tool
+    // (npm run frame) and baked in here. See scripts/frame-images.md.
+    focus: '50% 50%',
     tamil: 'பனங்கற்கண்டு',
     subtitle: 'Palm Candy Crystals',
     img: '/images/panam-karkandu.webp',
@@ -76,6 +82,9 @@ export const products = [
   {
     name: 'Chukku Karuppati',
     slug: 'chukku-karuppati',
+    // Framing for the cropped card image, set with the drag tool
+    // (npm run frame) and baked in here. See scripts/frame-images.md.
+    focus: '50% 50%',
     tamil: 'சுக்கு கருப்பட்டி',
     subtitle: 'Dry Ginger Palm Jaggery',
     img: '/images/chukku-karuppati.webp',
@@ -87,6 +96,9 @@ export const products = [
   {
     name: 'Vattu Karuppati',
     slug: 'vattu-karuppati',
+    // Framing for the cropped card image, set with the drag tool
+    // (npm run frame) and baked in here. See scripts/frame-images.md.
+    focus: '50% 50%',
     tamil: 'வட்டு கருப்பட்டி',
     subtitle: 'Rare Male Palm Nectar Delicacy',
     img: '/images/vattu-karuppati.webp',
