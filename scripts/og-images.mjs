@@ -18,6 +18,19 @@
  * headless Chrome already installed for scripts/prerender.mjs, and
  * screenshots it. No new dependency, no new binary to install on Netlify.
  *
+ * Tamil font: bundled, not left to the OS.
+ * -----------------------------------------
+ * The first version of this script rendered Tamil as tofu boxes on
+ * Netlify, though it looked fine run locally on a Mac. Neither
+ * 'Be Vietnam Pro' nor 'Literata' cover Tamil script at all; locally, the
+ * text was quietly falling back to a Tamil system font macOS ships
+ * (Tamil Sangam MN). Netlify's Linux build image has no such fallback, so
+ * the fallback chain ran out and Chrome drew nothing. The fix is to ship
+ * scripts/fonts/NotoSansTamil-600.ttf in the repo and serve it to the
+ * card ourselves, so the render never depends on what the host happens to
+ * have installed, or on a network fetch to Google Fonts succeeding during
+ * the build.
+ *
  * Runs after prerender in `npm run build`. If Chrome cannot be found this
  * fails the same way prerender.mjs does: warn-and-skip locally, hard fail
  * under PRERENDER_STRICT/CI so a broken share preview never ships silently.
@@ -71,11 +84,19 @@ mkdirSync(OUT_DIR, { recursive: true });
 
 const MIME = {
   '.html': 'text/html', '.webp': 'image/webp', '.jpg': 'image/jpeg', '.png': 'image/png',
+  '.ttf': 'font/ttf',
 };
+
+const TAMIL_FONT_PATH = join('scripts', 'fonts', 'NotoSansTamil-600.ttf');
+if (!existsSync(TAMIL_FONT_PATH)) {
+  console.error(`FAIL: ${TAMIL_FONT_PATH} is missing. Tamil text would render as tofu boxes.`);
+  process.exit(1);
+}
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-// Serves dist/ plus one virtual route per product that renders the card.
+// Serves dist/ plus one virtual route per product that renders the card,
+// plus the bundled Tamil font from scripts/fonts/.
 const server = createServer((req, res) => {
   const urlPath = decodeURIComponent(req.url.split('?')[0]);
   const match = urlPath.match(/^\/__og\/([a-z0-9-]+)$/);
@@ -84,6 +105,12 @@ const server = createServer((req, res) => {
     if (!p) { res.writeHead(404).end(); return; }
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.end(cardHTML(p));
+    return;
+  }
+  if (urlPath === '/__og/fonts/NotoSansTamil-600.ttf') {
+    const buf = readFileSync(TAMIL_FONT_PATH);
+    res.writeHead(200, { 'Content-Type': 'font/ttf' });
+    res.end(buf);
     return;
   }
   let file = join(DIST, urlPath);
@@ -100,6 +127,14 @@ const server = createServer((req, res) => {
 function cardHTML(p) {
   return `<!doctype html>
 <html><head><meta charset="utf-8"><style>
+  /* Bundled, not fetched: see the file header for why this cannot be left
+     to Google Fonts or the host's installed fonts. */
+  @font-face {
+    font-family: 'Noto Sans Tamil';
+    font-weight: 600;
+    font-style: normal;
+    src: url('/__og/fonts/NotoSansTamil-600.ttf') format('truetype');
+  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { width: 1200px; height: 630px; overflow: hidden; }
   body {
@@ -145,6 +180,7 @@ function cardHTML(p) {
     margin-bottom: 10px;
   }
   .tamil {
+    font-family: 'Noto Sans Tamil', 'Be Vietnam Pro', sans-serif;
     font-size: 26px;
     color: #2d5a27;
     font-weight: 600;
@@ -217,7 +253,26 @@ const cdp = async (method, params, ws, state) =>
   const results = [];
   for (const p of products) {
     await cdp('Page.navigate', { url: `http://127.0.0.1:${PORT}/__og/${p.slug}` }, ws, state);
-    await sleep(600);
+    await sleep(300);
+    // Wait for the bundled Tamil font specifically, not just "fonts.ready"
+    // in general: a @font-face that never loads still resolves fonts.ready
+    // once the browser gives up and falls back, which is exactly the
+    // silent-tofu-box failure this exists to catch.
+    let tamilFontLoaded = false;
+    for (let i = 0; i < 20; i++) {
+      const loaded = await cdp('Runtime.evaluate', {
+        expression: `document.fonts.check("600 26px 'Noto Sans Tamil'")`,
+        returnByValue: true,
+      }, ws, state);
+      if (loaded?.result?.value) { tamilFontLoaded = true; break; }
+      await sleep(150);
+    }
+    if (!tamilFontLoaded) {
+      console.error(`FAIL: Tamil font never loaded for ${p.slug}. Refusing to ship a tofu-box preview image.`);
+      ws.close(); chrome.kill(); server.close();
+      process.exit(1);
+    }
+    await sleep(150);
     const shot = await cdp('Page.captureScreenshot', { format: 'jpeg', quality: 88 }, ws, state);
     if (!shot?.data) {
       console.error(`FAIL: could not capture OG image for ${p.slug}.`);
