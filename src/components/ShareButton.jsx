@@ -10,30 +10,47 @@ import { Share2 } from 'lucide-react';
  * final fallback for contexts where the Clipboard API is unavailable
  * (non-secure origins, very old browsers).
  *
- * The shared body text carries the English subtitle, the Tamil name, and an
- * order line. Most share targets show `text` and `url` as separate lines
- * (title is often not shown to the recipient at all), so everything meant
- * to be read goes into `text` and the product link is passed separately as
- * `url`, so the app unfurls a preview of the product page.
+ * The shared message is built as ONE block of text with the link as its
+ * own first line, then handed to every path (native share, clipboard,
+ * legacy copy) exactly the same way. This is deliberate, not incidental:
  *
- * Deliberately no wa.me link in the text: apps that unfurl a link preview
- * pick it up from whichever URL appears in the message, and a wa.me link
- * in `text` was winning over the product `url`, so the share showed a
- * WhatsApp preview instead of the product's own image and description.
+ * 1. `navigator.share({ text, url })` does not compose the same order on
+ *    every platform. Android appends `url` after `text` when the target
+ *    app only accepts a single text field, which put the link last even
+ *    though the clipboard path (which only ever had one string) put it
+ *    first. Passing everything as one `text` string and leaving `url`
+ *    out of the share call keeps the order identical everywhere.
+ * 2. A link on its own first line, not buried after other text, is what
+ *    WhatsApp's own unfurler looks for to build a rich link preview when
+ *    the message lands in a chat, which is the actual point of sharing.
+ *
+ * Deliberately no wa.me link anywhere in the text: a second URL in the
+ * message competes with the product link for which one gets unfurled,
+ * and previously won, showing a WhatsApp preview instead of the
+ * product's own image and description.
  */
 export default function ShareButton({ url, title, tamil, text, phoneDisplay }) {
   const [toast, setToast] = useState(false);
+  const [toastPos, setToastPos] = useState(null);
   const hideTimer = useRef(null);
   const inputRef = useRef(null);
+  const btnRef = useRef(null);
 
   const nameLine = tamil ? `${text} (${tamil})` : text;
   const shareText = [
+    url,
     nameLine,
-    '',
     `Order now @ ${phoneDisplay}`,
   ].join('\n');
 
   const showToast = () => {
+    // Positioned in the viewport from the button's own rect, not relative
+    // to any CSS ancestor: this component is reused inside containers that
+    // clip overflow for their own reasons (a rounded product card image),
+    // and a toast positioned relative to one of those never becomes
+    // visible there.
+    const rect = btnRef.current?.getBoundingClientRect();
+    if (rect) setToastPos({ top: rect.bottom + 8, right: window.innerWidth - rect.right });
     setToast(true);
     clearTimeout(hideTimer.current);
     hideTimer.current = setTimeout(() => setToast(false), 2200);
@@ -42,7 +59,7 @@ export default function ShareButton({ url, title, tamil, text, phoneDisplay }) {
   const legacyCopy = () => {
     const input = inputRef.current;
     if (!input) return false;
-    input.value = `${shareText}\n${url}`;
+    input.value = shareText;
     input.hidden = false;
     input.focus();
     input.select();
@@ -59,7 +76,11 @@ export default function ShareButton({ url, title, tamil, text, phoneDisplay }) {
   const handleShare = async () => {
     if (navigator.share) {
       try {
-        await navigator.share({ title, text: shareText, url });
+        // `url` deliberately left out here: shareText already opens with
+        // it, and some Android share targets append `url` again after
+        // `text` when they only accept one field, which would print the
+        // link twice.
+        await navigator.share({ title, text: shareText });
         return;
       } catch (err) {
         // AbortError fires when the person just closes the share sheet.
@@ -70,7 +91,7 @@ export default function ShareButton({ url, title, tamil, text, phoneDisplay }) {
 
     if (navigator.clipboard?.writeText) {
       try {
-        await navigator.clipboard.writeText(`${shareText}\n${url}`);
+        await navigator.clipboard.writeText(shareText);
         showToast();
         return;
       } catch {
@@ -84,16 +105,28 @@ export default function ShareButton({ url, title, tamil, text, phoneDisplay }) {
   return (
     <div className="share-btn-wrap">
       <button
+        ref={btnRef}
         type="button"
         className="share-btn"
-        onClick={handleShare}
+        onClick={(e) => {
+          // Stops the tap from also being read as "tap anywhere on the
+          // card" by useTapNavigate on the home page grid, which would
+          // otherwise navigate to the product page as well as sharing it.
+          e.stopPropagation();
+          handleShare();
+        }}
         aria-label={`Share ${title}`}
         title="Share"
       >
         <Share2 size={18} aria-hidden="true" />
       </button>
 
-      <span className={`share-toast${toast ? ' is-visible' : ''}`} role="status" aria-live="polite">
+      <span
+        className={`share-toast${toast ? ' is-visible' : ''}`}
+        style={toastPos ? { top: `${toastPos.top}px`, right: `${toastPos.right}px` } : undefined}
+        role="status"
+        aria-live="polite"
+      >
         Link copied
       </span>
 
@@ -135,9 +168,13 @@ export default function ShareButton({ url, title, tamil, text, phoneDisplay }) {
         }
 
         .share-toast {
-          position: absolute;
-          top: calc(100% + 0.6rem);
-          right: 0;
+          /* Fixed to the viewport and positioned from the button's own
+             rect in JS (see showToast), not from a CSS ancestor: this
+             component sits inside containers that clip overflow for
+             their own layout reasons, and an absolutely-positioned toast
+             would render invisible inside one of those. */
+          position: fixed;
+          z-index: 9999;
           background: var(--primary);
           color: var(--on-primary);
           font-size: 0.8rem;

@@ -1,9 +1,94 @@
 import React from 'react';
 import WhatsAppIcon from './WhatsAppIcon';
 import SkeletonImage from './SkeletonImage';
-import { products, copy, waOrder } from '../config/site';
+import ShareButton from './ShareButton';
+import useTapNavigate from '../hooks/useTapNavigate';
+import { products, copy, waOrder, brand, contact } from '../config/site';
 
 
+
+function ProductCard({ p }) {
+  const href = `/${p.slug}/`;
+  const tap = useTapNavigate(href);
+
+  return (
+    <div
+      className={`soil-card product-card ${p.grid}`}
+      onPointerDown={tap.onPointerDown}
+      onPointerUp={tap.onPointerUp}
+      onPointerCancel={tap.onPointerCancel}
+    >
+      {/* Image and title stay real <a> elements for keyboard, screen
+          reader and crawler access. The card is not wrapped in a single
+          anchor because it already contains the WhatsApp order link, and
+          nesting anchors is invalid. useTapNavigate above adds "tap
+          anywhere else on the card" as a touch-only enhancement on top,
+          without breaking vertical scroll (see that file for how). */}
+      <a href={href} className="product-img-wrap product-img-link">
+        <SkeletonImage
+          src={p.img}
+          alt={`${p.name} (${p.tamil})`}
+          width={900}
+          height={900}
+          className="product-img"
+          fill
+          objectPosition={p.focus}
+          data-focus-slug={p.slug}
+          loading="lazy"
+          decoding="async"
+        />
+        <div className="product-badge-pos">
+          <span className={`badge-pill ${p.badge.className}`}>{p.badge.label}</span>
+        </div>
+      </a>
+
+      <ShareButton
+        url={`${brand.domain}${href}`}
+        title={p.name}
+        tamil={p.tamil}
+        text={p.subtitle}
+        phoneDisplay={contact.phoneDisplay}
+      />
+
+      <div className="product-body">
+        <h3 className="product-name">
+          <a href={href} className="product-name-link">
+            {p.name} <span className="product-tamil" lang="ta">({p.tamil})</span>
+          </a>
+        </h3>
+        <div className="product-subtitle">{p.subtitle}</div>
+        <p className="product-desc">{p.desc}</p>
+
+        {/* Space-efficient compact highlights */}
+        <div className="product-highlights">
+          {p.tags.map((tag, i) => (
+            <span key={i} className="product-highlight-item">
+              <span className="highlight-dot" aria-hidden="true">•</span>
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <a
+          href={waOrder(p.name)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn btn-whatsapp product-order-btn"
+        >
+          <WhatsAppIcon size={17} color="#ffffff" />
+          <span>Order {p.name}</span>
+        </a>
+
+        {/* Internal link to the product's own page. This is how
+            crawlers discover those routes, and how a visitor who
+            wants detail gets it without leaving for WhatsApp. */}
+        <a href={href} className="product-learn-more">
+          Read about {p.name} &rsaquo;
+        </a>
+      </div>
+    </div>
+  );
+}
 
 export default function Products() {
   return (
@@ -19,65 +104,7 @@ export default function Products() {
 
         <div className="products-grid">
           {products.map((p, idx) => (
-            <div key={idx} className={`soil-card product-card ${p.grid}`}>
-              {/* Image and title link to the product's own page. The card is
-                  not wrapped in a single anchor because it already contains
-                  the WhatsApp order link, and nesting anchors is invalid. */}
-              <a href={`/${p.slug}/`} className="product-img-wrap product-img-link">
-                <SkeletonImage
-                  src={p.img}
-                  alt={`${p.name} (${p.tamil})`}
-                  width={900}
-                  height={900}
-                  className="product-img"
-                  fill
-                  objectPosition={p.focus}
-                  data-focus-slug={p.slug}
-                  loading="lazy"
-                  decoding="async"
-                />
-                <div className="product-badge-pos">
-                  <span className={`badge-pill ${p.badge.className}`}>{p.badge.label}</span>
-                </div>
-              </a>
-
-              <div className="product-body">
-                <h3 className="product-name">
-                  <a href={`/${p.slug}/`} className="product-name-link">
-                    {p.name} <span className="product-tamil" lang="ta">({p.tamil})</span>
-                  </a>
-                </h3>
-                <div className="product-subtitle">{p.subtitle}</div>
-                <p className="product-desc">{p.desc}</p>
-
-                {/* Space-efficient compact highlights */}
-                <div className="product-highlights">
-                  {p.tags.map((tag, i) => (
-                    <span key={i} className="product-highlight-item">
-                      <span className="highlight-dot" aria-hidden="true">•</span>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <a
-                  href={waOrder(p.name)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-whatsapp product-order-btn"
-                >
-                  <WhatsAppIcon size={17} color="#ffffff" />
-                  <span>Order {p.name}</span>
-                </a>
-
-                {/* Internal link to the product's own page. This is how
-                    crawlers discover those routes, and how a visitor who
-                    wants detail gets it without leaving for WhatsApp. */}
-                <a href={`/${p.slug}/`} className="product-learn-more">
-                  Read about {p.name} &rsaquo;
-                </a>
-              </div>
-            </div>
+            <ProductCard key={idx} p={p} />
           ))}
         </div>
       </div>
@@ -114,6 +141,12 @@ export default function Products() {
           flex-direction: column;
           overflow: hidden;
           background: var(--bg-container-lowest);
+          position: relative;
+          /* Vertical page scroll must win over the tap-navigate gesture
+             below: this only intercepts a genuine tap, not a scroll drag,
+             but the browser still needs pan-y allowed on the element the
+             pointer events are attached to. */
+          touch-action: pan-y;
         }
         .product-img-wrap {
           position: relative;

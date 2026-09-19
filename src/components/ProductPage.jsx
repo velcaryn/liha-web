@@ -51,7 +51,15 @@ export default function ProductPage({ slug, onOpenPolicy }) {
     // build time (see that file for why WebP was never used here). Falls
     // back to the site-wide preview if a page is viewed before a build has
     // run one, e.g. `npm run dev`.
-    const ogImage = `${brand.domain}/images/og/${slug}.jpg`;
+    //
+    // __BUILD_ID__ (set in vite.config.js from Netlify's COMMIT_REF) is
+    // appended as a cache buster. Without it, a fixed filename can serve a
+    // stale preview from a browser cache or from WhatsApp's own link
+    // crawler cache indefinitely: neither has any signal that the image
+    // underneath changed, since /images/* is served with a 30-day
+    // Cache-Control. A value that changes on every deploy forces both to
+    // treat this as a new resource each time it does.
+    const ogImage = `${brand.domain}/images/og/${slug}.jpg?v=${__BUILD_ID__}`;
 
     document.title = title;
 
