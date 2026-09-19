@@ -20,8 +20,8 @@ export default function Footer({ onOpenPolicy }) {
           {/* Brand Info */}
           <div className="footer-brand">
             <div className="footer-brand-row">
-              <img src="/images/logo.webp" alt="Liha's Karuppati" className="footer-logo" width="34" height="34" />
-              <span className="footer-brand-name">Liha's Karuppati</span>
+              <img src="/images/logo.webp" alt="Liha's Karupatti" className="footer-logo" width="34" height="34" />
+              <span className="footer-brand-name">Liha's Karupatti</span>
             </div>
             <p className="footer-desc">
               Preserving traditional Palmyra craftsmanship since 2019. Bringing authentic, unrefined sweetness of Tamil Nadu directly to your home.
@@ -84,7 +84,7 @@ export default function Footer({ onOpenPolicy }) {
 
         {/* Footer Bottom Bar */}
         <div className="footer-bottom">
-          <span>&copy; {new Date().getFullYear()} Liha's Karuppati. All rights reserved.</span>
+          <span>&copy; {new Date().getFullYear()} Liha's Karupatti. All rights reserved.</span>
           <span>Handcrafted with pride in Tamil Nadu, India.</span>
         </div>
       </div>

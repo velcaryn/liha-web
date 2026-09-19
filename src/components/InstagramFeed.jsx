@@ -36,7 +36,7 @@ export default function InstagramFeed() {
             <iframe
               src={`https://www.instagram.com/${INSTAGRAM_HANDLE}/embed`}
               className="ig-iframe"
-              title="Liha's Karuppati Instagram Feed"
+              title="Liha's Karupatti Instagram Feed"
               loading="lazy"
               allowTransparency="true"
               allow="encrypted-media"

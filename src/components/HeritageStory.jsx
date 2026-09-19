@@ -5,7 +5,7 @@ const steps = [
   { icon: Sun, title: 'Dawn Nectar Tapping', desc: 'Skilled palm climbers tap fresh Palmyra sap (Padaneer) at dawn.' },
   { icon: Droplets, title: 'Pure Filtration', desc: 'Fresh nectar is strained through fine cotton to remove natural sediment.' },
   { icon: Flame, title: 'Slow Wood-Fired Boiling', desc: 'Simmered in traditional iron vats over firewood until golden-brown.' },
-  { icon: PackageCheck, title: 'Coconut Shell Moulding', desc: 'Poured into coconut shell halves to cool into classic Karuppati blocks.' }
+  { icon: PackageCheck, title: 'Coconut Shell Moulding', desc: 'Poured into coconut shell halves to cool into classic Karupatti blocks.' }
 ];
 
 export default function HeritageStory() {

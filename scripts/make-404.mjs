@@ -14,7 +14,7 @@ const head = `
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, follow" />
-    <title>Page not found | Liha's Karuppati</title>
+    <title>Page not found | Liha's Karupatti</title>
     <link rel="icon" href="/favicon.ico" sizes="any" />
 `;
 

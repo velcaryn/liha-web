@@ -3,7 +3,7 @@
 **Read this file before writing any code.** It is the build standard for
 small-business brochure sites: React + Vite, static, Netlify, WhatsApp
 ordering. Every rule here is something that was actually built, or a defect
-that was actually found, in the Liha's Karuppati build. Nothing here is
+that was actually found, in the Liha's Karupatti build. Nothing here is
 aspirational.
 
 Target: **site number two in a weekend, not a month.**
@@ -407,8 +407,16 @@ Each of these shipped or nearly shipped.
 3. **Domain mismatch.** `lihashop.in` in the HTML canonical, robots, and
    sitemap; a different domain in the config. A wrong canonical tag actively
    harms indexing. **Verify the domain in all 6 places before launch.**
-4. **Instagram handle typo.** `lihas_karupatti` vs `lihas_karuppati`, one
-   letter apart, silently a dead link. Single-source it in config.
+4. **Brand spelling wrong everywhere except the one place it mattered.**
+   The site spelled the product `Karuppati` (double-p, single-t) in 129
+   places, including three live indexed URLs. The client's own Instagram
+   bio reads `Liha's KARUPATTI`, and `contact.instagramHandle` in config
+   already had the correct spelling, `lihas_karupatti`. An earlier version
+   of this note assumed the config was the typo and flagged it for
+   "correction" toward the spelling that was actually wrong everywhere
+   else. Lesson: when a brand name and a client's own channel disagree,
+   the channel wins. Check the live account before touching a spelling,
+   never assume the codebase is the source of truth for a proper noun.
 5. **JSON-LD drifted from the rendered FAQ.** Shelf life 9-12 months in
    structured data, 6-12 in the component.
 6. **JSX braces inside plain object literals.** `href: {waLink(...)}` inside
@@ -471,6 +479,19 @@ Run top to bottom. Nothing gets skipped because it "looks fine".
 - [ ] Portfolio permission in writing
 - [ ] Client owns their domain and Netlify account, or knows you hold it
 - [ ] Retainer agreed: hosting, updates, seasonal changes
+
+---
+
+## 10b. Adding a product to an existing site
+
+See `docs/ADD-PRODUCT.md`. Photo, two config blocks, the home page
+JSON-LD, the sitemap, `npm run verify`. Routing, prerendering, the share
+preview image, the nav links and the order form all derive from
+`src/config/site.js`.
+
+Renaming or removing a slug is the sharp edge: a live slug is an indexed
+URL and Netlify hard-404s unknown paths, so the 301 goes in
+`netlify.toml` above the catch-all before the rename ships.
 
 ---
 

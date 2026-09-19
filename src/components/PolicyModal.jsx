@@ -9,7 +9,7 @@ const policies = {
     content: (
       <>
         <h4>1. Processing & Dispatch</h4>
-        <p>All orders placed for Liha's Karuppati products are handcrafted in small batches and dispatched within 24 to 48 business hours from our facility in Tamil Nadu.</p>
+        <p>All orders placed for Liha's Karupatti products are handcrafted in small batches and dispatched within 24 to 48 business hours from our facility in Tamil Nadu.</p>
 
         <h4>2. Delivery Timelines</h4>
         <ul>
@@ -65,10 +65,10 @@ const policies = {
     content: (
       <>
         <h4>1. Product Authenticity</h4>
-        <p>Liha's Karuppati guarantees 100% natural, unadulterated palm jaggery sourced from native Palmyra palms. Natural variations in color and texture may occur across batches due to seasonal harvest conditions.</p>
+        <p>Liha's Karupatti guarantees 100% natural, unadulterated palm jaggery sourced from native Palmyra palms. Natural variations in color and texture may occur across batches due to seasonal harvest conditions.</p>
 
         <h4>2. Pricing & Availability</h4>
-        <p>Prices and seasonal item availability (such as Vattu Karuppati from male palm nectar) are subject to harvest yield and stock levels.</p>
+        <p>Prices and seasonal item availability (such as Vattu Karupatti from male palm nectar) are subject to harvest yield and stock levels.</p>
 
         <h4>3. Governing Law</h4>
         <p>Any disputes arising from purchases or services shall be governed by the laws and jurisdiction of Tamil Nadu, India.</p>

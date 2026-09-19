@@ -17,8 +17,8 @@ Each line maps to the `focus` field of that product in `src/config/site.js`:
 
 ```js
 {
-  name: 'Karuppati',
-  slug: 'karuppati',
+  name: 'Karupatti',
+  slug: 'karupatti',
   focus: '50% 38%',   // <- paste here
   ...
 }

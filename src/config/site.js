@@ -11,7 +11,7 @@
 
 // ── Brand ────────────────────────────────────────────────
 export const brand = {
-  name: "Liha's Karuppati",
+  name: "Liha's Karupatti",
   shortName: 'Liha',
   tagline: 'Palm & Soil',
   domain: 'https://lihashop.in',
@@ -52,14 +52,14 @@ export function waOrder(productName) {
 // ── Products ─────────────────────────────────────────────
 export const products = [
   {
-    name: 'Karuppati',
-    slug: 'karuppati',
+    name: 'Karupatti',
+    slug: 'karupatti',
     // Framing for the cropped card image, set with the drag tool
     // (npm run frame) and baked in here. See scripts/frame-images.md.
     focus: '51% 31%',
     tamil: 'கருப்பட்டி',
     subtitle: 'Pure Dark Palm Jaggery',
-    img: '/images/karuppati.webp',
+    img: '/images/karupatti.webp',
     badge: { label: 'Traditional Heritage', className: 'badge-green' },
     desc: 'Rich, dark brown solid blocks of traditional Indian palm sugar. Purely unrefined, free from sulfur and bleaching chemicals.',
     tags: ['Unrefined', 'Naturally Low Glycemic', 'Deep Caramel Taste'],
@@ -80,32 +80,44 @@ export const products = [
     grid: 'product-card--narrow',
   },
   {
-    name: 'Chukku Karuppati',
-    slug: 'chukku-karuppati',
-    // Framing for the cropped card image, set with the drag tool
-    // (npm run frame) and baked in here. See scripts/frame-images.md.
-    focus: '31% 60%',
+    name: 'Chukku Karupatti',
+    slug: 'chukku-karupatti',
+    // Centred product crop, set by eye against the 2026-09-19 photo.
+    focus: '50% 50%',
     tamil: 'சுக்கு கருப்பட்டி',
     subtitle: 'Dry Ginger Palm Jaggery',
-    img: '/images/chukku-karuppati.webp',
+    img: '/images/chukku-karupatti.webp',
     badge: { label: 'Healthy Remedy', className: 'badge-green' },
-    desc: 'Traditional palm jaggery infused with the warming goodness of dry ginger and black pepper. A traditional winter preparation in Tamil homes.',
+    desc: 'Bite-sized cubes of palm jaggery infused with the warming goodness of dry ginger and black pepper. A traditional winter preparation in Tamil homes.',
     tags: ['Dry Ginger & Pepper', 'Warming Spice Blend', 'Winter Favourite'],
     grid: 'product-card--narrow',
   },
   {
-    name: 'Vattu Karuppati',
-    slug: 'vattu-karuppati',
+    name: 'Vattu Karupatti',
+    slug: 'vattu-karupatti',
     // Framing for the cropped card image, set with the drag tool
     // (npm run frame) and baked in here. See scripts/frame-images.md.
     focus: '49% 62%',
     tamil: 'வட்டு கருப்பட்டி',
     subtitle: 'Rare Male Palm Nectar Delicacy',
-    img: '/images/vattu-karuppati.webp',
+    img: '/images/vattu-karupatti.webp',
     badge: { label: 'Rare & Limited Edition', className: 'badge-cream' },
-    desc: 'An exquisite artisanal delicacy crafted exclusively from the limited Padaneer tapped from Male Palm trees (ஆண் பனை). This unique nectar gives Vattu Karuppati its distinctive lighter golden shade and refined sweetness.',
+    desc: 'An exquisite artisanal delicacy crafted exclusively from the limited Padaneer tapped from Male Palm trees (ஆண் பனை). This unique nectar gives Vattu Karupatti its distinctive lighter golden shade and refined sweetness.',
     tags: ['Tapped from Male Palms', 'Distinctive Light Shade', 'Seasonal Batch'],
     grid: 'product-card--wide',
+  },
+  {
+    name: 'Panam Kilangu Maavu',
+    slug: 'panam-kilangu-maavu',
+    // Centred product crop, set by eye against the 2026-09-19 photo.
+    focus: '50% 50%',
+    tamil: 'பனங்கிழங்கு மாவு',
+    subtitle: 'Palm Sprouts Powder',
+    img: '/images/panam-kilangu-maavu.webp',
+    badge: { label: 'Wholesome Staple', className: 'badge-orange' },
+    desc: 'Fine flour milled from sun-dried Palmyra palm sprouts, a traditional Tamil staple valued for its fibre and gentle, grounding nature.',
+    tags: ['Sun-Dried & Milled', 'Naturally Gluten-Free', 'Traditional Porridge Flour'],
+    grid: 'product-card--full',
   },
 ];
 
@@ -131,9 +143,9 @@ export const copy = {
 // the card blurb from the home page is a thin duplicate and will not.
 // Descriptive and factual only, no medical claims (see HealthBenefits.jsx).
 export const productPages = {
-  "karuppati": {
-    "h1": "Karuppati: Traditional Palmyra Palm Jaggery from Tamil Nadu",
-    "intro": "Karuppati is the solid, dark palm jaggery that Tamil households have sweetened with for generations. Ours is made from nothing but Padaneer, the fresh nectar tapped at dawn from Palmyra palms, reduced slowly over a firewood flame until it sets into dense blocks. No white sugar is blended in, no sulphur or lime is used to lighten the colour, and nothing is added to make it set faster.",
+  "karupatti": {
+    "h1": "Karupatti: Traditional Palmyra Palm Jaggery from Tamil Nadu",
+    "intro": "Karupatti is the solid, dark palm jaggery that Tamil households have sweetened with for generations. Ours is made from nothing but Padaneer, the fresh nectar tapped at dawn from Palmyra palms, reduced slowly over a firewood flame until it sets into dense blocks. No white sugar is blended in, no sulphur or lime is used to lighten the colour, and nothing is added to make it set faster.",
     "sections": [
       [
         "How it is made",
@@ -159,11 +171,11 @@ export const productPages = {
     "sections": [
       [
         "How it is made",
-        "The same Padaneer used for Karuppati is reduced to a thick syrup, then held warm and undisturbed for days so crystals can form and grow on their own. The crystals are lifted out, drained and dried. Nothing is seeded or sprayed to force crystallisation, which is why the crystals vary in size and shape from batch to batch."
+        "The same Padaneer used for Karupatti is reduced to a thick syrup, then held warm and undisturbed for days so crystals can form and grow on their own. The crystals are lifted out, drained and dried. Nothing is seeded or sprayed to force crystallisation, which is why the crystals vary in size and shape from batch to batch."
       ],
       [
         "What it tastes like",
-        "Cleaner and lighter than block Karuppati, closer to a mild caramel. The irregular crystals dissolve slowly, so it sweetens gradually rather than all at once."
+        "Cleaner and lighter than block Karupatti, closer to a mild caramel. The irregular crystals dissolve slowly, so it sweetens gradually rather than all at once."
       ],
       [
         "How to use it",
@@ -175,17 +187,17 @@ export const productPages = {
       ]
     ]
   },
-  "chukku-karuppati": {
-    "h1": "Chukku Karuppati: Palm Jaggery with Dry Ginger and Pepper",
-    "intro": "Chukku Karuppati is Karuppati made with dry ginger (chukku) and black pepper worked into the batch while it is still molten. It is a preparation Tamil families make for the cooler months, when a warming, spiced sweetener is preferred to a plain one.",
+  "chukku-karupatti": {
+    "h1": "Chukku Karupatti: Palm Jaggery with Dry Ginger and Pepper",
+    "intro": "Chukku Karupatti is Karupatti made with dry ginger (chukku) and black pepper worked into the batch while it is still molten, then set into bite-sized cubes rather than large blocks. It is a preparation Tamil families make for the cooler months, when a warming, spiced sweetener is preferred to a plain one.",
     "sections": [
       [
         "How it is made",
-        "Palm nectar is reduced the same way as plain Karuppati. Near the end of the boil, ground dry ginger and black pepper are folded through, so the spice is distributed evenly rather than sitting on the surface. The blocks are then set and cooled."
+        "Palm nectar is reduced the same way as plain Karupatti. Near the end of the boil, ground dry ginger and black pepper are folded through, so the spice is distributed evenly rather than sitting on the surface. The mixture is then set and cut into small cubes rather than poured into large moulds, which is why Chukku Karupatti looks different from a block of plain Karupatti."
       ],
       [
         "What it tastes like",
-        "The palm caramel comes first, then the ginger heat builds, with pepper behind it. Noticeably spicier than plain Karuppati and less straightforwardly sweet."
+        "The palm caramel comes first, then the ginger heat builds, with pepper behind it. Noticeably spicier than plain Karupatti and less straightforwardly sweet."
       ],
       [
         "How to use it",
@@ -193,21 +205,21 @@ export const productPages = {
       ],
       [
         "Storage",
-        "As with plain Karuppati, keep it airtight and cool. The spices do not shorten its life, but they will lose sharpness after several months, so it is best used within the season."
+        "As with plain Karupatti, keep it airtight and cool. The spices do not shorten its life, but they will lose sharpness after several months, so it is best used within the season."
       ]
     ]
   },
-  "vattu-karuppati": {
-    "h1": "Vattu Karuppati: Rare Male Palm Nectar Jaggery",
-    "intro": "Vattu Karuppati is made only from Padaneer tapped from male Palmyra palms. Male palms yield less nectar and yield it for a shorter window in the year, so this is a small, seasonal batch rather than a product we can make continuously. It is lighter in colour and distinctly different in taste from ordinary Karuppati.",
+  "vattu-karupatti": {
+    "h1": "Vattu Karupatti: Rare Male Palm Nectar Jaggery",
+    "intro": "Vattu Karupatti is made only from Padaneer tapped from male Palmyra palms. Male palms yield less nectar and yield it for a shorter window in the year, so this is a small, seasonal batch rather than a product we can make continuously. It is lighter in colour and distinctly different in taste from ordinary Karupatti.",
     "sections": [
       [
         "Why it is rare",
-        "Male Palmyra palms produce nectar from their flower spikes across a limited season, and the volume per tree is well below what a female palm yields. A tapper working the same number of trees will bring back a fraction of the nectar, which is why Vattu Karuppati has always been the batch that runs out first."
+        "Male Palmyra palms produce nectar from their flower spikes across a limited season, and the volume per tree is well below what a female palm yields. A tapper working the same number of trees will bring back a fraction of the nectar, which is why Vattu Karupatti has always been the batch that runs out first."
       ],
       [
         "What it tastes like",
-        "Lighter and cleaner than dark Karuppati, with less of the smoky depth and more of a delicate palm character. The colour is noticeably paler, closer to light amber than brown."
+        "Lighter and cleaner than dark Karupatti, with less of the smoky depth and more of a delicate palm character. The colour is noticeably paler, closer to light amber than brown."
       ],
       [
         "How to use it",
@@ -216,6 +228,28 @@ export const productPages = {
       [
         "Availability",
         "Seasonal and limited. When a batch is gone we cannot simply make more until the next tapping season, so we sell it in small quantities while it lasts."
+      ]
+    ]
+  },
+  "panam-kilangu-maavu": {
+    "h1": "Panam Kilangu Maavu: Traditional Palmyra Palm Sprouts Powder",
+    "intro": "Panam Kilangu Maavu is flour milled from the sprouted tuber of the Palmyra palm, known in Tamil as panang kizhangu. The tuber is boiled, sliced and sun-dried before it is ground into a fine powder, a preparation Tamil households have relied on as a wholesome, fibre-rich staple for generations.",
+    "sections": [
+      [
+        "How it is made",
+        "The underground sprout of the Palmyra palm is dug up during its short seasonal window, boiled, then sliced into pieces and laid out to dry in the sun over several days. Once fully dried, the pieces are ground into a fine, pale flour and sieved before packing. Nothing is added at any stage."
+      ],
+      [
+        "What it tastes like",
+        "Mild, earthy and lightly starchy on its own, closer to a wholegrain flour than a sweetener. It takes on other flavours easily, which is why it is traditionally cooked with milk, jaggery or fruit rather than eaten plain."
+      ],
+      [
+        "How to use it",
+        "Traditionally cooked slowly with water or milk into a thick porridge (kanji), often sweetened with a little Karupatti and finished with a few nuts. It can also be blended with millet flours for a heartier breakfast, or introduced to babies as an early weaning food from around ten months, cooked soft and thin."
+      ],
+      [
+        "Storage",
+        "Keep it in an airtight container somewhere cool and dry, away from direct sunlight and moisture. Being a plain milled flour with no preservatives, it is best used within a few months of opening for the freshest flavour."
       ]
     ]
   }

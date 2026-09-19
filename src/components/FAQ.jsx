@@ -11,24 +11,24 @@ import WhatsAppIcon from './WhatsAppIcon';
 // Edit questions and answers here only.
 export const faqs = [
   {
-    question: 'How long does Karuppati stay fresh and how should I store it?',
-    answer: 'Pure Palm Jaggery has a natural shelf-life of 6 to 12 months. Store it in an airtight container in a cool, dry place away from direct moisture. Because our Karuppati is 100% natural with zero preservatives, refrigeration in warm humid months will help preserve its firm texture.'
+    question: 'How long does Karupatti stay fresh and how should I store it?',
+    answer: 'Pure Palm Jaggery has a natural shelf-life of 6 to 12 months. Store it in an airtight container in a cool, dry place away from direct moisture. Because our Karupatti is 100% natural with zero preservatives, refrigeration in warm humid months will help preserve its firm texture.'
   },
   {
     question: 'How does shipping work and what are the delivery timelines?',
     answer: 'We dispatch all orders via express air/surface couriers within 24 to 48 hours of order confirmation. Delivery typically takes 2-3 business days across South India (Tamil Nadu, Karnataka, Kerala, AP/Telangana) and 4-6 business days for the rest of India.'
   },
   {
-    question: 'Will adding Karuppati to hot tea or filter coffee curdle the milk?',
-    answer: 'Pure, authentic palm jaggery does not curdle milk when added properly. For best results with hot tea or filter coffee, brew your beverage first, turn off the heat, and stir in powdered Karuppati just before serving.'
+    question: 'Will adding Karupatti to hot tea or filter coffee curdle the milk?',
+    answer: 'Pure, authentic palm jaggery does not curdle milk when added properly. For best results with hot tea or filter coffee, brew your beverage first, turn off the heat, and stir in powdered Karupatti just before serving.'
   },
   {
-    question: 'Is Karuppati a good swap for refined sugar?',
+    question: 'Is Karupatti a good swap for refined sugar?',
     answer: 'Published research places palm jaggery at a Glycemic Index of roughly 35 to 42, against 65 to 70 for refined white sugar, and because it is unrefined it keeps natural iron and trace minerals that refining removes. It is still a sugar and still adds calories, so treat it as a better-quality sweetener rather than a health food. If you are managing diabetes or any medical condition, please talk to your doctor before changing your diet.'
   },
   {
-    question: 'How is pure Karuppati made and how does it differ from regular jaggery?',
-    answer: 'Liha Karuppati is made purely from the fresh inflorescence nectar of Palmyra palm trees (Padaneer). It is slowly evaporated over firewood without adding any white sugar, artificial colors, sodium hydrosulphite, or chemical bleaching agents.'
+    question: 'How is pure Karupatti made and how does it differ from regular jaggery?',
+    answer: 'Liha Karupatti is made purely from the fresh inflorescence nectar of Palmyra palm trees (Padaneer). It is slowly evaporated over firewood without adding any white sugar, artificial colors, sodium hydrosulphite, or chemical bleaching agents.'
   },
   {
     question: 'What payment methods do you accept for WhatsApp orders?',

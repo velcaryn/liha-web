@@ -11,7 +11,7 @@ export default function NotFound() {
       <div className="not-found-card soil-card">
         <img
           src="/images/logo.webp"
-          alt="Liha's Karuppati"
+          alt="Liha's Karupatti"
           className="not-found-logo"
           width="64"
           height="64"

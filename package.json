@@ -5,12 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/prerender.mjs && node scripts/make-404.mjs",
+    "build": "vite build && node scripts/prerender.mjs && node scripts/og-images.mjs && node scripts/make-404.mjs",
     "preview": "vite preview",
     "check": "node scripts/check-brand-leak.mjs",
     "verify": "npm run check && npm run check:nav && npm run check:faq && npm run build",
     "check:nav": "node scripts/check-fixed-nav.mjs",
     "prerender": "node scripts/prerender.mjs",
+    "og-images": "node scripts/og-images.mjs",
     "sync:faq": "node scripts/sync-faq-schema.mjs",
     "check:faq": "node scripts/sync-faq-schema.mjs --check",
     "indexnow": "node scripts/indexnow.mjs"

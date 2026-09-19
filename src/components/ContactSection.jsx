@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { brand, contact, phoneHref, waDefault, waLink } from '../config/site';
+import { brand, contact, phoneHref, waDefault, waLink, products } from '../config/site';
 import { Phone, ChevronDown, Check } from 'lucide-react';
 import WhatsAppIcon from './WhatsAppIcon';
 
@@ -14,12 +14,35 @@ function InstagramIcon({ size = 18, color = 'currentColor' }) {
   );
 }
 
+// A short badge tag per product, shown in the order dropdown. Keyed by
+// slug so it stays attached to the right product when the list is derived
+// from config/site.js below, rather than duplicating the whole catalogue.
+const ORDER_BADGES = {
+  karupatti: 'Best Seller',
+  'panam-karkandu': 'Natural Crystal',
+  'chukku-karupatti': 'Herbal Wellness',
+  'vattu-karupatti': 'Rare Edition',
+  'panam-kilangu-maavu': 'Wholesome Staple',
+};
+
+// Derived from config/site.js so a new product added there appears in the
+// order form automatically, rather than needing this list hand-edited (and
+// previously drifting: ids here did not match the real slugs at all).
 const PRODUCT_OPTIONS = [
-  { id: 'karuppati', label: 'Karuppati', tamil: 'கருப்பட்டி', full: 'Karuppati (Palm Jaggery) - கருப்பட்டி', badge: 'Best Seller' },
-  { id: 'panam-karkandu', label: 'Panam Karkandu', tamil: 'பனங்கற்கண்டு', full: 'Panam Karkandu (Palm Candy) - பனங்கற்கண்டு', badge: 'Natural Crystal' },
-  { id: 'chukku', label: 'Chukku Karuppati', tamil: 'சுக்கு கருப்பட்டி', full: 'Chukku Karuppati (Dry Ginger Palm Jaggery) - சுக்கு கருப்பட்டி', badge: 'Herbal Wellness' },
-  { id: 'vattu', label: 'Vattu Karuppati', tamil: 'வட்டு கருப்பட்டி', full: 'Vattu Karuppati (Disc Palm Jaggery) - வட்டு கருப்பட்டி', badge: 'Rare Edition' },
-  { id: 'sampler', label: 'Assorted Sampler Pack', tamil: 'அனைத்தும் அடங்கிய தொகுப்பு', full: 'Assorted Palm Sampler Pack (All 4 Varieties)', badge: 'All 4 Varieties' },
+  ...products.map((p) => ({
+    id: p.slug,
+    label: p.name,
+    tamil: p.tamil,
+    full: `${p.name} (${p.subtitle}) - ${p.tamil}`,
+    badge: ORDER_BADGES[p.slug] || '',
+  })),
+  {
+    id: 'sampler',
+    label: 'Assorted Sampler Pack',
+    tamil: 'அனைத்தும் அடங்கிய தொகுப்பு',
+    full: 'Assorted Palm Sampler Pack (All Varieties)',
+    badge: 'All Varieties',
+  },
 ];
 
 const QTY_OPTIONS = [
@@ -74,7 +97,7 @@ export default function ContactSection() {
             <span className="badge-pill badge-green">Direct From Source</span>
             <h2 className="contact-title">Order Fresh Palm Jaggery</h2>
             <p className="contact-subtitle">
-              We ship authentic Karuppati securely across India. Choose items below to order via WhatsApp.
+              We ship authentic Karupatti securely across India. Choose items below to order via WhatsApp.
             </p>
           </div>
 

@@ -4,35 +4,45 @@
   a fragment as the same document as its parent, so listing them declared one
   page six times. These are real routes, each prerendered to its own HTML file
   with its own title, description, canonical and Product schema.
+
+  2026-09-19: slugs renamed karuppati -> karupatti (brand spelling fix, see
+  docs/PLAYBOOK.md section 9) and panam-kilangu-maavu added as the 5th
+  product. Old slugs 301 to these in netlify.toml.
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://lihashop.in/</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://lihashop.in/karuppati/</loc>
-    <lastmod>2026-09-05</lastmod>
+    <loc>https://lihashop.in/karupatti/</loc>
+    <lastmod>2026-09-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://lihashop.in/panam-karkandu/</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://lihashop.in/chukku-karuppati/</loc>
-    <lastmod>2026-09-05</lastmod>
+    <loc>https://lihashop.in/chukku-karupatti/</loc>
+    <lastmod>2026-09-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://lihashop.in/vattu-karuppati/</loc>
-    <lastmod>2026-09-05</lastmod>
+    <loc>https://lihashop.in/vattu-karupatti/</loc>
+    <lastmod>2026-09-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://lihashop.in/panam-kilangu-maavu/</loc>
+    <lastmod>2026-09-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>

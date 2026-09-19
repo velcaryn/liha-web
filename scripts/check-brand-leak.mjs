@@ -27,7 +27,7 @@ const RULES = [
 // JS file. Counted and reported so the number stays visible.
 const SOFT = [
   { name: 'brand name',   re: /\bLiha\b/i },
-  { name: 'product name', re: /karuppati|karkandu/i },
+  { name: 'product name', re: /karupatti|karkandu/i },
 ];
 
 let failures = 0;

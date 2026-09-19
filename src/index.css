@@ -358,11 +358,12 @@ div[id] {
   min-height: 100dvh;
 }
 
-/* ---------- Per-product pages (/karuppati, /panam-karkandu, ...) ----------
-   Long-form editorial layout. Measure is capped near 68ch because these
-   pages are read, not skimmed, and full-width prose at 1200px is unreadable.
-   Top padding clears the fixed navbar. */
-.product-page {
+/* ---------- Product detail pages (/karupatti/, /panam-karkandu/, ...) ----
+   A real PDP, not an article: image and buy panel side by side, then the
+   long-form copy as scannable cards, then a route to the rest of the
+   catalogue. Mobile stacks everything centred, image first. Top padding
+   clears the fixed navbar. */
+.pdp {
   padding-top: 7rem;
   padding-bottom: 4rem;
 }
@@ -370,7 +371,7 @@ div[id] {
 .breadcrumb {
   font-size: 0.85rem;
   color: var(--text-muted);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   display: flex;
   gap: 0.5rem;
   align-items: center;
@@ -387,102 +388,307 @@ div[id] {
   .breadcrumb a:hover { color: var(--secondary); text-decoration: underline; }
 }
 
-.product-page-head { max-width: 68ch; }
-
-.product-page-title {
-  font-family: var(--font-serif, inherit);
-  font-size: clamp(1.9rem, 4.5vw, 3rem);
-  line-height: 1.15;
-  color: var(--primary);
-  margin: 0.75rem 0 0.35rem;
+/* ---- Hero: image + buy panel ---- */
+.pdp-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
 }
 
-.product-page-tamil {
-  font-size: 1.15rem;
-  color: var(--secondary);
-  margin: 0 0 1.25rem;
-  font-weight: 600;
+.pdp-media {
+  position: relative;
+  align-self: center;
+  width: 100%;
+  max-width: 420px;
 }
-
-.product-page-intro {
-  font-size: 1.08rem;
-  line-height: 1.75;
-  color: var(--text-main);
-  margin-bottom: 1.75rem;
-}
-
-.product-page-cta { margin-bottom: 2.5rem; }
-
-/* The image is wrapped by SkeletonImage, so the sizing lives on the wrapper
-   and the inner img just fills it. */
-.product-page-img { border-radius: var(--radius-lg); }
-.skeleton-wrap:has(.product-page-img) {
-  max-width: 620px;
+.pdp-img { border-radius: var(--radius-lg); }
+.skeleton-wrap:has(.pdp-img) {
   border-radius: var(--radius-lg);
-  margin: 0 0 3rem;
+  width: 100%;
 }
 /* Only paint the white plate once the photo is actually there. While the
    wrapper still carries .skeleton it must keep the shimmer ground, or the
    placeholder is an invisible white box on a white page. */
-.skeleton-wrap:has(.product-page-img:not(.is-loading)) {
+.skeleton-wrap:has(.pdp-img:not(.is-loading)) {
   background: var(--bg-container-lowest);
 }
 
-.product-page-section {
-  max-width: 68ch;
-  margin-bottom: 2.5rem;
+.pdp-details {
+  text-align: center;
 }
-.product-page-section h2 {
-  font-size: clamp(1.25rem, 2.5vw, 1.6rem);
+.pdp-details .badge-pill { margin-bottom: 0.75rem; }
+
+.pdp-title {
+  font-family: var(--font-serif, inherit);
+  font-size: clamp(1.7rem, 6vw, 2.4rem);
+  line-height: 1.15;
   color: var(--primary);
-  margin: 0 0 0.6rem;
-}
-.product-page-section p {
-  font-size: 1.02rem;
-  line-height: 1.75;
-  color: var(--text-main);
-  margin: 0 0 1.1rem;
+  margin: 0 0 0.25rem;
 }
 
-.product-page-siblings {
-  border-top: 1px solid var(--bg-container-high);
-  padding-top: 2rem;
-  margin-top: 1rem;
+.pdp-tamil {
+  font-size: 1.1rem;
+  color: var(--secondary);
+  font-weight: 600;
+  margin: 0 0 0.15rem;
 }
-.product-page-siblings h2 {
-  font-size: 1.2rem;
-  color: var(--primary);
-  margin: 0 0 1rem;
+
+.pdp-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin: 0 0 1.25rem;
 }
-.product-page-siblings ul {
+
+.pdp-order-btn {
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+  font-size: 1rem;
+}
+
+.pdp-order-note {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin: 0.6rem 0 1.5rem;
+}
+
+.pdp-intro {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-main);
+  margin: 0 0 1.25rem;
+  text-align: left;
+}
+
+.pdp-highlights {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: left;
 }
-.product-page-siblings a {
-  display: inline-block;
-  padding: 0.6rem 1rem;
-  border: 1px solid var(--bg-container-high);
-  border-radius: var(--radius-full);
-  background: var(--bg-container-lowest);
-  color: var(--text-main);
-  text-decoration: none;
+.pdp-highlights li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
   font-size: 0.92rem;
   font-weight: 600;
+  color: var(--text-variant);
 }
-@media (hover: hover) {
-  .product-page-siblings a:hover {
-    border-color: var(--secondary);
-    color: var(--secondary);
+.pdp-highlights .highlight-dot {
+  color: var(--secondary);
+  font-weight: 900;
+}
+
+/* ---- Trust strip ----
+   Mirrors the home page strip, but the rules live here rather than being
+   shared with TrustBadges.jsx: that component keeps its CSS in its own
+   <style> block, which is only in the document when that component is
+   mounted, and it is not mounted on a product page. */
+.pdp-trust {
+  background: var(--bg-container-lowest);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 0.75rem;
+  border: 1px solid var(--outline-variant);
+  box-shadow: var(--soil-shadow-sm);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem 0.5rem;
+  margin-bottom: 2.5rem;
+}
+.pdp-trust .trust-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.4rem;
+  width: 100%;
+}
+.pdp-trust .trust-icon-wrap {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--bg-container-high);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  flex-shrink: 0;
+}
+.pdp-trust .trust-icon-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.pdp-trust .trust-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1.2;
+  text-align: center;
+}
+
+/* ---- Section headings shared by the info and related blocks ---- */
+.pdp-section-heading {
+  font-size: clamp(1.25rem, 4vw, 1.6rem);
+  color: var(--primary);
+  margin: 0 0 1.25rem;
+  text-align: center;
+}
+
+/* ---- Detail cards: how it is made, taste, use, storage ---- */
+.pdp-info {
+  margin-bottom: 3rem;
+}
+.pdp-info-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+.pdp-info-card {
+  background: var(--bg-container-lowest);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  box-shadow: var(--soil-shadow-sm);
+}
+.pdp-info-card h3 {
+  font-size: 1.05rem;
+  color: var(--primary);
+  margin: 0 0 0.5rem;
+}
+.pdp-info-card p {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--text-main);
+  margin: 0;
+}
+
+/* ---- Explore other products ---- */
+.pdp-related {
+  border-top: 1px solid var(--bg-container-high);
+  padding-top: 2rem;
+}
+.pdp-related-grid {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 0.5rem;
+  margin: 0 -1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  /* Native momentum scrolling per the playbook: CSS scroll-snap, not JS. */
+  -webkit-overflow-scrolling: touch;
+}
+.pdp-related-card {
+  scroll-snap-align: start;
+  flex: 0 0 220px;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: var(--bg-container-lowest);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--soil-shadow-sm);
+  transition: var(--transition-smooth);
+}
+/* SkeletonImage with `fill` expects an ancestor to define the box, so the
+   height lives on its wrapper. Without this the wrapper collapses and the
+   card body below it is pushed out of the visible card. */
+.skeleton-wrap:has(.pdp-related-img) {
+  display: block;
+  width: 100%;
+  height: 160px;
+  flex-shrink: 0;
+}
+.pdp-related-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.pdp-related-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.9rem 1rem;
+}
+.pdp-related-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+.pdp-related-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+@media (hover: hover) and (pointer: fine) {
+  .pdp-related-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--soil-shadow-hover);
   }
+}
+.pdp-related-card:active {
+  transform: scale(0.98);
 }
 
 /* The fixed mobile dock overlaps the last section on small screens. */
 @media (max-width: 899px) {
-  .product-page { padding-top: 5.5rem; padding-bottom: 6rem; }
+  .pdp { padding-top: 5.5rem; padding-bottom: 6rem; }
+}
+
+/* ---- Desktop: image and buy panel side by side ---- */
+@media (min-width: 900px) {
+  .pdp-hero {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 3.5rem;
+    margin-bottom: 3rem;
+  }
+  .pdp-media {
+    flex: 0 0 46%;
+    max-width: none;
+    align-self: auto;
+    /* Stays in view while the buy panel and copy are read. */
+    position: sticky;
+    top: 7.5rem;
+  }
+  .pdp-details {
+    flex: 1;
+    text-align: left;
+    padding-top: 0.5rem;
+  }
+  .pdp-order-btn {
+    margin: 0;
+  }
+  .pdp-trust {
+    grid-template-columns: repeat(4, 1fr);
+    padding: 1.5rem 2rem;
+    gap: 1.5rem;
+  }
+  .pdp-trust .trust-icon-wrap {
+    width: 56px;
+    height: 56px;
+    padding: 0.65rem;
+  }
+  .pdp-trust .trust-label { font-size: 0.85rem; }
+  .pdp-info-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  .pdp-info-card { padding: 1.75rem; }
+  .pdp-related-grid {
+    overflow: visible;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+  }
+  .pdp-related-card { flex: 1 1 calc(25% - 0.75rem); }
 }
 
 /* Internal link from each home page product card to its own page. */

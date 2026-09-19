@@ -1,22 +1,25 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
-import { brand, contact, phoneHref, waLink } from '../config/site';
+import { brand, contact, phoneHref, waLink, products } from '../config/site';
 import { gsap } from 'gsap';
 import { Phone, ArrowUpRight } from 'lucide-react';
 import './CardNav.css';
 import WhatsAppIcon from './WhatsAppIcon';
 
+// Product links are derived from config/site.js so a new product added
+// there appears in the nav automatically, instead of needing this list
+// (and its twin in CardNav.jsx) hand-edited every time.
+const PRODUCT_LINKS = products.map((p) => ({
+  label: `${p.name} (${p.tamil})`,
+  href: `/${p.slug}/`,
+  ariaLabel: p.subtitle,
+}));
 
 const NAV_CARDS = [
   {
     label: "Pure Products",
     bgColor: "#32170d",
     textColor: "#ffffff",
-    links: [
-      { label: "Karuppati (கருப்பட்டி)", href: "/karuppati/", ariaLabel: "Pure Dark Palm Jaggery" },
-      { label: "Panam Karkandu (பனங்கற்கண்டு)", href: "/panam-karkandu/", ariaLabel: "Palm Candy Crystals" },
-      { label: "Chukku Karuppati (சுக்கு)", href: "/chukku-karuppati/", ariaLabel: "Dry Ginger Palm Jaggery" },
-      { label: "Vattu Karuppati (வட்டு)", href: "/vattu-karuppati/", ariaLabel: "Rare Male Palm Nectar" }
-    ]
+    links: PRODUCT_LINKS
   },
   {
     label: "Heritage & Health",
@@ -194,9 +197,9 @@ export default function Navbar() {
       {/* Desktop Floating Pill Island Header (>= 900px) */}
       <nav className="desktop-navbar">
         <a href={homeHref} className="desktop-brand">
-          <img src="/images/logo.webp" alt="Liha's Karuppati" className="desktop-logo" width="38" height="38" />
+          <img src="/images/logo.webp" alt="Liha's Karupatti" className="desktop-logo" width="38" height="38" />
           <div className="desktop-brand-text">
-            <span className="desktop-brand-title">Liha's Karuppati</span>
+            <span className="desktop-brand-title">Liha's Karupatti</span>
             <span className="desktop-brand-tagline">PURE PALM JAGGERY</span>
           </div>
         </a>
@@ -215,7 +218,7 @@ export default function Navbar() {
             <span>{contact.phoneDisplay}</span>
           </a>
           <a
-            href={waLink("Hi, I would like to order pure Karuppati from Liha")}
+            href={waLink("Hi, I would like to order pure Karupatti from Liha")}
             target="_blank"
             rel="noopener noreferrer"
             className="desktop-btn desktop-btn-whatsapp"
@@ -231,9 +234,9 @@ export default function Navbar() {
         <nav ref={navRef} className={`card-nav ${isExpanded ? 'open' : ''}`}>
           <div className="card-nav-top">
             <a href={homeHref} className="logo-container" onClick={closeMobileMenu}>
-              <img src="/images/logo.webp" alt="Liha's Karuppati" className="logo-image" width="38" height="38" />
+              <img src="/images/logo.webp" alt="Liha's Karupatti" className="logo-image" width="38" height="38" />
               <div className="logo-text-col">
-                <span className="logo-title">Liha's Karuppati</span>
+                <span className="logo-title">Liha's Karupatti</span>
                 <span className="logo-tagline">PURE PALM JAGGERY</span>
               </div>
             </a>

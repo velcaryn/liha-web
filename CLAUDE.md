@@ -22,6 +22,12 @@ typo in a canonical tag, one letter wrong in a social handle.
 5. **Hover effects go inside `@media (hover: hover)`.** Touch devices get
    `:active` feedback instead.
 
+## Adding a product
+
+Follow `docs/ADD-PRODUCT.md` top to bottom. Most of the wiring derives
+from `src/config/site.js` now, but the home page JSON-LD and the sitemap
+still need a hand edit, and a renamed slug needs a 301 in `netlify.toml`.
+
 ## Before calling a task done
 
 Walk the launch checklist in section 10 of the playbook. If the task touched

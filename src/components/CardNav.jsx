@@ -1,22 +1,25 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
-import { brand, contact, phoneHref, waLink } from '../config/site';
+import { brand, contact, phoneHref, waLink, products } from '../config/site';
 import { gsap } from 'gsap';
 import { ArrowUpRight } from 'lucide-react';
 import './CardNav.css';
 import WhatsAppIcon from './WhatsAppIcon';
 
+// Product links are derived from config/site.js so a new product added
+// there appears in the nav automatically, instead of needing this list
+// (and its twin in Navbar.jsx) hand-edited every time.
+const PRODUCT_LINKS = products.map((p) => ({
+  label: `${p.name} (${p.tamil})`,
+  href: `/${p.slug}/`,
+  ariaLabel: p.subtitle,
+}));
 
 const DEFAULT_ITEMS = [
   {
     label: "Pure Products",
     bgColor: "#32170d",
     textColor: "#ffffff",
-    links: [
-      { label: "Karuppati (கருப்பட்டி)", href: "/karuppati/", ariaLabel: "Pure Dark Palm Jaggery" },
-      { label: "Panam Karkandu (பனங்கற்கண்டு)", href: "/panam-karkandu/", ariaLabel: "Palm Candy Crystals" },
-      { label: "Chukku Karuppati (சுக்கு)", href: "/chukku-karuppati/", ariaLabel: "Dry Ginger Palm Jaggery" },
-      { label: "Vattu Karuppati (வட்டு)", href: "/vattu-karuppati/", ariaLabel: "Rare Male Palm Nectar" }
-    ]
+    links: PRODUCT_LINKS
   },
   {
     label: "Heritage & Health",
@@ -42,7 +45,7 @@ const DEFAULT_ITEMS = [
 
 const CardNav = ({
   logo = "/images/logo.webp",
-  logoAlt = "Liha's Karuppati",
+  logoAlt = "Liha's Karupatti",
   items = DEFAULT_ITEMS,
   className = '',
   ease = 'power3.out',
@@ -182,7 +185,7 @@ const CardNav = ({
           <a href="#" className="logo-container" onClick={closeMenu}>
             <img src={logo} alt={logoAlt} className="logo-image" width="38" height="38" />
             <div className="logo-text-col">
-              <span className="logo-title">Liha's Karuppati</span>
+              <span className="logo-title">Liha's Karupatti</span>
               <span className="logo-tagline">PURE PALM JAGGERY</span>
             </div>
           </a>
@@ -207,7 +210,7 @@ const CardNav = ({
           </div>
 
           <a
-            href={waLink("Hi, I would like to order pure Karuppati from Liha")}
+            href={waLink("Hi, I would like to order pure Karupatti from Liha")}
             target="_blank"
             rel="noopener noreferrer"
             className="card-nav-cta-button"

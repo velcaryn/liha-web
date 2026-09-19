@@ -41,6 +41,50 @@
   status = 200
   force = true
 
+# Brand spelling fix, 2026-09-19: the product was spelled "Karuppati"
+# (double-p, single-t) everywhere in this repo except the Instagram handle
+# in config, which the client's own live account confirms is correct
+# ("Karupatti"). Slugs, routes and images were renamed to match. These 301s
+# carry the old, already-indexed URLs and image paths to their new
+# addresses so nothing that already linked or ranked to them breaks. They
+# must stay ABOVE the catch-all below: Netlify matches redirects top to
+# bottom, and a rule below the catch-all never fires.
+[[redirects]]
+  from = "/karuppati/*"
+  to = "/karupatti/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/chukku-karuppati/*"
+  to = "/chukku-karupatti/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/vattu-karuppati/*"
+  to = "/vattu-karupatti/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/images/karuppati.webp"
+  to = "/images/karupatti.webp"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/images/chukku-karuppati.webp"
+  to = "/images/chukku-karupatti.webp"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/images/vattu-karuppati.webp"
+  to = "/images/vattu-karupatti.webp"
+  status = 301
+  force = true
+
 # Unknown paths get a real 404, not the home page with a 200.
 #
 # The previous catch-all served index.html at status 200 for ANY path, so

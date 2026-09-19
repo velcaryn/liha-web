@@ -18,7 +18,7 @@ const CAROUSEL_SLIDES = [
   {
     image: '/images/carousel/carousel-3-product-range-flatlay.webp',
     title: 'Artisanal Pure Collection',
-    desc: '100% unrefined Karuppati, Panam Karkandu, Chukku & Vattu varieties.',
+    desc: '100% unrefined Karupatti, Panam Karkandu, Chukku & Vattu varieties.',
     alt: 'Complete Liha product range'
   },
   {
@@ -58,7 +58,7 @@ export default function CarouselGallery() {
           </span>
           <h2 className="carousel-headline">Crafted with Purity & Care</h2>
           <p className="carousel-subtitle">
-            Swipe through the artisanal craftsmanship and daily wellness of Liha's Karuppati.
+            Swipe through the artisanal craftsmanship and daily wellness of Liha's Karupatti.
           </p>
         </div>
 

@@ -214,6 +214,24 @@ export default function Products() {
           .product-card--narrow {
             grid-column: span 5;
           }
+          /* Fifth card in the bento: spans the full row and lays the image
+             beside the copy instead of above it, so it reads as a featured
+             close rather than an oversized narrow card. The image wrapper
+             keeps an explicit height because SkeletonImage runs in fill
+             mode here: height auto collapses it and the photo vanishes. */
+          .product-card--full {
+            grid-column: span 12;
+            flex-direction: row;
+          }
+          .product-card--full .product-img-wrap {
+            width: 42%;
+            height: 320px;
+            flex-shrink: 0;
+          }
+          .product-card--full .product-body {
+            flex: 1;
+            justify-content: center;
+          }
           .product-img-wrap { height: 250px; }
           .product-body { padding: 1.75rem 2rem; }
           .product-name { font-size: 1.45rem; }

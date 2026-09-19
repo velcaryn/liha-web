@@ -32,7 +32,7 @@ export default function Hero() {
 
             <div className="hero-actions">
               <a
-                href={waLink("Hi, I would like to order Karuppati from Liha")}
+                href={waLink("Hi, I would like to order Karupatti from Liha")}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-whatsapp hero-btn"

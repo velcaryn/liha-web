@@ -70,7 +70,7 @@ export default function MobileNav() {
 
       {/* Center WhatsApp Order Button */}
       <a
-        href={waLink("Hi Liha's Karuppati team, I would like to order pure palm jaggery")}
+        href={waLink("Hi Liha's Karupatti team, I would like to order pure palm jaggery")}
         target="_blank"
         rel="noopener noreferrer"
         className="mobile-nav-center-btn"

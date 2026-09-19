@@ -123,7 +123,7 @@ export default function App() {
 
         {/* Desktop Floating WhatsApp Quick Button */}
         <a
-          href={waLink("Hi Liha's Karuppati team, I would like to enquire about ordering pure palm jaggery")}
+          href={waLink("Hi Liha's Karupatti team, I would like to enquire about ordering pure palm jaggery")}
           target="_blank"
           rel="noopener noreferrer"
           className="floating-whatsapp"

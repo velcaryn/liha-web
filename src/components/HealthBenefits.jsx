@@ -78,7 +78,7 @@ export default function HealthBenefits() {
 
         {/* Comparison - card layout on mobile, table on desktop */}
         <div className="soil-card comparison-card">
-          <h3 className="comparison-title">Pure Karuppati vs Refined White Sugar</h3>
+          <h3 className="comparison-title">Pure Karupatti vs Refined White Sugar</h3>
 
           {/* Mobile: stacked comparison items */}
           <div className="comparison-mobile">
